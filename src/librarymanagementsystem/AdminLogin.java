@@ -6,6 +6,7 @@
 package librarymanagementsystem;
 
 import java.awt.event.WindowEvent;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -144,16 +145,23 @@ public class AdminLogin extends javax.swing.JFrame {
     private void loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginActionPerformed
         String name = userName.getText();
         String pass = userPass.getText();
-        if(name.contains("bassel") && pass.contains("12345")){
+        if (name.contains("bassel") && pass.contains("12345")) {
             userName.setText(null);
             userPass.setText(null);
-            systemExit();
+            this.setVisible(false);
+            ModuleSystem mod = new ModuleSystem();
+            mod.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(null, "Invalid Login Details...", "Login Error", JOptionPane.ERROR_MESSAGE);
+            userName.setText(null);
+            userPass.setText(null);
         }
     }//GEN-LAST:event_loginActionPerformed
 
     private void resetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetActionPerformed
         userName.setText(null);
         userPass.setText(null);
+        
     }//GEN-LAST:event_resetActionPerformed
 
     /**
@@ -201,8 +209,6 @@ public class AdminLogin extends javax.swing.JFrame {
     private javax.swing.JTextField userName;
     private javax.swing.JTextField userPass;
     // End of variables declaration//GEN-END:variables
-    private void systemExit(){
-        WindowEvent winClosing = new WindowEvent(this,WindowEvent.WINDOW_CLOSING);
-    }
 
+    
 }
