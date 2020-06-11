@@ -7,5 +7,4 @@ public class Author extends MainPersonInfo{
                   String newEmail, String newPhone, String newAddress) {
         super(newFName, newMName, newLName, newEmail, newPhone, newAddress);
     }
-    
 }
