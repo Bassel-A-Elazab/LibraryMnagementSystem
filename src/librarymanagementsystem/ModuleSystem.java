@@ -43,6 +43,11 @@ public class ModuleSystem extends javax.swing.JFrame {
         });
 
         booksManage.setText("Books Management");
+        booksManage.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                booksManageActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -78,6 +83,12 @@ public class ModuleSystem extends javax.swing.JFrame {
     private void membersManageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_membersManageActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_membersManageActionPerformed
+
+    private void booksManageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_booksManageActionPerformed
+        this.setVisible(false);
+        BooksManage bookManage = new BooksManage();
+        bookManage.setVisible(true);
+    }//GEN-LAST:event_booksManageActionPerformed
 
     /**
      * @param args the command line arguments
