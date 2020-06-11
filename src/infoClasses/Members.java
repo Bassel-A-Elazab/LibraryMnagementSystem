@@ -7,13 +7,62 @@ public class Members {
     private String mName;
     private String lName;
     private String email;
-    private int phone;
+    private String phone;
     private String address;
     private int numBookBorrowed;
     private int numBookBought;
     
     public Members(int newMembId, String newFName, String newMName, String newLName, String newEmail,
-                   int newPhone, String newAddress, int newNumBookBorrowed,int newNumBookBought){
-        
+                   String newPhone, String newAddress, int newNumBookBorrowed,int newNumBookBought){
+        this.membId = newMembId;
+        this.fName = newFName;
+        this.mName = newMName;
+        this.lName = newLName;
+        this.email = newEmail;
+        this.phone = newPhone;
+        this.address = newAddress;
+        this.numBookBorrowed = newNumBookBorrowed;
+        this.numBookBought = newNumBookBought;
+    }
+    public void setFName(String newFName){
+        this.fName = newFName;
+    }
+    public String getFName(){
+        return fName;
+    }
+    
+    public void setMName(String newMName){
+        this.mName = newMName;
+    }
+    public String getMName(){
+        return mName;
+    }
+    
+    public void setLName(String newLName){
+        this.lName = newLName;
+    }
+    public String getLName(){
+        return lName;
+    }
+    
+    public void setEmail(String newEmail){
+        this.email = newEmail;
+    }
+    public String getEmail(){
+        return email;
+    }
+    
+    public void setPhone(String newPhone){
+        this.phone = newPhone;
+    }
+    public String getPhone(){
+        return phone;
+    }
+    
+    public void setAddress(String newAddress){
+        this.address = newAddress;
+    }
+    public String getAddress(){
+        return address;
     }
 }
