@@ -112,7 +112,8 @@ public class BooksManage extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBookActionPerformed
-        
+        AddBooks book = new AddBooks();
+        book.setVisible(true);
         
     }//GEN-LAST:event_addBookActionPerformed
 
