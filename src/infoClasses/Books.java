@@ -4,7 +4,6 @@ import java.sql.Date;
 
 public class Books {
 
-    private int isbn;
     private String title;
     private int copyRightYear;
     private String publishCountry;
@@ -12,9 +11,8 @@ public class Books {
     private int cost;
     private Date publishDate;
 
-    public Books(int newISBN, String newTitle, int newCopyRightYear,
+    public Books(String newTitle, int newCopyRightYear,
             String newPublishCountry, int newQnty, int newCost, Date newPublishDate) {
-        this.isbn = newISBN;
         this.title = newTitle;
         this.copyRightYear = newCopyRightYear;
         this.publishCountry = newPublishCountry;
@@ -22,7 +20,6 @@ public class Books {
         this.cost = newCost;
         this.publishDate = newPublishDate;
     }
-
     public void setTitle(String newTitle) {
         this.title = newTitle;
     }

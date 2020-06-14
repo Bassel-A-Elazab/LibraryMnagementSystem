@@ -1,14 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package librarymanagementsystem;
 
-/**
- *
- * @author Basola
- */
+import infoClasses.Books;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class AddBooks extends javax.swing.JFrame {
 
     /**
@@ -110,6 +109,11 @@ public class AddBooks extends javax.swing.JFrame {
         jButton2.setText("Add New Author");
 
         add.setText("Add");
+        add.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addActionPerformed(evt);
+            }
+        });
 
         reset.setText("Reset");
         reset.addActionListener(new java.awt.event.ActionListener() {
@@ -239,6 +243,20 @@ public class AddBooks extends javax.swing.JFrame {
         category.setSelectedIndex(0);
         qnty.setText(null);
     }//GEN-LAST:event_resetActionPerformed
+
+    private void addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addActionPerformed
+        Connection con = ConnectDatabase.setConnect();
+        
+        int brwCopy = 0;
+        //Books bk = new Books(title.getText(),copyRightYear.getText(),publishCountry.getSelectedItem().toString(),brwCopy,cost.getText(),);
+        try {
+            Statement stmt = con.createStatement();
+           // String sql = "INSERT INTO books (Title,CopyRightYear,PublishCountry,TotalCopy,BorrowedCopy,Cost,Categ_ID)"+"VALUES('"+?+"','"+?+"','"+?+"','"+?+"','"+?+"','"+?+"','"+?+"');";
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        
+    }//GEN-LAST:event_addActionPerformed
 
     /**
      * @param args the command line arguments
