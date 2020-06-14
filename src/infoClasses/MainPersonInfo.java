@@ -7,7 +7,9 @@ public class MainPersonInfo {
     private String email;
     private String phone;
     private String address;
+    public MainPersonInfo(){
     
+    }
     public MainPersonInfo(String newFName, String newMName, String newLName, String newEmail,
                    String newPhone, String newAddress){
         this.fName = newFName;

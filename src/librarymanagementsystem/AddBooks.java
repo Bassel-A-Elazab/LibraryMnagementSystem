@@ -1,12 +1,14 @@
 
 package librarymanagementsystem;
 
+import infoClasses.Author;
 import infoClasses.Books;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 public class AddBooks extends javax.swing.JFrame {
 
@@ -17,6 +19,11 @@ public class AddBooks extends javax.swing.JFrame {
         initComponents();
     }
 
+    public AddBooks(Author auth) {
+            initComponents();
+            JOptionPane.showMessageDialog(null,auth.getLName(), "Success", JOptionPane.INFORMATION_MESSAGE);
+            
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -232,6 +239,7 @@ public class AddBooks extends javax.swing.JFrame {
 
     private void exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitActionPerformed
         this.setVisible(false);
+        
     }//GEN-LAST:event_exitActionPerformed
 
     private void resetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetActionPerformed
@@ -246,6 +254,8 @@ public class AddBooks extends javax.swing.JFrame {
 
     private void addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addActionPerformed
         Connection con = ConnectDatabase.setConnect();
+        AddAuthor auth = new AddAuthor();
+        auth.setVisible(true);
         
         int brwCopy = 0;
         //Books bk = new Books(title.getText(),copyRightYear.getText(),publishCountry.getSelectedItem().toString(),brwCopy,cost.getText(),);
