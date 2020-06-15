@@ -1,17 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package librarymanagementsystem;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author Basola
- */
 public class BooksManage extends javax.swing.JFrame {
     public BooksManage() {
         initComponents();
@@ -114,7 +106,6 @@ public class BooksManage extends javax.swing.JFrame {
     private void addBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBookActionPerformed
         AddBooks book = new AddBooks();
         book.setVisible(true);
-        
     }//GEN-LAST:event_addBookActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed

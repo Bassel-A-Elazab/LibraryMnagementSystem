@@ -126,7 +126,7 @@
                   <Component id="jLabel7" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
                   <Component id="qnty" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="65" pref="65" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="65" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
                   <Component id="jLabel3" min="-2" pref="31" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -299,12 +299,13 @@
     <Component class="javax.swing.JComboBox" name="authorName">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="5">
+          <StringArray count="6">
             <StringItem index="0" value="Liam Noah William"/>
             <StringItem index="1" value="Jacob Michael Daniel"/>
             <StringItem index="2" value="James Oliver Benjamin"/>
             <StringItem index="3" value="Elijah Lucas Mason"/>
             <StringItem index="4" value="Logan Alexander Ethan"/>
+            <StringItem index="5" value="Bassel Ahmed El-azab"/>
           </StringArray>
         </Property>
       </Properties>

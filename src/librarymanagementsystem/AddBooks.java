@@ -3,15 +3,19 @@ package librarymanagementsystem;
 
 import infoClasses.Author;
 import infoClasses.Books;
+import infoClasses.Category;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class AddBooks extends javax.swing.JFrame {
-
+    Category cat;
+    Books bk;
     /**
      * Creates new form AddBooks
      */
@@ -21,8 +25,7 @@ public class AddBooks extends javax.swing.JFrame {
 
     public AddBooks(Author auth) {
             initComponents();
-            JOptionPane.showMessageDialog(null,auth.getLName(), "Success", JOptionPane.INFORMATION_MESSAGE);
-            
+            authorName.addItem(auth.getFName()+" "+auth.getMName()+" "+auth.getLName());      
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -104,7 +107,7 @@ public class AddBooks extends javax.swing.JFrame {
             }
         });
 
-        authorName.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Liam Noah William", "Jacob Michael Daniel", "James Oliver Benjamin", "Elijah Lucas Mason", "Logan Alexander Ethan" }));
+        authorName.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Liam Noah William", "Jacob Michael Daniel", "James Oliver Benjamin", "Elijah Lucas Mason", "Logan Alexander Ethan", "Bassel Ahmed El-azab" }));
 
         exit.setText("Exit");
         exit.addActionListener(new java.awt.event.ActionListener() {
@@ -254,14 +257,21 @@ public class AddBooks extends javax.swing.JFrame {
 
     private void addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addActionPerformed
         Connection con = ConnectDatabase.setConnect();
-        AddAuthor auth = new AddAuthor();
-        auth.setVisible(true);
-        
+        Statement stmt = null;
+        ResultSet rs = null;
+        this.cat = new Category(publishCountry.getSelectedItem().toString());
         int brwCopy = 0;
-        //Books bk = new Books(title.getText(),copyRightYear.getText(),publishCountry.getSelectedItem().toString(),brwCopy,cost.getText(),);
         try {
-            Statement stmt = con.createStatement();
-           // String sql = "INSERT INTO books (Title,CopyRightYear,PublishCountry,TotalCopy,BorrowedCopy,Cost,Categ_ID)"+"VALUES('"+?+"','"+?+"','"+?+"','"+?+"','"+?+"','"+?+"','"+?+"');";
+            stmt = con.createStatement();
+            String getCategId = "SELECT idCategory FROM category where Name_C = "+cat.getName();
+            rs = stmt.executeQuery(getCategId);
+            bk.setTitle(title.getText());
+            bk.setCopyRightYear(Integer.parseInt(copyRightYear.getText()));
+            bk.setPublishCountry(publishCountry.getSelectedItem().toString());
+            bk.setQnty(Integer.parseInt(qnty.getText()));
+            bk.setCost(Integer.parseInt(cost.getText()));
+            Date d = new Date();
+           String sql = "INSERT INTO books (Title,CopyRightYear,PublishCountry,TotalCopy,Cost,PublishDate,BorrowedCopy,Categ_ID)"+"VALUES('"+?+"','"+?+"','"+?+"','"+?+"','"+?+"','"+?+"','"+?+"');";
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
