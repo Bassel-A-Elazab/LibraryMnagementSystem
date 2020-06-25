@@ -2,7 +2,7 @@ package infoClasses;
 public class Category {
     private String name;
     public Category(String newName){
-        this.name = name;
+        this.name = newName;
     }
     public void setName(String newName){
         this.name = newName;
