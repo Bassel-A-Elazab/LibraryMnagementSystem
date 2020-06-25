@@ -26,7 +26,7 @@ public class AddBooks extends javax.swing.JFrame {
 
     public AddBooks(Author auth) {
             initComponents();
-            authorName.addItem(auth.getFName()+" "+auth.getMName()+" "+auth.getLName());      
+            authorName.addItem(auth.getFName()+" "+auth.getMName()+" "+auth.getLName());  
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -111,6 +111,11 @@ public class AddBooks extends javax.swing.JFrame {
         });
 
         authorName.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Liam Noah William", "Jacob Michael Daniel", "James Oliver Benjamin", "Elijah Lucas Mason", "Logan Alexander Ethan", "Bassel Ahmed El-azab" }));
+        authorName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                authorNameActionPerformed(evt);
+            }
+        });
 
         exit.setText("Exit");
         exit.addActionListener(new java.awt.event.ActionListener() {
@@ -253,8 +258,7 @@ public class AddBooks extends javax.swing.JFrame {
     }//GEN-LAST:event_costActionPerformed
 
     private void exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitActionPerformed
-        this.setVisible(false);
-        
+        this.setVisible(false); 
     }//GEN-LAST:event_exitActionPerformed
 
     private void resetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetActionPerformed
@@ -271,7 +275,7 @@ public class AddBooks extends javax.swing.JFrame {
         Connection con = ConnectDatabase.setConnect();
         Statement stmt = null;
         ResultSet rs = null;
-        Integer idCateg;
+        Integer idCateg = 0,idAuthor = 0,ISBN = 0;
         String date_Publish;
         SimpleDateFormat dcn = new SimpleDateFormat("yyyy-MM-dd");
         this.cat = new Category(category.getSelectedItem().toString());
@@ -280,10 +284,10 @@ public class AddBooks extends javax.swing.JFrame {
         try {
             String getCategId = "SELECT idCategory FROM category where Name_C ="+"'"+this.cat.getName()+"';";
             stmt = con.createStatement();
-            rs = stmt.executeQuery(getCategId);//
-            //rs = stmt.getGeneratedKeys();
-            rs.next();
+            rs = stmt.executeQuery(getCategId);
+            if(rs.next()){
             idCateg = rs.getInt(1);
+            }
             this.bk.setTitle(title.getText());
             this.bk.setCopyRightYear(Integer.parseInt(copyRightYear.getText()));
             this.bk.setPublishCountry(publishCountry.getSelectedItem().toString());
@@ -292,15 +296,39 @@ public class AddBooks extends javax.swing.JFrame {
             Date d = new Date();
             d = publishDate.getDate();
             date_Publish = dcn.format(d);
-            System.out.println(date_Publish);
-            
+            System.out.println();
+            System.out.println();
+            String authName = (String) authorName.getSelectedItem();
+            String[] getAuthorId = authName.split(" ");
+            String fNameAuthor = getAuthorId[0];
+            String mNameAuthor = getAuthorId[1];
+            String lNameAuthor = getAuthorId[2];
+            System.out.println(fNameAuthor);
+            System.out.println(mNameAuthor);
+            System.out.println(lNameAuthor);
+            String getAuthId = "SELECT idAuthors FROM Authors WHERE Fname_A ='"+fNameAuthor+"'AND Mname_A='"+mNameAuthor+"'AND Lname_A='"+lNameAuthor+"';";
+            rs = stmt.executeQuery(getAuthId);
+            if(rs.next()){
+               idAuthor = rs.getInt(1); 
+            }
             String sql = "INSERT INTO books (Title,CopyRightYear,PublishCountry,TotalCopy,Cost,PublishDate,BorrowedCopy,Categ_ID)"+"VALUES('"+bk.getTitle()+"','"+bk.getCopyRightYear()+"','"+bk.getPublishCountry()+"','"+bk.getQnty()+"','"+bk.getCost()+"','"+date_Publish+"','"+brwCopy+"','"+idCateg+"');";
+            stmt.executeUpdate(sql);
+            sql = "SELECT LAST_INSERT_ID();";
+            rs = stmt.executeQuery(sql);
+            if(rs.next()){
+                ISBN = rs.getInt(1);
+            }
+            sql = "INSERT INTO publisher(Autor_ID,ISBN_Books_Publish) VALUES('"+idAuthor+"','"+ISBN+"');";
             stmt.executeUpdate(sql);
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
         
     }//GEN-LAST:event_addActionPerformed
+
+    private void authorNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_authorNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_authorNameActionPerformed
 
     /**
      * @param args the command line arguments

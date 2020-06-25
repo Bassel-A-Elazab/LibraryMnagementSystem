@@ -168,7 +168,7 @@ public class AddAuthor extends javax.swing.JFrame {
             String sql = "INSERT INTO authors(fName_A,Mname_A,Lname_A,Email_A,Phone_A,Address_A)" + "VALUES('" + auth.getFName() + "','" + auth.getMName() + "','" + auth.getLName() + "','" + auth.getEmail() + "','" + auth.getPhone() + "','" + auth.getAddress() + "')";
             stmt.executeUpdate(sql);
             JOptionPane.showMessageDialog(null, "New Author Added Success...", "Success", JOptionPane.INFORMATION_MESSAGE);
-            new AddBooks(auth);
+            new AddBooks(this.auth);
             this.setVisible(false);
         } catch (SQLException ex) {
             ex.printStackTrace();
