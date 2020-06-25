@@ -272,8 +272,10 @@ public class AddBooks extends javax.swing.JFrame {
         Statement stmt = null;
         ResultSet rs = null;
         Integer idCateg;
-        SimpleDateFormat dcn = new SimpleDateFormat("dd-MM-yyyy");
+        String date_Publish;
+        SimpleDateFormat dcn = new SimpleDateFormat("yyyy-MM-dd");
         this.cat = new Category(category.getSelectedItem().toString());
+        this.bk = new Books();
         int brwCopy = 0;
         try {
             String getCategId = "SELECT idCategory FROM category where Name_C ="+"'"+this.cat.getName()+"';";
@@ -282,8 +284,6 @@ public class AddBooks extends javax.swing.JFrame {
             //rs = stmt.getGeneratedKeys();
             rs.next();
             idCateg = rs.getInt(1);
-         
-            /*
             this.bk.setTitle(title.getText());
             this.bk.setCopyRightYear(Integer.parseInt(copyRightYear.getText()));
             this.bk.setPublishCountry(publishCountry.getSelectedItem().toString());
@@ -291,16 +291,11 @@ public class AddBooks extends javax.swing.JFrame {
             this.bk.setCost(Integer.parseInt(cost.getText()));
             Date d = new Date();
             d = publishDate.getDate();
-            System.out.println(bk.getTitle());
-            System.out.println(bk.getCopyRightYear());
-            System.out.println(bk.getPublishCountry());
-            System.out.println(bk.getQnty());
-            System.out.println(bk.getCost());
-            System.out.println(d);
-            System.out.println(getCategId);
-            */
-            //String sql = "INSERT INTO books (Title,CopyRightYear,PublishCountry,TotalCopy,Cost,PublishDate,BorrowedCopy,Categ_ID)"+"VALUES('"+bk.getTitle()+"','"+bk.getCopyRightYear()+"','"+bk.getPublishCountry()+"','"+bk.getQnty()+"','"+bk.getCost()+"','"+d+"','"+brwCopy+"','"+Integer.parseInt(getCategId)+"');";
-            //stmt.executeUpdate(sql);
+            date_Publish = dcn.format(d);
+            System.out.println(date_Publish);
+            
+            String sql = "INSERT INTO books (Title,CopyRightYear,PublishCountry,TotalCopy,Cost,PublishDate,BorrowedCopy,Categ_ID)"+"VALUES('"+bk.getTitle()+"','"+bk.getCopyRightYear()+"','"+bk.getPublishCountry()+"','"+bk.getQnty()+"','"+bk.getCost()+"','"+date_Publish+"','"+brwCopy+"','"+idCateg+"');";
+            stmt.executeUpdate(sql);
         } catch (SQLException ex) {
             ex.printStackTrace();
         }

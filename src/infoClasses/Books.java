@@ -10,7 +10,7 @@ public class Books {
     private int qnty;
     private int cost;
     private Date publishDate;
-
+    public Books(){}
     public Books(String newTitle, int newCopyRightYear,
             String newPublishCountry, int newQnty, int newCost, Date newPublishDate) {
         this.title = newTitle;
