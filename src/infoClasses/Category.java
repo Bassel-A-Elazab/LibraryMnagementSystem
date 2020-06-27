@@ -1,6 +1,9 @@
 package infoClasses;
 public class Category {
     private String name;
+    public Category(){
+    
+    }
     public Category(String newName){
         this.name = newName;
     }

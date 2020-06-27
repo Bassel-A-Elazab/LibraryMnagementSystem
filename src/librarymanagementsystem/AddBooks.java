@@ -1,9 +1,10 @@
-
 package librarymanagementsystem;
 
 import infoClasses.Author;
 import infoClasses.Books;
 import infoClasses.Category;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,8 +16,10 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class AddBooks extends javax.swing.JFrame {
+
     Category cat;
     Books bk;
+
     /**
      * Creates new form AddBooks
      */
@@ -25,9 +28,10 @@ public class AddBooks extends javax.swing.JFrame {
     }
 
     public AddBooks(Author auth) {
-            initComponents();
-            authorName.addItem(auth.getFName()+" "+auth.getMName()+" "+auth.getLName());  
+        initComponents();
+        authorName.addItem(auth.getFName() + " " + auth.getMName() + " " + auth.getLName());
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -60,6 +64,9 @@ public class AddBooks extends javax.swing.JFrame {
         reset = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
         publishDate = new com.toedter.calendar.JDateChooser();
+        copyYearError = new javax.swing.JLabel();
+        qntError = new javax.swing.JLabel();
+        costError = new javax.swing.JLabel();
 
         jCheckBoxMenuItem1.setSelected(true);
         jCheckBoxMenuItem1.setText("jCheckBoxMenuItem1");
@@ -87,6 +94,11 @@ public class AddBooks extends javax.swing.JFrame {
                 copyRightYearActionPerformed(evt);
             }
         });
+        copyRightYear.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                copyRightYearKeyPressed(evt);
+            }
+        });
 
         title.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -103,10 +115,20 @@ public class AddBooks extends javax.swing.JFrame {
                 qntyActionPerformed(evt);
             }
         });
+        qnty.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                qntyKeyPressed(evt);
+            }
+        });
 
         cost.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 costActionPerformed(evt);
+            }
+        });
+        cost.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                costKeyPressed(evt);
             }
         });
 
@@ -149,93 +171,102 @@ public class AddBooks extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(31, 31, 31)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(27, 27, 27)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(publishCountry, 0, 254, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(title, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(copyRightYear, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(publishDate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(authorName, 0, 1, Short.MAX_VALUE))
-                .addGap(40, 40, 40)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(256, 256, 256))
-            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(370, 370, 370)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(474, 474, 474)
+                        .addGap(31, 31, 31)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(cost, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(category, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(qnty, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(37, 37, 37)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(qntError, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(authorName, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(title, javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(copyRightYear, javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(copyYearError, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(publishCountry, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(publishDate, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGap(111, 111, 111)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(costError, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                        .addComponent(cost, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
+                                                        .addComponent(category, 0, 178, Short.MAX_VALUE)
+                                                        .addComponent(qnty))))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGap(60, 60, 60)
+                                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
-                .addGap(68, 68, 68)
+                .addGap(75, 75, 75)
                 .addComponent(add, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(132, 132, 132)
+                .addGap(138, 138, 138)
                 .addComponent(reset, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 109, Short.MAX_VALUE)
                 .addComponent(exit, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(91, 91, 91))
+                .addGap(87, 87, 87))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
+                .addGap(65, 65, 65)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(title, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cost, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(title, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addComponent(cost, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(costError, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(copyRightYear, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(category, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(31, 31, 31)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(copyYearError, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(41, 41, 41)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(publishCountry, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(publishCountry, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(qnty, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(33, 33, 33)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(qntError, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(publishDate, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(37, 37, 37)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(authorName, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
+                    .addComponent(publishDate, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(74, 74, 74)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(authorName, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(18, 60, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(add, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(reset, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(exit, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(55, 55, 55))
+                .addGap(66, 66, 66))
         );
 
         pack();
@@ -258,7 +289,7 @@ public class AddBooks extends javax.swing.JFrame {
     }//GEN-LAST:event_costActionPerformed
 
     private void exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitActionPerformed
-        this.setVisible(false); 
+        this.setVisible(false);
     }//GEN-LAST:event_exitActionPerformed
 
     private void resetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetActionPerformed
@@ -273,62 +304,153 @@ public class AddBooks extends javax.swing.JFrame {
 
     private void addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addActionPerformed
         Connection con = ConnectDatabase.setConnect();
+        this.cat = new Category();
+        this.bk = new Books();
         Statement stmt = null;
         ResultSet rs = null;
-        Integer idCateg = 0,idAuthor = 0,ISBN = 0;
-        String date_Publish;
+        Integer idCateg = 0, idAuthor = 0, ISBN = 0, price, cpyRight, numberBk;
+        String date_Publish = null, authName = null;
+        String[] getAuthorId = new String[3];
+        Date d = new Date();
         SimpleDateFormat dcn = new SimpleDateFormat("yyyy-MM-dd");
-        this.cat = new Category(category.getSelectedItem().toString());
-        this.bk = new Books();
         int brwCopy = 0;
-        try {
-            String getCategId = "SELECT idCategory FROM category where Name_C ="+"'"+this.cat.getName()+"';";
-            stmt = con.createStatement();
-            rs = stmt.executeQuery(getCategId);
-            if(rs.next()){
-            idCateg = rs.getInt(1);
-            }
+        boolean chk = false;
+        //Check Title Name
+        if (title.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Title Name Is Empty", "Invalid Input Title", JOptionPane.INFORMATION_MESSAGE);
+            chk = true;
+        } else {
             this.bk.setTitle(title.getText());
-            this.bk.setCopyRightYear(Integer.parseInt(copyRightYear.getText()));
+        }
+
+        //Check Cost
+        if (cost.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Cost Field Is Empty", "Invalid Input Cost", JOptionPane.INFORMATION_MESSAGE);
+            chk = true;
+        } else {
+            try {
+                if (Integer.parseInt(cost.getText()) < 0) {
+                    JOptionPane.showMessageDialog(null, "Cost Field Is Less Than Zero", "Invalid Input Cost", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    this.bk.setCost(Integer.parseInt(cost.getText()));
+                }
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Not A Number", "Invalid Input Cost", JOptionPane.INFORMATION_MESSAGE);
+            }
+        }
+
+        //Check Total Of Copy
+        if (qnty.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Total Copy Field Is Empty", "Invalid Input Total Copy", JOptionPane.INFORMATION_MESSAGE);
+            chk = true;
+        } else {
+            try {
+                this.bk.setQnty(Integer.parseInt(qnty.getText()));
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Not A Number", "Invalid Input Total Copy", JOptionPane.INFORMATION_MESSAGE);
+            }
+        }
+
+        //Check Total Of Copy
+        if (copyRightYear.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Copy Right Year Field Is Empty", "Invalid Input Copy Right Year", JOptionPane.INFORMATION_MESSAGE);
+            chk = true;
+        } else {
+            try {
+                this.bk.setCopyRightYear(Integer.parseInt(copyRightYear.getText()));
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Not A Number", "Invalid Input Copy Right Year", JOptionPane.INFORMATION_MESSAGE);
+            }
+        }
+
+        if (publishCountry.getSelectedItem().toString().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Publish Country Isn't Selected", "Invalid Input Copy Right Year", JOptionPane.INFORMATION_MESSAGE);
+            chk = true;
+        } else {
             this.bk.setPublishCountry(publishCountry.getSelectedItem().toString());
-            this.bk.setQnty(Integer.parseInt(qnty.getText()));
-            this.bk.setCost(Integer.parseInt(cost.getText()));
-            Date d = new Date();
+        }
+
+        //Check Category
+        if (category.getSelectedItem().toString().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Category Isn't Selected", "Invalid Input Category", JOptionPane.INFORMATION_MESSAGE);
+            chk = true;
+        } else {
+            this.cat.setName(category.getSelectedItem().toString());
+        }
+
+        //Check Author Name
+        if (authorName.getSelectedItem().toString().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Author Isn't Selected", "Invalid Input Author", JOptionPane.INFORMATION_MESSAGE);
+            chk = true;
+        } else {
+            authName = (String) authorName.getSelectedItem();
+            getAuthorId = authName.split(" ");
+        }
+
+        //Check Date
+        if (publishDate.getDate() == null) {
+            JOptionPane.showMessageDialog(null, "Please Choose Correct Calender Like 01-06-2020", "Invalid Input Calender", JOptionPane.INFORMATION_MESSAGE);
+            chk = true;
+        } else {
             d = publishDate.getDate();
             date_Publish = dcn.format(d);
-            System.out.println();
-            System.out.println();
-            String authName = (String) authorName.getSelectedItem();
-            String[] getAuthorId = authName.split(" ");
-            String fNameAuthor = getAuthorId[0];
-            String mNameAuthor = getAuthorId[1];
-            String lNameAuthor = getAuthorId[2];
-            System.out.println(fNameAuthor);
-            System.out.println(mNameAuthor);
-            System.out.println(lNameAuthor);
-            String getAuthId = "SELECT idAuthors FROM Authors WHERE Fname_A ='"+fNameAuthor+"'AND Mname_A='"+mNameAuthor+"'AND Lname_A='"+lNameAuthor+"';";
-            rs = stmt.executeQuery(getAuthId);
-            if(rs.next()){
-               idAuthor = rs.getInt(1); 
-            }
-            String sql = "INSERT INTO books (Title,CopyRightYear,PublishCountry,TotalCopy,Cost,PublishDate,BorrowedCopy,Categ_ID)"+"VALUES('"+bk.getTitle()+"','"+bk.getCopyRightYear()+"','"+bk.getPublishCountry()+"','"+bk.getQnty()+"','"+bk.getCost()+"','"+date_Publish+"','"+brwCopy+"','"+idCateg+"');";
-            stmt.executeUpdate(sql);
-            sql = "SELECT LAST_INSERT_ID();";
-            rs = stmt.executeQuery(sql);
-            if(rs.next()){
-                ISBN = rs.getInt(1);
-            }
-            sql = "INSERT INTO publisher(Autor_ID,ISBN_Books_Publish) VALUES('"+idAuthor+"','"+ISBN+"');";
-            stmt.executeUpdate(sql);
-        } catch (SQLException ex) {
-            ex.printStackTrace();
         }
-        
+        if (!chk) {
+            try {
+                String getCategId = "SELECT idCategory FROM category where Name_C =" + "'" + this.cat.getName() + "';";
+                System.out.println(getCategId);
+                stmt = con.createStatement();
+                rs = stmt.executeQuery(getCategId);
+                if (rs.next()) {
+                    idCateg = rs.getInt(1);
+                }
+                String getAuthId = "SELECT idAuthors FROM Authors WHERE Fname_A ='" + getAuthorId[0] + "'AND Mname_A='" + getAuthorId[1] + "'AND Lname_A='" + getAuthorId[2] + "';";
+                rs = stmt.executeQuery(getAuthId);
+                if (rs.next()) {
+                    idAuthor = rs.getInt(1);
+                }
+                System.out.println("here 2");
+                String sql = "INSERT INTO books (Title,CopyRightYear,PublishCountry,TotalCopy,Cost,PublishDate,BorrowedCopy,Categ_ID)" + "VALUES('" + bk.getTitle() + "','" + bk.getCopyRightYear() + "','" + bk.getPublishCountry() + "','" + bk.getQnty() + "','" + bk.getCost() + "','" + date_Publish + "','" + brwCopy + "','" + idCateg + "');";
+                stmt.executeUpdate(sql);
+                sql = "SELECT LAST_INSERT_ID();";
+                rs = stmt.executeQuery(sql);
+                if (rs.next()) {
+                    ISBN = rs.getInt(1);
+                }
+                sql = "INSERT INTO publisher(Autor_ID,ISBN_Books_Publish) VALUES('" + idAuthor + "','" + ISBN + "');";
+                stmt.executeUpdate(sql);
+                JOptionPane.showMessageDialog(null, "Operation Success", "New Book Is Added", JOptionPane.INFORMATION_MESSAGE);
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+
     }//GEN-LAST:event_addActionPerformed
 
     private void authorNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_authorNameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_authorNameActionPerformed
+
+    private void costKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_costKeyPressed
+
+    }//GEN-LAST:event_costKeyPressed
+
+    private void copyRightYearKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_copyRightYearKeyPressed
+
+    }//GEN-LAST:event_copyRightYearKeyPressed
+
+    private void qntyKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_qntyKeyPressed
+        /*
+        char c = evt.getKeyChar();
+        if (!(Character.isDigit(c) || c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE)) {
+            qntError.setText("Invalid Input, Please Enter A Number...");
+            getToolkit().beep();
+            evt.consume();
+        } else {
+            qntError.setText("");
+        }
+         */
+    }//GEN-LAST:event_qntyKeyPressed
 
     /**
      * @param args the command line arguments
@@ -360,6 +482,7 @@ public class AddBooks extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+
                 new AddBooks().setVisible(true);
             }
         });
@@ -370,7 +493,9 @@ public class AddBooks extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> authorName;
     private javax.swing.JComboBox<String> category;
     private javax.swing.JTextField copyRightYear;
+    private javax.swing.JLabel copyYearError;
     private javax.swing.JTextField cost;
+    private javax.swing.JLabel costError;
     private javax.swing.JButton exit;
     private javax.swing.JButton jButton2;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
@@ -386,6 +511,7 @@ public class AddBooks extends javax.swing.JFrame {
     private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JComboBox<String> publishCountry;
     private com.toedter.calendar.JDateChooser publishDate;
+    private javax.swing.JLabel qntError;
     private javax.swing.JTextField qnty;
     private javax.swing.JButton reset;
     private javax.swing.JTextField title;
