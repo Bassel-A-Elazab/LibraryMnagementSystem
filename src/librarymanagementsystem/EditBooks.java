@@ -327,15 +327,16 @@ public class EditBooks extends javax.swing.JFrame {
         Statement stmt_book = null,stmt_other = null;
         ResultSet rs_book = null,rs_other = null;
         String categ = null;
-        String[] author = new String[3];
         this.bk = new Books();
         this.auth = new Author();
         this.categClass = new Category();
         int ISBN = 0;
+        
         if (bookID.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Book ID Is Empty...", "Invalid Input Of Book ID", JOptionPane.INFORMATION_MESSAGE);
         } else {
             try {
+                //Get/Search  Book From DataBase With ISBN
                 ISBN = Integer.parseInt(bookID.getText());
                 String sql = "SELECT * FROM books WHERE ISBN = " + ISBN + ";";
                 stmt_book = con_book.createStatement();
@@ -349,24 +350,24 @@ public class EditBooks extends javax.swing.JFrame {
                     sql = "SELECT * FROM authors WHERE idAuthors in ( SELECT Autor_ID FROM publisher WHERE ISBN_Books_Publish = "+ISBN+");";
                     rs_other = stmt_other.executeQuery(sql);
                     rs_other.next();
-                    author[0] = rs_other.getString(2);
-                    author[1] = rs_other.getString(3);
-                    author[2] = rs_other.getString(4);
+                    
+                    this.auth.setFName(rs_other.getString(2));
+                    this.auth.setMName(rs_other.getString(3));
+                    this.auth.setLName(rs_other.getString(4));
+                    
                     //Initialize Classes Of Books , AUthors ,Category
                     this.bk = new Books(rs_book.getString(2),rs_book.getInt(3),rs_book.getString(4),rs_book.getInt(5),rs_book.getInt(6),rs_book.getDate(7));
-                    this.auth.setFName(author[0]);
-                    this.auth.setMName(author[1]);
-                    this.auth.setLName(author[2]);
                     this.categClass = new Category(categ);
                     
-                    title.setText(rs_book.getString(2));
-                    copyRightYear.setText(String.valueOf(rs_book.getInt(3)));
-                    cost.setText(String.valueOf(rs_book.getInt(6)));
-                    category.setSelectedItem(categ);
-                    qnty.setText(String.valueOf(rs_book.getInt(5)));
-                    publishDate.setDate(rs_book.getDate(7));
-                    publishCountry.setSelectedItem(rs_book.getString(4));
-                    authorName.setSelectedItem(author[0]+" "+author[1]+" "+author[2]);
+                    //Set Info. Of Book Edit
+                    title.setText(this.bk.getTitle());
+                    copyRightYear.setText(String.valueOf(this.bk.getCopyRightYear()));
+                    cost.setText(String.valueOf(this.bk.getCost()));
+                    category.setSelectedItem(this.categClass.getName());
+                    qnty.setText(String.valueOf(this.bk.getQnty()));
+                    publishDate.setDate(this.bk.getDate());
+                    publishCountry.setSelectedItem(this.bk.getPublishCountry());
+                    authorName.setSelectedItem(this.auth.getFName()+" "+this.auth.getMName()+" "+this.auth.getLName());
                 } else {
                     JOptionPane.showMessageDialog(null, "Sorry, This book Is Not Found", "Books List", JOptionPane.INFORMATION_MESSAGE);
                     title.setText("");
