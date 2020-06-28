@@ -26,7 +26,7 @@
           <Group type="102" attributes="0">
               <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
-                  <Component id="jButton1" min="-2" pref="91" max="-2" attributes="0"/>
+                  <Component id="editBook" min="-2" pref="91" max="-2" attributes="0"/>
                   <Group type="102" attributes="0">
                       <Component id="jLabel3" min="-2" pref="151" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
@@ -93,7 +93,7 @@
                   <Component id="bookID" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="jButton1" min="-2" pref="49" max="-2" attributes="0"/>
+              <Component id="editBook" min="-2" pref="49" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
                   <Group type="102" attributes="0">
@@ -160,10 +160,13 @@
     </Component>
     <Component class="javax.swing.JTextField" name="bookID">
     </Component>
-    <Component class="javax.swing.JButton" name="jButton1">
+    <Component class="javax.swing.JButton" name="editBook">
       <Properties>
         <Property name="text" type="java.lang.String" value="Edit"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="editBookActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JSeparator" name="jSeparator1">
     </Component>
@@ -310,6 +313,7 @@
             <StringItem index="57" value="Duchy of Parma"/>
           </StringArray>
         </Property>
+        <Property name="selectedIndex" type="int" value="-1"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="publishCountryActionPerformed"/>

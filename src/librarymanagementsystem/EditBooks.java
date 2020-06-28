@@ -5,11 +5,20 @@
  */
 package librarymanagementsystem;
 
+import infoClasses.Books;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Basola
  */
 public class EditBooks extends javax.swing.JFrame {
+
+    Books bk;
 
     /**
      * Creates new form EditBooks
@@ -30,7 +39,7 @@ public class EditBooks extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         bookID = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        editBook = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -57,7 +66,12 @@ public class EditBooks extends javax.swing.JFrame {
 
         jLabel3.setText("Book ID : ");
 
-        jButton1.setText("Edit");
+        editBook.setText("Edit");
+        editBook.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editBookActionPerformed(evt);
+            }
+        });
 
         jLabel4.setText("Title : ");
 
@@ -107,6 +121,7 @@ public class EditBooks extends javax.swing.JFrame {
         category.setSelectedIndex(-1);
 
         publishCountry.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda", "Argentina", "Armenia", "Australia", "Austria", "Austrian Empire", "Azerbaijan", "Baden", "ahamas", "Bahrain", "Bangladesh", "Barbados", "Bavaria", "Belarus", "Belgium", "Belize", "Benin (Dahomey)", "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei", "Brunswick and Lüneburg", "Bulgaria", "Burkina Faso (Upper Volta)", "Burma", "Burundi", "Cabo Verde", "Cambodia", "Cameroon", "Canada", "Cayman Islands", "The Central African Republic", "Central American Federation", "Chad", "Chile", "Chinam", "Colombia", "Comoros", "Congo Free State", "The Costa Rica", "Cote d’Ivoire (Ivory Coast)", "Croatia", "Cuba", "Cyprus", "Czechia", "Czechoslovakia", "Democratic Republic of the Congo", "Denmark", "Djibouti", "Dominic", "Dominican Republic", "Duchy of Parma" }));
+        publishCountry.setSelectedIndex(-1);
         publishCountry.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 publishCountryActionPerformed(evt);
@@ -145,7 +160,7 @@ public class EditBooks extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(40, 40, 40)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(editBook, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -197,7 +212,7 @@ public class EditBooks extends javax.swing.JFrame {
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(bookID, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(editBook, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
@@ -277,7 +292,7 @@ public class EditBooks extends javax.swing.JFrame {
         } else {
             qntError.setText("");
         }
-        */
+         */
     }//GEN-LAST:event_qntyKeyPressed
 
     private void publishCountryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_publishCountryActionPerformed
@@ -287,6 +302,55 @@ public class EditBooks extends javax.swing.JFrame {
     private void authorNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_authorNameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_authorNameActionPerformed
+
+    private void editBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBookActionPerformed
+        Connection con_book = ConnectDatabase.setConnect();
+        Connection con_other = ConnectDatabase.setConnect();
+        Statement stmt_book = null,stmt_other = null;
+        ResultSet rs_book = null,rs_other = null;
+        String categ = null;
+        String[] author = new String[3];
+        this.bk = new Books();
+        int ISBN = 0;
+        if (bookID.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Book ID Is Empty...", "Invalid Input Of Book ID", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            try {
+                ISBN = Integer.parseInt(bookID.getText());
+                String sql = "SELECT * FROM books WHERE ISBN = " + ISBN + ";";
+                stmt_book = con_book.createStatement();
+                rs_book = stmt_book.executeQuery(sql);
+                if (rs_book.next()) {
+                    stmt_other = con_other.createStatement();
+                    sql = "SELECT Name_C FROM category WHERE idCategory = "+rs_book.getInt(9)+";";
+                    rs_other = stmt_other.executeQuery(sql);
+                    rs_other.next();
+                    categ = rs_other.getString(1);
+                    sql = "SELECT * FROM authors WHERE idAuthors in ( SELECT Autor_ID FROM publisher WHERE ISBN_Books_Publish = "+ISBN+");";
+                    rs_other = stmt_other.executeQuery(sql);
+                    rs_other.next();
+                    author[0] = rs_other.getString(2);
+                    author[1] = rs_other.getString(3);
+                    author[2] = rs_other.getString(4);
+                    title.setText(rs_other.getString(2));
+                    copyRightYear.setText(String.valueOf(rs_book.getInt(3)));
+                    cost.setText(String.valueOf(rs_book.getInt(6)));
+                    category.setSelectedItem(categ);
+                    qnty.setText(String.valueOf(rs_book.getInt(5)));
+                    publishDate.setDate(rs_book.getDate(7));
+                    publishCountry.setSelectedItem(rs_book.getString(4));
+                    authorName.setSelectedItem(author[0]+" "+author[1]+" "+author[2]);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Sorry, This book Is Not Found", "Books List", JOptionPane.INFORMATION_MESSAGE);
+                    
+                }
+            } catch (NumberFormatException el) {
+                JOptionPane.showMessageDialog(null, "Book ID Should Be A Number...", "Invalid Input Of Book ID", JOptionPane.INFORMATION_MESSAGE);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_editBookActionPerformed
 
     /**
      * @param args the command line arguments
@@ -329,7 +393,7 @@ public class EditBooks extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> category;
     private javax.swing.JTextField copyRightYear;
     private javax.swing.JTextField cost;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton editBook;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
