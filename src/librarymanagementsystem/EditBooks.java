@@ -58,7 +58,7 @@ public class EditBooks extends javax.swing.JFrame {
         publishDate = new com.toedter.calendar.JDateChooser();
         authorName = new javax.swing.JComboBox<>();
         jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        exit = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -151,7 +151,12 @@ public class EditBooks extends javax.swing.JFrame {
 
         jButton2.setText("Update Information Of Book");
 
-        jButton3.setText("Exit");
+        exit.setText("Exit");
+        exit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -168,7 +173,7 @@ public class EditBooks extends javax.swing.JFrame {
                 .addGap(383, 479, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(exit, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
@@ -251,7 +256,7 @@ public class EditBooks extends javax.swing.JFrame {
                 .addGap(40, 40, 40)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
+                .addComponent(exit, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -342,7 +347,14 @@ public class EditBooks extends javax.swing.JFrame {
                     authorName.setSelectedItem(author[0]+" "+author[1]+" "+author[2]);
                 } else {
                     JOptionPane.showMessageDialog(null, "Sorry, This book Is Not Found", "Books List", JOptionPane.INFORMATION_MESSAGE);
-                    
+                    title.setText("");
+                    copyRightYear.setText("");
+                    cost.setText("");
+                    category.setSelectedIndex(-1);
+                    qnty.setText("");
+                    publishDate.setDate(null);
+                    publishCountry.setSelectedIndex(-1);
+                    authorName.setSelectedIndex(-1);
                 }
             } catch (NumberFormatException el) {
                 JOptionPane.showMessageDialog(null, "Book ID Should Be A Number...", "Invalid Input Of Book ID", JOptionPane.INFORMATION_MESSAGE);
@@ -351,6 +363,10 @@ public class EditBooks extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_editBookActionPerformed
+
+    private void exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_exitActionPerformed
 
     /**
      * @param args the command line arguments
@@ -394,8 +410,8 @@ public class EditBooks extends javax.swing.JFrame {
     private javax.swing.JTextField copyRightYear;
     private javax.swing.JTextField cost;
     private javax.swing.JButton editBook;
+    private javax.swing.JButton exit;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
