@@ -407,7 +407,8 @@ public class EditBooks extends javax.swing.JFrame {
         SimpleDateFormat dcn = new SimpleDateFormat("yyyy-MM-dd");
         String authName = (String) authorName.getSelectedItem();
         String[] getAuthorName = authName.split(" ");
-
+        
+        //Edit Of Check If There Is No Change In Book Data
         if (title.getText().equals(this.bk.getTitle()) && Integer.parseInt(cost.getText()) == this.bk.getCost()
                 && Integer.parseInt(qnty.getText()) == this.bk.getQnty() && Integer.parseInt(copyRightYear.getText()) == this.bk.getCopyRightYear()
                 && publishCountry.getSelectedItem().toString().equals(this.bk.getPublishCountry())
@@ -475,7 +476,7 @@ public class EditBooks extends javax.swing.JFrame {
         if (category.getSelectedItem().toString().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Category Isn't Selected", "Invalid Input Category", JOptionPane.INFORMATION_MESSAGE);
             chkOther = true;
-        } else if (category.getSelectedItem().toString().equals(this.categClass.getName())) {
+        } else if ((category.getSelectedItem().toString().equals(this.categClass.getName()))) {
             chkCategory = true;
         } else {
             this.categClass.setName(category.getSelectedItem().toString());
@@ -485,7 +486,7 @@ public class EditBooks extends javax.swing.JFrame {
         if (authorName.getSelectedItem().toString().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Author Isn't Selected", "Invalid Input Author", JOptionPane.INFORMATION_MESSAGE);
             chkOther = true;
-        } else if (getAuthorName[0].equals(this.auth.getFName()) && getAuthorName[1].equals(this.auth.getFName()) && getAuthorName[2].equals(this.auth.getFName())) {
+        } else if ((getAuthorName[0].equals(this.auth.getFName()) && getAuthorName[1].equals(this.auth.getMName()) && getAuthorName[2].equals(this.auth.getLName()))) {
             chkAuthor = true;
         } else {
             authName = (String) authorName.getSelectedItem();
@@ -502,41 +503,47 @@ public class EditBooks extends javax.swing.JFrame {
         }
         if (!chkOther) {
             System.out.println("Here");
+            System.out.println(chkAuthor);
+            System.out.println(chkCategory);
             try {
                 stmt = con.createStatement();
-                if (chkAuthor && chkCategory) {
+                if (!chkAuthor && !chkCategory) {
 
-                    sql = "UPDATE books SET Title = '" + this.bk.getTitle() + "',SET CopyRightYear = " + this.bk.getCopyRightYear()
-                            + ",SET PublishCountry = '" + this.bk.getPublishCountry() + "',SET TotalCopy = " + this.bk.getQnty()
-                            + ",SET Cost = " + this.bk.getCost() + ",SET PublishDate = " + this.bk.getDate()
-                            + ",SET Categ_ID = (SELECT idCategory FROM category WHERE Name_C = '" + this.categClass.getName() + "')WHERE ISBN = " + ISBN + ";";
+                    sql = "UPDATE books SET Title = '" + this.bk.getTitle() + "',CopyRightYear = " + this.bk.getCopyRightYear()
+                            + ",PublishCountry = '" + this.bk.getPublishCountry() + "', TotalCopy = " + this.bk.getQnty()
+                            + ",Cost = " + this.bk.getCost() + ",PublishDate = '" + this.bk.getDate()
+                            + "',Categ_ID = (SELECT idCategory FROM category WHERE Name_C = '" + this.categClass.getName() + "')WHERE ISBN = " + ISBN + ";";
+                    System.out.println("Here 1 : "+sql);
                     stmt.executeUpdate(sql);
                     sql = "UPDATE publisher SET Autor_ID = (SELECT idAuthors FROM authors WHERE Fname_A = '"+this.auth.getFName()+"' and Mname_A = '"+this.auth.getMName()+"' and Lname_A = '"+this.auth.getLName()+"') WHERE ISBN_Books_Publish = "+ISBN+";";
                     stmt.executeUpdate(sql);
-                    JOptionPane.showMessageDialog(null, "Book Edited Success...", "Update Information Message", ISBN);
-                
-                } else if (chkAuthor && !chkCategory) {
-                    sql = "UPDATE books SET Title = '" + this.bk.getTitle() + "',SET CopyRightYear = " + this.bk.getCopyRightYear()
-                            + ",SET PublishCountry = '" + this.bk.getPublishCountry() + "',SET TotalCopy = " + this.bk.getQnty()
-                            + ",SET Cost = " + this.bk.getCost() + ",SET PublishDate = " + this.bk.getDate() + "'WHERE ISBN = " + ISBN + ";";
-                    stmt.executeUpdate(sql);
-                    sql = "UPDATE publisher SET Autor_ID = (SELECT idAuthors FROM authors WHERE Fname_A = '"+this.auth.getFName()+"' and Mname_A = '"+this.auth.getMName()+"' and Lname_A = '"+this.auth.getLName()+"') WHERE ISBN_Books_Publish = "+ISBN+";";
-                    stmt.executeUpdate(sql);
-                    JOptionPane.showMessageDialog(null, "Book Edited Success...", "Update Information Message", ISBN);
+                    JOptionPane.showMessageDialog(null, "Book Edited Success...", "Update Information Message", JOptionPane.INFORMATION_MESSAGE);
                 
                 } else if (!chkAuthor && chkCategory) {
-                    sql = "UPDATE books SET Title = '" + this.bk.getTitle() + "',SET CopyRightYear = " + this.bk.getCopyRightYear()
-                            + ",SET PublishCountry = '" + this.bk.getPublishCountry() + "',SET TotalCopy = " + this.bk.getQnty()
-                            + ",SET Cost = " + this.bk.getCost() + ",SET PublishDate = " + this.bk.getDate()
-                            + ",SET Categ_ID = (SELECT idCategory FROM category WHERE Name_C = '" + this.categClass.getName() + "')WHERE ISBN = " + ISBN + ";";
+                    sql = "UPDATE books SET Title = '" + this.bk.getTitle() + "',CopyRightYear = " + this.bk.getCopyRightYear()
+                            + ",PublishCountry = '" + this.bk.getPublishCountry() + "',TotalCopy = " + this.bk.getQnty()
+                            + ",Cost = " + this.bk.getCost() + ",PublishDate = '" + this.bk.getDate() + "' WHERE ISBN = " + ISBN + ";";
+                    System.out.println("Here 2 : "+sql);
                     stmt.executeUpdate(sql);
-                    JOptionPane.showMessageDialog(null, "Book Edited Success...", "Update Information Message", ISBN);
+                    sql = "UPDATE publisher SET Autor_ID = (SELECT idAuthors FROM authors WHERE Fname_A = '"+this.auth.getFName()+"' and Mname_A = '"+this.auth.getMName()+"' and Lname_A = '"+this.auth.getLName()+"') WHERE ISBN_Books_Publish = "+ISBN+";";
+                    stmt.executeUpdate(sql);
+                    JOptionPane.showMessageDialog(null, "Book Edited Success...", "Update Information Message", JOptionPane.INFORMATION_MESSAGE);
+                
+                } else if (chkAuthor && !chkCategory) {
+                    sql = "UPDATE books SET Title = '" + this.bk.getTitle() + "',CopyRightYear = " + this.bk.getCopyRightYear()
+                            + ",PublishCountry = '" + this.bk.getPublishCountry() + "',TotalCopy = " + this.bk.getQnty()
+                            + ",Cost = " + this.bk.getCost() + ",PublishDate = '" + this.bk.getDate()
+                            + "',SET Categ_ID = (SELECT idCategory FROM category WHERE Name_C = '" + this.categClass.getName() + "')WHERE ISBN = " + ISBN + ";";
+                    System.out.println("Here 3 : "+sql);
+                    stmt.executeUpdate(sql);
+                    JOptionPane.showMessageDialog(null, "Book Edited Success...", "Update Information Message", JOptionPane.INFORMATION_MESSAGE);
                 } else {
-                    sql = "UPDATE books SET Title = '" + this.bk.getTitle() + "',SET CopyRightYear = " + this.bk.getCopyRightYear()
-                            + ",SET PublishCountry = '" + this.bk.getPublishCountry() + "',SET TotalCopy = " + this.bk.getQnty()
-                            + ",SET Cost = " + this.bk.getCost() + ",SET PublishDate = " + this.bk.getDate() + "'WHERE ISBN = " + ISBN + ";";
+                    sql = "UPDATE books SET Title = '" + this.bk.getTitle() + "',CopyRightYear = " + this.bk.getCopyRightYear()
+                            + ",PublishCountry = '" + this.bk.getPublishCountry() + "',TotalCopy = " + this.bk.getQnty()
+                            + ",Cost = " + this.bk.getCost() + ",PublishDate = '" + this.bk.getDate() + "' WHERE ISBN = " + ISBN + ";";
+                    System.out.println("Here 4 : "+sql);
                     stmt.executeUpdate(sql);
-                    JOptionPane.showMessageDialog(null, "Book Edited Success...", "Update Information Message", ISBN);
+                    JOptionPane.showMessageDialog(null, "Book Edited Success...", "Update Information Message", JOptionPane.INFORMATION_MESSAGE);
                 }
             } catch (SQLException ex) {
                 ex.printStackTrace();
