@@ -407,10 +407,13 @@ public class EditBooks extends javax.swing.JFrame {
         SimpleDateFormat dcn = new SimpleDateFormat("yyyy-MM-dd");
         String authName = (String) authorName.getSelectedItem();
         String[] getAuthorName = authName.split(" ");
-        if (title.getText().equals(this.bk.getTitle()) && cost.getText().equals(this.bk.getCost()) && qnty.getText().equals(this.bk.getQnty())
-                && copyRightYear.getText().equals(this.bk.getCopyRightYear()) && publishCountry.getSelectedItem().toString().equals(this.bk.getPublishCountry())
+
+        if (title.getText().equals(this.bk.getTitle()) && Integer.parseInt(cost.getText()) == this.bk.getCost()
+                && Integer.parseInt(qnty.getText()) == this.bk.getQnty() && Integer.parseInt(copyRightYear.getText()) == this.bk.getCopyRightYear()
+                && publishCountry.getSelectedItem().toString().equals(this.bk.getPublishCountry())
                 && category.getSelectedItem().toString().equals(this.categClass.getName())
-                && getAuthorName[0].equals(this.auth.getFName()) && getAuthorName[1].equals(this.auth.getFName()) && getAuthorName[2].equals(this.auth.getFName())) {
+                &&((dcn.format(publishDate.getDate()).compareTo(dcn.format(this.bk.getDate()))) == 0)
+                && (getAuthorName[0].equals(this.auth.getFName()) && getAuthorName[1].equals(this.auth.getMName()) && getAuthorName[2].equals(this.auth.getLName()) )){
             JOptionPane.showMessageDialog(null, "There Isn't Change In Book Info...", "Update Information Message", JOptionPane.INFORMATION_MESSAGE);
             chkOther = true;
         }
@@ -497,9 +500,8 @@ public class EditBooks extends javax.swing.JFrame {
             d = publishDate.getDate();
             date_Publish = dcn.format(d);
         }
-        //System.out.println(chkOther);
         if (!chkOther) {
-            //System.out.println("Here");
+            System.out.println("Here");
             try {
                 stmt = con.createStatement();
                 if (chkAuthor && chkCategory) {
