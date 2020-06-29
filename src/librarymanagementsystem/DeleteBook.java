@@ -5,6 +5,14 @@
  */
 package librarymanagementsystem;
 
+import infoClasses.Books;
+import infoClasses.Category;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Basola
@@ -27,21 +35,109 @@ public class DeleteBook extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        bookID = new javax.swing.JTextField();
+        deleteBook = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jLabel1.setText("Book Information");
+
+        jLabel3.setText("Book ID : ");
+
+        deleteBook.setText("Delete");
+        deleteBook.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteBookActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 713, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(39, 39, 39)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(bookID, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(deleteBook, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(74, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 640, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(41, 41, 41)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(bookID, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(41, 41, 41)
+                .addComponent(deleteBook, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(99, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void deleteBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBookActionPerformed
+        Connection con_book = ConnectDatabase.setConnect();
+        Connection con_other = ConnectDatabase.setConnect();
+        Statement stmt_book = null, stmt_other = null;
+        ResultSet rs_book = null, rs_other = null;
+        String categ = null;
+        int ISBN;
+        if (bookID.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Book ID Is Empty...", "Invalid Input Of Book ID", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            try {
+                //Get/Search  Book From DataBase With ISBN
+                ISBN = Integer.parseInt(bookID.getText());
+                String sql = "SELECT * FROM books WHERE ISBN = " + ISBN + ";";
+                stmt_book = con_book.createStatement();
+                rs_book = stmt_book.executeQuery(sql);
+                if (rs_book.next()) {
+                    System.out.println("here");
+                    stmt_other = con_other.createStatement();
+                    sql = "SELECT Name_C FROM category WHERE idCategory = " + rs_book.getInt(9) + ";";
+                    rs_other = stmt_other.executeQuery(sql);
+                    rs_other.next();
+                    categ = rs_other.getString(1);
+                    sql = "SELECT * FROM authors WHERE idAuthors in ( SELECT Autor_ID FROM publisher WHERE ISBN_Books_Publish = " + ISBN + ");";
+                    rs_other = stmt_other.executeQuery(sql);
+                    rs_other.next();
+
+                    String paneOutput = "Title : "+rs_book.getString(2)+"\n"+
+                                        "Copy Right Year : "+rs_book.getInt(3)+"\n"+
+                                        "Cost : "+rs_book.getInt(6)+"\n"+
+                                        "Category : "+categ+"\n"+
+                                        "Total Copy : "+rs_book.getInt(5)+"\n"+
+                                        "Publish Date : "+rs_book.getDate(7)+"\n"+
+                                        "Publish Country : "+rs_book.getString(4)+"\n"+
+                                        "Author Name : "+rs_other.getString(2)+" "+rs_other.getString(3)+" "+rs_other.getString(4);
+                    int result = JOptionPane.showConfirmDialog(this,"Are You Want To Delete This book?\nYour Book Info: \n"+paneOutput,"Delete Message",JOptionPane.YES_NO_CANCEL_OPTION);
+                    if(result == JOptionPane.YES_OPTION){
+                        sql = "delete from publisher where ISBN_Books_Publish ="+ISBN+";";
+                        stmt_book.execute(sql);
+                        sql = "delete from books where ISBN ="+ISBN+";";
+                        stmt_book.execute(sql);
+                        JOptionPane.showMessageDialog(null, "Book Is Deleted...", "Delete Message", JOptionPane.INFORMATION_MESSAGE);
+                        bookID.setText("");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Sorry, This book Is Not Found", "Books List", JOptionPane.INFORMATION_MESSAGE);
+                }
+            } catch (NumberFormatException el) {
+                JOptionPane.showMessageDialog(null, "Book ID Should Be A Number...", "Invalid Input Of Book ID", JOptionPane.INFORMATION_MESSAGE);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_deleteBookActionPerformed
 
     /**
      * @param args the command line arguments
@@ -79,5 +175,9 @@ public class DeleteBook extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField bookID;
+    private javax.swing.JButton deleteBook;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel3;
     // End of variables declaration//GEN-END:variables
 }

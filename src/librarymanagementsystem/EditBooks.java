@@ -28,7 +28,7 @@ public class EditBooks extends javax.swing.JFrame {
     Books bk;
     Author auth;
     Category categClass;
-    int ISBN = 0;
+    int ISBN;
 
     /**
      * Creates new form EditBooks
@@ -336,7 +336,7 @@ public class EditBooks extends javax.swing.JFrame {
         this.bk = new Books();
         this.auth = new Author();
         this.categClass = new Category();
-
+        
         if (bookID.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Book ID Is Empty...", "Invalid Input Of Book ID", JOptionPane.INFORMATION_MESSAGE);
         } else {
