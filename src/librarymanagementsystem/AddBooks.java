@@ -301,13 +301,7 @@ public class AddBooks extends javax.swing.JFrame {
     }//GEN-LAST:event_exitActionPerformed
 
     private void resetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetActionPerformed
-        title.setText(null);
-        copyRightYear.setText(null);
-        publishCountry.setSelectedIndex(0);
-        authorName.setSelectedIndex(0);
-        cost.setText(null);
-        category.setSelectedIndex(0);
-        qnty.setText(null);
+        clearInfo();
     }//GEN-LAST:event_resetActionPerformed
 
     private void addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addActionPerformed
@@ -417,7 +411,6 @@ public class AddBooks extends javax.swing.JFrame {
                 if (rs.next()) {
                     idAuthor = rs.getInt(1);
                 }
-                System.out.println("here 2");
                 String sql = "INSERT INTO books (Title,CopyRightYear,PublishCountry,TotalCopy,Cost,PublishDate,BorrowedCopy,Categ_ID)" + "VALUES('" + bk.getTitle() + "','" + bk.getCopyRightYear() + "','" + bk.getPublishCountry() + "','" + bk.getQnty() + "','" + bk.getCost() + "','" + date_Publish + "','" + brwCopy + "','" + idCateg + "');";
                 stmt.executeUpdate(sql);
                 sql = "SELECT LAST_INSERT_ID();";
@@ -428,6 +421,7 @@ public class AddBooks extends javax.swing.JFrame {
                 sql = "INSERT INTO publisher(Autor_ID,ISBN_Books_Publish) VALUES('" + idAuthor + "','" + ISBN + "');";
                 stmt.executeUpdate(sql);
                 JOptionPane.showMessageDialog(null, "Operation Success", "New Book Is Added", JOptionPane.INFORMATION_MESSAGE);
+                clearInfo();
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
@@ -524,4 +518,14 @@ public class AddBooks extends javax.swing.JFrame {
     private javax.swing.JButton reset;
     private javax.swing.JTextField title;
     // End of variables declaration//GEN-END:variables
+public void clearInfo() {
+        title.setText(null);
+        copyRightYear.setText(null);
+        publishCountry.setSelectedIndex(-1);
+        authorName.setSelectedIndex(-1);
+        cost.setText(null);
+        category.setSelectedIndex(-1);
+        qnty.setText(null);
+        publishDate.setDate(null);
+    }
 }
