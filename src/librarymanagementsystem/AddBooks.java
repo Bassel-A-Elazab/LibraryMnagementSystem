@@ -107,8 +107,15 @@ public class AddBooks extends javax.swing.JFrame {
         });
 
         category.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Computer Graphics", "Programming Languages", "Database System", "Artificial Intelligence", "Compilers", "Computer Vision", "Machine Learning", "Encryption", "Software Testing", "Computer Networking" }));
+        category.setSelectedIndex(-1);
 
         publishCountry.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda", "Argentina", "Armenia", "Australia", "Austria", "Austrian Empire", "Azerbaijan", "Baden", "ahamas", "Bahrain", "Bangladesh", "Barbados", "Bavaria", "Belarus", "Belgium", "Belize", "Benin (Dahomey)", "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei", "Brunswick and Lüneburg", "Bulgaria", "Burkina Faso (Upper Volta)", "Burma", "Burundi", "Cabo Verde", "Cambodia", "Cameroon", "Canada", "Cayman Islands", "The Central African Republic", "Central American Federation", "Chad", "Chile", "Chinam", "Colombia", "Comoros", "Congo Free State", "The Costa Rica", "Cote d’Ivoire (Ivory Coast)", "Croatia", "Cuba", "Cyprus", "Czechia", "Czechoslovakia", "Democratic Republic of the Congo", "Denmark", "Djibouti", "Dominic", "Dominican Republic", "Duchy of Parma" }));
+        publishCountry.setSelectedIndex(-1);
+        publishCountry.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                publishCountryActionPerformed(evt);
+            }
+        });
 
         qnty.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -133,6 +140,7 @@ public class AddBooks extends javax.swing.JFrame {
         });
 
         authorName.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Liam Noah William", "Jacob Michael Daniel", "James Oliver Benjamin", "Elijah Lucas Mason", "Logan Alexander Ethan", "Bassel Ahmed El-azab" }));
+        authorName.setSelectedIndex(-1);
         authorName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 authorNameActionPerformed(evt);
@@ -365,7 +373,7 @@ public class AddBooks extends javax.swing.JFrame {
             }
         }
 
-        if (publishCountry.getSelectedItem().toString().isEmpty()) {
+        if (publishCountry.getSelectedIndex() == -1) {
             JOptionPane.showMessageDialog(null, "Publish Country Isn't Selected", "Invalid Input Copy Right Year", JOptionPane.INFORMATION_MESSAGE);
             chk = true;
         } else {
@@ -373,7 +381,7 @@ public class AddBooks extends javax.swing.JFrame {
         }
 
         //Check Category
-        if (category.getSelectedItem().toString().isEmpty()) {
+        if (category.getSelectedIndex() == -1) {
             JOptionPane.showMessageDialog(null, "Category Isn't Selected", "Invalid Input Category", JOptionPane.INFORMATION_MESSAGE);
             chk = true;
         } else {
@@ -381,7 +389,7 @@ public class AddBooks extends javax.swing.JFrame {
         }
 
         //Check Author Name
-        if (authorName.getSelectedItem().toString().isEmpty()) {
+        if (authorName.getSelectedIndex() == -1) {
             JOptionPane.showMessageDialog(null, "Author Isn't Selected", "Invalid Input Author", JOptionPane.INFORMATION_MESSAGE);
             chk = true;
         } else {
@@ -453,6 +461,10 @@ public class AddBooks extends javax.swing.JFrame {
         }
          */
     }//GEN-LAST:event_qntyKeyPressed
+
+    private void publishCountryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_publishCountryActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_publishCountryActionPerformed
 
     /**
      * @param args the command line arguments

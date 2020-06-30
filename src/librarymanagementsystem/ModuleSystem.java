@@ -85,7 +85,7 @@ public class ModuleSystem extends javax.swing.JFrame {
     }//GEN-LAST:event_membersManageActionPerformed
 
     private void booksManageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_booksManageActionPerformed
-        this.setVisible(false);
+
         BooksManage bookManage = new BooksManage();
         bookManage.setVisible(true);
     }//GEN-LAST:event_booksManageActionPerformed
