@@ -5,6 +5,15 @@
  */
 package librarymanagementsystem;
 
+import infoClasses.Author;
+import infoClasses.Books;
+import infoClasses.Category;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+
 /**
  *
  * @author Basola
@@ -14,10 +23,39 @@ public class DisplayBooks extends javax.swing.JFrame {
     /**
      * Creates new form DisplayBooks
      */
+    Books bk = new Books();
+    Author auth = new Author();
+    Category cat = new Category();
+    Connection con = ConnectDatabase.setConnect();
+    Statement stmt = null;
+    ResultSet rs = null , rs_other = null;
     public DisplayBooks() {
         initComponents();
     }
-
+    public ArrayList<Object> bkList(){
+        ArrayList<Object> bkList = new ArrayList<>();
+        String sql;
+        try{
+            sql = "SELECT * FROM books";
+            stmt = con.createStatement();
+            rs = stmt.executeQuery(sql);
+            while(rs.next()){
+                sql = "select Name_C from category where idCategory = "+rs.getInt("Categ_ID")+";";
+                rs_other = stmt.executeQuery(sql);
+                rs_other.next();
+                this.cat = new Category(rs_other.getString("Name_C"));
+                sql = "select Fname_A,Mname_A,Lname_A from authors where idAuthors in (select Autor_ID from publisher where ISBN_Books_Publish = "+rs.getInt("Categ_ID")+");";
+                rs_other = stmt.executeQuery(sql);
+                rs_other.next();
+                this.auth = new Author(rs_other.getString("Fname_A"),rs_other.getString("Fname_A"),rs_other.getString("Fname_A"));
+                this.bk = new Books(rs.getString("Ttiel"),rs.getInt("CopyRightYear"),rs.getString("PublishCountry"),rs.getInt("TotalCopy"),rs.getInt("Cost"),rs.getDate("PublishDate"));
+                
+            }
+        }catch(SQLException ex){
+            ex.printStackTrace();
+        }
+        return bkList;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -27,17 +65,45 @@ public class DisplayBooks extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tableBooks = new javax.swing.JTable();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jLabel1.setText("Display All Books");
+
+        tableBooks.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ISBN", "Title", "Author Name", "CopyRightYear", "PublishCountry", "TotalCopy", "Cost", "PublishDate", "BorrowedCopy", "Category"
+            }
+        ));
+        jScrollPane1.setViewportView(tableBooks);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 948, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(384, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 392, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(172, 172, 172))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 530, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(86, Short.MAX_VALUE))
         );
 
         pack();
@@ -79,5 +145,8 @@ public class DisplayBooks extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tableBooks;
     // End of variables declaration//GEN-END:variables
 }

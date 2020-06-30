@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package librarymanagementsystem;
-
 /**
  *
  * @author Basola
@@ -17,7 +16,7 @@ public class BooksManage extends javax.swing.JFrame {
     public BooksManage() {
         initComponents();
     }
-
+   
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -30,7 +29,7 @@ public class BooksManage extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         deleteBook = new javax.swing.JButton();
         addBook = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        displayBook = new javax.swing.JButton();
         editBook = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -41,7 +40,12 @@ public class BooksManage extends javax.swing.JFrame {
 
         addBook.setText("Add New Book");
 
-        jButton3.setText("Display All Books");
+        displayBook.setText("Display All Books");
+        displayBook.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                displayBookActionPerformed(evt);
+            }
+        });
 
         editBook.setText("Edit Book");
 
@@ -60,7 +64,7 @@ public class BooksManage extends javax.swing.JFrame {
                         .addGap(95, 95, 95)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(editBook, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(displayBook, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(319, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
@@ -81,7 +85,7 @@ public class BooksManage extends javax.swing.JFrame {
                         .addGap(157, 157, 157)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(deleteBook, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(displayBook, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(250, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
@@ -92,6 +96,10 @@ public class BooksManage extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void displayBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_displayBookActionPerformed
+        
+    }//GEN-LAST:event_displayBookActionPerformed
 
     /**
      * @param args the command line arguments
@@ -131,8 +139,8 @@ public class BooksManage extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addBook;
     private javax.swing.JButton deleteBook;
+    private javax.swing.JButton displayBook;
     private javax.swing.JButton editBook;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }

@@ -10,6 +10,11 @@ public class MainPersonInfo {
     public MainPersonInfo(){
     
     }
+    public MainPersonInfo(String newFName, String newMName, String newLName){
+        this.fName = newFName;
+        this.mName = newMName;
+        this.lName = newLName;
+    }
     public MainPersonInfo(String newFName, String newMName, String newLName, String newEmail,
                    String newPhone, String newAddress){
         this.fName = newFName;

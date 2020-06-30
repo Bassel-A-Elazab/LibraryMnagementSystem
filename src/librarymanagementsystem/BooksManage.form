@@ -35,7 +35,7 @@
                       <EmptySpace min="-2" pref="95" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="editBook" min="-2" pref="142" max="-2" attributes="0"/>
-                          <Component id="jButton3" min="-2" pref="142" max="-2" attributes="0"/>
+                          <Component id="displayBook" min="-2" pref="142" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -64,7 +64,7 @@
                       <EmptySpace min="-2" pref="157" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="deleteBook" alignment="3" min="-2" pref="58" max="-2" attributes="0"/>
-                          <Component id="jButton3" alignment="3" min="-2" pref="58" max="-2" attributes="0"/>
+                          <Component id="displayBook" alignment="3" min="-2" pref="58" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -96,10 +96,13 @@
         <Property name="text" type="java.lang.String" value="Add New Book"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton3">
+    <Component class="javax.swing.JButton" name="displayBook">
       <Properties>
         <Property name="text" type="java.lang.String" value="Display All Books"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="displayBookActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="editBook">
       <Properties>
