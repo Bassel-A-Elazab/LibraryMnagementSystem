@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package librarymanagementsystem;
+
 /**
  *
  * @author Basola
@@ -16,7 +17,7 @@ public class BooksManage extends javax.swing.JFrame {
     public BooksManage() {
         initComponents();
     }
-   
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -37,6 +38,11 @@ public class BooksManage extends javax.swing.JFrame {
         jLabel1.setText("Books Management");
 
         deleteBook.setText("Delete Book");
+        deleteBook.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteBookActionPerformed(evt);
+            }
+        });
 
         addBook.setText("Add New Book");
         addBook.addActionListener(new java.awt.event.ActionListener() {
@@ -53,6 +59,11 @@ public class BooksManage extends javax.swing.JFrame {
         });
 
         editBook.setText("Edit Book");
+        editBook.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editBookActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -103,14 +114,24 @@ public class BooksManage extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void displayBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_displayBookActionPerformed
-            DisplayBooks show = new DisplayBooks();
-            System.out.println("Display");
-            show.setVisible(true);
+        DisplayBooks show = new DisplayBooks();
+        show.setVisible(true);
     }//GEN-LAST:event_displayBookActionPerformed
 
     private void addBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBookActionPerformed
-       
+        AddBooks add = new AddBooks();
+        add.setVisible(true);
     }//GEN-LAST:event_addBookActionPerformed
+
+    private void editBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBookActionPerformed
+        EditBooks edit = new EditBooks();
+        edit.setVisible(true);
+    }//GEN-LAST:event_editBookActionPerformed
+
+    private void deleteBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBookActionPerformed
+        DeleteBook delete = new DeleteBook();
+        delete.setVisible(true);
+    }//GEN-LAST:event_deleteBookActionPerformed
 
     /**
      * @param args the command line arguments

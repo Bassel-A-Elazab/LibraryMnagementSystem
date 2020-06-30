@@ -58,7 +58,7 @@ public class DisplayBooks extends javax.swing.JFrame {
                 bk = new Books(rs.getString("Title"), rs.getInt("CopyRightYear"), rs.getString("PublishCountry"), rs.getInt("TotalCopy"), rs.getInt("Cost"), rs.getDate("PublishDate"), rs.getInt("BorrowedCopy"));
                 row[0] = rs.getString("ISBN");
                 row[1] = bk.getTitle();
-                row[2] = auth.getFName()+" "+auth.getMName()+" "+auth.getLName();
+                row[2] = auth.getFName() + " " + auth.getMName() + " " + auth.getLName();
                 row[3] = bk.getCopyRightYear();
                 row[4] = bk.getPublishCountry();
                 row[5] = bk.getQnty();
