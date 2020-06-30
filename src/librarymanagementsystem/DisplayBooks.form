@@ -72,8 +72,8 @@
                 <Column editable="true" title="TotalCopy" type="java.lang.Object"/>
                 <Column editable="true" title="Cost" type="java.lang.Object"/>
                 <Column editable="true" title="PublishDate" type="java.lang.Object"/>
-                <Column editable="true" title="BorrowedCopy" type="java.lang.Object"/>
                 <Column editable="true" title="Category" type="java.lang.Object"/>
+                <Column editable="true" title="BorrowedCopy" type="java.lang.Object"/>
               </Table>
             </Property>
           </Properties>

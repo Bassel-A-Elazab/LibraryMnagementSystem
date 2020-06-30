@@ -359,7 +359,7 @@ public class EditBooks extends javax.swing.JFrame {
                     this.auth.setFName(rs_other.getString(2));
                     this.auth.setMName(rs_other.getString(3));
                     this.auth.setLName(rs_other.getString(4));
-
+                    
                     //Initialize Classes Of Books , AUthors ,Category
                     this.bk = new Books(rs_book.getString(2), rs_book.getInt(3), rs_book.getString(4), rs_book.getInt(5), rs_book.getInt(6), rs_book.getDate(7),rs_book.getInt(8));
                     this.categClass = new Category(categ);

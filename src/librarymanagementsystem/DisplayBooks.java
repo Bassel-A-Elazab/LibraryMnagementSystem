@@ -13,6 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -27,35 +28,51 @@ public class DisplayBooks extends javax.swing.JFrame {
     Author auth = new Author();
     Category cat = new Category();
     Connection con = ConnectDatabase.setConnect();
-    Statement stmt = null;
-    ResultSet rs = null , rs_other = null;
+    Connection con_other = ConnectDatabase.setConnect();
+    Statement stmt = null, stmt_other = null;
+    ResultSet rs = null, rs_other = null;
+
     public DisplayBooks() {
         initComponents();
+        showBooks();
     }
-    public ArrayList<Object> bkList(){
-        ArrayList<Object> bkList = new ArrayList<>();
-        String sql;
-        try{
-            sql = "SELECT * FROM books";
+
+    public void showBooks() {
+        String sql1, sql2;
+        Object[] row = new Object[10];
+        DefaultTableModel model = (DefaultTableModel) tableBooks.getModel();
+        try {
+            sql1 = "SELECT * FROM books";
             stmt = con.createStatement();
-            rs = stmt.executeQuery(sql);
-            while(rs.next()){
-                sql = "select Name_C from category where idCategory = "+rs.getInt("Categ_ID")+";";
-                rs_other = stmt.executeQuery(sql);
+            stmt_other = con_other.createStatement();
+            rs = stmt.executeQuery(sql1);
+            while (rs.next()) {
+                sql2 = "select Name_C from category where idCategory = " + rs.getInt("Categ_ID") + ";";
+                rs_other = stmt_other.executeQuery(sql2);
                 rs_other.next();
-                this.cat = new Category(rs_other.getString("Name_C"));
-                sql = "select Fname_A,Mname_A,Lname_A from authors where idAuthors in (select Autor_ID from publisher where ISBN_Books_Publish = "+rs.getInt("Categ_ID")+");";
-                rs_other = stmt.executeQuery(sql);
+                cat = new Category(rs_other.getString("Name_C"));
+                sql2 = "select Fname_A,Mname_A,Lname_A from authors where idAuthors in (select Autor_ID from publisher where ISBN_Books_Publish = " + rs.getInt("ISBN") + ");";
+                rs_other = stmt_other.executeQuery(sql2);
                 rs_other.next();
-                this.auth = new Author(rs_other.getString("Fname_A"),rs_other.getString("Fname_A"),rs_other.getString("Fname_A"));
-                this.bk = new Books(rs.getString("Ttiel"),rs.getInt("CopyRightYear"),rs.getString("PublishCountry"),rs.getInt("TotalCopy"),rs.getInt("Cost"),rs.getDate("PublishDate"),rs.getInt("BorrowedCopy"));
-                
+                auth = new Author(rs_other.getString("Fname_A"), rs_other.getString("Fname_A"), rs_other.getString("Fname_A"));
+                bk = new Books(rs.getString("Title"), rs.getInt("CopyRightYear"), rs.getString("PublishCountry"), rs.getInt("TotalCopy"), rs.getInt("Cost"), rs.getDate("PublishDate"), rs.getInt("BorrowedCopy"));
+                row[0] = rs.getString("ISBN");
+                row[1] = bk.getTitle();
+                row[2] = auth.getFName()+" "+auth.getMName()+" "+auth.getLName();
+                row[3] = bk.getCopyRightYear();
+                row[4] = bk.getPublishCountry();
+                row[5] = bk.getQnty();
+                row[6] = bk.getCost();
+                row[7] = bk.getDate();
+                row[8] = cat.getName();
+                row[9] = bk.getBorrowedCopy();
+                model.addRow(row);
             }
-        }catch(SQLException ex){
+        } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        return bkList;
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -78,7 +95,7 @@ public class DisplayBooks extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ISBN", "Title", "Author Name", "CopyRightYear", "PublishCountry", "TotalCopy", "Cost", "PublishDate", "BorrowedCopy", "Category"
+                "ISBN", "Title", "Author Name", "CopyRightYear", "PublishCountry", "TotalCopy", "Cost", "PublishDate", "Category", "BorrowedCopy"
             }
         ));
         jScrollPane1.setViewportView(tableBooks);

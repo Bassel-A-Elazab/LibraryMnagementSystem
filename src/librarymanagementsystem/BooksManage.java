@@ -39,6 +39,11 @@ public class BooksManage extends javax.swing.JFrame {
         deleteBook.setText("Delete Book");
 
         addBook.setText("Add New Book");
+        addBook.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addBookActionPerformed(evt);
+            }
+        });
 
         displayBook.setText("Display All Books");
         displayBook.addActionListener(new java.awt.event.ActionListener() {
@@ -98,8 +103,14 @@ public class BooksManage extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void displayBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_displayBookActionPerformed
-        
+            DisplayBooks show = new DisplayBooks();
+            System.out.println("Display");
+            show.setVisible(true);
     }//GEN-LAST:event_displayBookActionPerformed
+
+    private void addBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBookActionPerformed
+       
+    }//GEN-LAST:event_addBookActionPerformed
 
     /**
      * @param args the command line arguments
