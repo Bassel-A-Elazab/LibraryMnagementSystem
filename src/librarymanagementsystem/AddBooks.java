@@ -25,11 +25,16 @@ public class AddBooks extends javax.swing.JFrame {
      */
     public AddBooks() {
         initComponents();
+        System.out.println("One");
+        
+         authorName.addItem("Usama Serag");
     }
 
     public AddBooks(Author auth) {
         initComponents();
-        authorName.addItem(auth.getFName() + " " + auth.getMName() + " " + auth.getLName());
+        System.out.println("Two");
+        authorName.addItem(auth.getFName() + " " + auth.getMName() + " " + auth.getLName()); 
+        authorName.addItem("Bassel");
     }
 
     /**
@@ -59,7 +64,7 @@ public class AddBooks extends javax.swing.JFrame {
         cost = new javax.swing.JTextField();
         authorName = new javax.swing.JComboBox<>();
         exit = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        addAuthor = new javax.swing.JButton();
         add = new javax.swing.JButton();
         reset = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
@@ -154,7 +159,12 @@ public class AddBooks extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("Add New Author");
+        addAuthor.setText("Add New Author");
+        addAuthor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addAuthorActionPerformed(evt);
+            }
+        });
 
         add.setText("Add");
         add.addActionListener(new java.awt.event.ActionListener() {
@@ -224,7 +234,7 @@ public class AddBooks extends javax.swing.JFrame {
                                                         .addComponent(cost, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))))
                                             .addGroup(layout.createSequentialGroup()
                                                 .addGap(60, 60, 60)
-                                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                                .addComponent(addAuthor, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))))
                                     .addComponent(title, javax.swing.GroupLayout.Alignment.LEADING)))
                             .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -276,7 +286,7 @@ public class AddBooks extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(authorName, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(addAuthor, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(18, 63, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(add, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -466,6 +476,11 @@ public class AddBooks extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_publishCountryActionPerformed
 
+    private void addAuthorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addAuthorActionPerformed
+        AddAuthor addName = new AddAuthor();
+        addName.setVisible(true);
+    }//GEN-LAST:event_addAuthorActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -504,6 +519,7 @@ public class AddBooks extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton add;
+    private javax.swing.JButton addAuthor;
     private javax.swing.JComboBox<String> authorName;
     private javax.swing.JComboBox<String> category;
     private javax.swing.JTextField copyRightYear;
@@ -511,7 +527,6 @@ public class AddBooks extends javax.swing.JFrame {
     private javax.swing.JTextField cost;
     private javax.swing.JLabel costError;
     private javax.swing.JButton exit;
-    private javax.swing.JButton jButton2;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

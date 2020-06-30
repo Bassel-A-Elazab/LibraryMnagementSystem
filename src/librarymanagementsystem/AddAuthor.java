@@ -19,6 +19,7 @@ public class AddAuthor extends javax.swing.JFrame {
     public AddAuthor() {
         initComponents();
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -162,17 +163,50 @@ public class AddAuthor extends javax.swing.JFrame {
 
     private void addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addActionPerformed
         Connection con = ConnectDatabase.setConnect();
-        this.auth = new Author(fName.getText(), mName.getText(), lName.getText(), email.getText(), phone.getText(), address.getText());
-        try {
-            Statement stmt = con.createStatement();
-            String sql = "INSERT INTO authors(fName_A,Mname_A,Lname_A,Email_A,Phone_A,Address_A)" + "VALUES('" + auth.getFName() + "','" + auth.getMName() + "','" + auth.getLName() + "','" + auth.getEmail() + "','" + auth.getPhone() + "','" + auth.getAddress() + "')";
-            stmt.executeUpdate(sql);
-            JOptionPane.showMessageDialog(null, "New Author Added Success...", "Success", JOptionPane.INFORMATION_MESSAGE);
-            new AddBooks(this.auth);
-            this.setVisible(false);
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }  
+        boolean chk = false;
+        if (fName.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "First Name Is Empty", "Invalid Input", JOptionPane.INFORMATION_MESSAGE);
+            chk = true;
+        }
+
+        if (mName.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Middle Name Is Empty", "Invalid Input", JOptionPane.INFORMATION_MESSAGE);
+            chk = true;
+        }
+
+        if (lName.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Last Name Is Empty", "Invalid Input", JOptionPane.INFORMATION_MESSAGE);
+            chk = true;
+        }
+
+        if (email.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Email Is Empty", "Invalid Input", JOptionPane.INFORMATION_MESSAGE);
+            chk = true;
+        }
+
+        if (phone.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Phone Is Empty", "Invalid Input", JOptionPane.INFORMATION_MESSAGE);
+            chk = true;
+        }
+
+        if (address.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Address Is Empty", "Invalid Input", JOptionPane.INFORMATION_MESSAGE);
+            chk = true;
+        }
+        if (!chk) {
+            this.auth = new Author(fName.getText(), mName.getText(), lName.getText(), email.getText(), phone.getText(), address.getText());
+            try {
+                Statement stmt = con.createStatement();
+                String sql = "INSERT INTO authors(fName_A,Mname_A,Lname_A,Email_A,Phone_A,Address_A)" + "VALUES('" + auth.getFName() + "','" + auth.getMName() + "','" + auth.getLName() + "','" + auth.getEmail() + "','" + auth.getPhone() + "','" + auth.getAddress() + "')";
+                stmt.executeUpdate(sql);
+                JOptionPane.showMessageDialog(null, "New Author Added Success...", "Success", JOptionPane.INFORMATION_MESSAGE);
+                new AddBooks(this.auth);
+                this.setVisible(false);
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+
     }//GEN-LAST:event_addActionPerformed
 
     private void exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitActionPerformed
