@@ -10,15 +10,17 @@ public class Books {
     private int qnty;
     private int cost;
     private Date publishDate;
+    private int BorrwCopy;
     public Books(){}
     public Books(String newTitle, int newCopyRightYear,
-            String newPublishCountry, int newQnty, int newCost, Date newPublishDate) {
+            String newPublishCountry, int newQnty, int newCost, Date newPublishDate,int newBorrwCopy) {
         this.title = newTitle;
         this.copyRightYear = newCopyRightYear;
         this.publishCountry = newPublishCountry;
         this.qnty = newQnty;
         this.cost = newCost;
         this.publishDate = newPublishDate;
+        this.BorrwCopy = newBorrwCopy;
     }
     public void setTitle(String newTitle) {
         this.title = newTitle;
@@ -66,5 +68,12 @@ public class Books {
 
     public Date getDate() {
         return publishDate;
+    }
+    public void setBorrowedCopy(int newBorrwCopy) {
+        this.BorrwCopy = newBorrwCopy;
+    }
+
+    public int getBorrowedCopy() {
+        return BorrwCopy;
     }
 }

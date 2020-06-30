@@ -48,7 +48,7 @@ public class DisplayBooks extends javax.swing.JFrame {
                 rs_other = stmt.executeQuery(sql);
                 rs_other.next();
                 this.auth = new Author(rs_other.getString("Fname_A"),rs_other.getString("Fname_A"),rs_other.getString("Fname_A"));
-                this.bk = new Books(rs.getString("Ttiel"),rs.getInt("CopyRightYear"),rs.getString("PublishCountry"),rs.getInt("TotalCopy"),rs.getInt("Cost"),rs.getDate("PublishDate"));
+                this.bk = new Books(rs.getString("Ttiel"),rs.getInt("CopyRightYear"),rs.getString("PublishCountry"),rs.getInt("TotalCopy"),rs.getInt("Cost"),rs.getDate("PublishDate"),rs.getInt("BorrowedCopy"));
                 
             }
         }catch(SQLException ex){
