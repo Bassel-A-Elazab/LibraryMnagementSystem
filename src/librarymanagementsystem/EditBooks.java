@@ -336,7 +336,7 @@ public class EditBooks extends javax.swing.JFrame {
         this.bk = new Books();
         this.auth = new Author();
         this.categClass = new Category();
-        
+
         if (bookID.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Book ID Is Empty...", "Invalid Input Of Book ID", JOptionPane.INFORMATION_MESSAGE);
         } else {
@@ -359,9 +359,9 @@ public class EditBooks extends javax.swing.JFrame {
                     this.auth.setFName(rs_other.getString(2));
                     this.auth.setMName(rs_other.getString(3));
                     this.auth.setLName(rs_other.getString(4));
-                    
+
                     //Initialize Classes Of Books , AUthors ,Category
-                    this.bk = new Books(rs_book.getString(2), rs_book.getInt(3), rs_book.getString(4), rs_book.getInt(5), rs_book.getInt(6), rs_book.getDate(7),rs_book.getInt(8));
+                    this.bk = new Books(rs_book.getString(2), rs_book.getInt(3), rs_book.getString(4), rs_book.getInt(5), rs_book.getInt(6), rs_book.getDate(7), rs_book.getInt(8));
                     this.categClass = new Category(categ);
 
                     //Set Info. Of Book Edit
@@ -405,11 +405,16 @@ public class EditBooks extends javax.swing.JFrame {
         String sql = null;
         Date d = new Date();
         SimpleDateFormat dcn = new SimpleDateFormat("yyyy-MM-dd");
-        String authName = (String) authorName.getSelectedItem();
-        String[] getAuthorName = authName.split(" ");
-
+        String authName;
+        String[] getAuthorName = new String[3];
         //Edit Of Check If There Is No Change In Book Data
         try {
+            authName = (String) authorName.getSelectedItem();
+            getAuthorName = authName.split(" ");
+            if (bookID.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Book ID Is Empty...", "Invalid Input Of Book ID", JOptionPane.INFORMATION_MESSAGE);
+                chkOther = true;
+            }
             if (title.getText().equals(this.bk.getTitle()) && Integer.parseInt(cost.getText()) == this.bk.getCost()
                     && Integer.parseInt(qnty.getText()) == this.bk.getQnty() && Integer.parseInt(copyRightYear.getText()) == this.bk.getCopyRightYear()
                     && publishCountry.getSelectedItem().toString().equals(this.bk.getPublishCountry())
@@ -420,9 +425,9 @@ public class EditBooks extends javax.swing.JFrame {
                 chkOther = true;
             }
         } catch (NumberFormatException ex) {
-
-        }catch(NullPointerException ex){
-        
+               chkOther = true;
+        } catch (NullPointerException el) {
+            chkOther = true;
         }
 
         if (title.getText().isEmpty()) {
@@ -475,16 +480,15 @@ public class EditBooks extends javax.swing.JFrame {
                 chkOther = true;
             }
         }
-
-        if (publishCountry.getSelectedItem().toString().isEmpty()) {
+        
+        if (publishCountry.getSelectedIndex() == -1){
             JOptionPane.showMessageDialog(null, "Publish Country Isn't Selected", "Invalid Input Copy Right Year", JOptionPane.INFORMATION_MESSAGE);
             chkOther = true;
         } else {
             this.bk.setPublishCountry(publishCountry.getSelectedItem().toString());
         }
-
         //Check Category
-        if (category.getSelectedItem().toString().isEmpty()) {
+        if (category.getSelectedIndex() == -1) {
             JOptionPane.showMessageDialog(null, "Category Isn't Selected", "Invalid Input Category", JOptionPane.INFORMATION_MESSAGE);
             chkOther = true;
         } else if ((category.getSelectedItem().toString().equals(this.categClass.getName()))) {
@@ -494,7 +498,7 @@ public class EditBooks extends javax.swing.JFrame {
         }
 
         //Check Author Name
-        if (authorName.getSelectedItem().toString().isEmpty()) {
+        if (authorName.getSelectedIndex() == -1) {
             JOptionPane.showMessageDialog(null, "Author Isn't Selected", "Invalid Input Author", JOptionPane.INFORMATION_MESSAGE);
             chkOther = true;
         } else if ((getAuthorName[0].equals(this.auth.getFName()) && getAuthorName[1].equals(this.auth.getMName()) && getAuthorName[2].equals(this.auth.getLName()))) {
@@ -512,7 +516,7 @@ public class EditBooks extends javax.swing.JFrame {
             d = publishDate.getDate();
             date_Publish = dcn.format(d);
         }
-        System.out.println(chkOther);
+
         if (!chkOther) {
             try {
                 stmt = con.createStatement();
@@ -537,23 +541,18 @@ public class EditBooks extends javax.swing.JFrame {
                     sql = "UPDATE publisher SET Autor_ID = (SELECT idAuthors FROM authors WHERE Fname_A = '" + this.auth.getFName() + "' and Mname_A = '" + this.auth.getMName() + "' and Lname_A = '" + this.auth.getLName() + "') WHERE ISBN_Books_Publish = " + ISBN + ";";
                     stmt.executeUpdate(sql);
                     JOptionPane.showMessageDialog(null, "Book Edited Success...", "Update Information Message", JOptionPane.INFORMATION_MESSAGE);
-
                     clearData();
                 } else if (chkAuthor && !chkCategory) {
                     sql = "UPDATE books SET Title = '" + this.bk.getTitle() + "',CopyRightYear = " + this.bk.getCopyRightYear()
                             + ",PublishCountry = '" + this.bk.getPublishCountry() + "',TotalCopy = " + this.bk.getQnty()
                             + ",Cost = " + this.bk.getCost() + ",PublishDate = '" + this.bk.getDate()
                             + "',Categ_ID = (SELECT idCategory FROM category WHERE Name_C = '" + this.categClass.getName() + "')WHERE ISBN = " + ISBN + ";";
-                    System.out.println("Here 3 : " + sql);
-                    stmt.executeUpdate(sql);
                     JOptionPane.showMessageDialog(null, "Book Edited Success...", "Update Information Message", JOptionPane.INFORMATION_MESSAGE);
                     clearData();
                 } else {
                     sql = "UPDATE books SET Title = '" + this.bk.getTitle() + "',CopyRightYear = " + this.bk.getCopyRightYear()
                             + ",PublishCountry = '" + this.bk.getPublishCountry() + "',TotalCopy = " + this.bk.getQnty()
                             + ",Cost = " + this.bk.getCost() + ",PublishDate = '" + this.bk.getDate() + "' WHERE ISBN = " + ISBN + ";";
-                    System.out.println("Here 4 : " + sql);
-                    stmt.executeUpdate(sql);
                     JOptionPane.showMessageDialog(null, "Book Edited Success...", "Update Information Message", JOptionPane.INFORMATION_MESSAGE);
                     clearData();
                 }
