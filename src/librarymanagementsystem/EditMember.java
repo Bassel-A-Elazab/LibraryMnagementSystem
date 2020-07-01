@@ -84,7 +84,7 @@ public class EditMember extends javax.swing.JFrame {
 
         jLabel8.setText("Address : ");
 
-        confirmUpdate.setText("Update Information Of Book");
+        confirmUpdate.setText("Update Information Of Member");
         confirmUpdate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 confirmUpdateActionPerformed(evt);
@@ -198,11 +198,11 @@ public class EditMember extends javax.swing.JFrame {
         Connection con = ConnectDatabase.setConnect();
         Statement stmt = null;
         ResultSet rs = null;
-        if (memberID.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Member ID Is Empty...", "Invalid Input Of Member ID", JOptionPane.INFORMATION_MESSAGE);
-        } else {
-            ID = Integer.parseInt(memberID.getText());
-            try {
+        try {
+            if (memberID.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Member ID Is Empty...", "Invalid Input Of Member ID", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                ID = Integer.parseInt(memberID.getText());
                 String sql = "SELECT * FROM members WHERE idMembers = " + ID + ";";
                 stmt = con.createStatement();
                 rs = stmt.executeQuery(sql);
@@ -218,17 +218,22 @@ public class EditMember extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "Sorry, This Member Is Not Found", "Members List", JOptionPane.INFORMATION_MESSAGE);
                     clearData();
                 }
-            } catch (NumberFormatException el) {
-                JOptionPane.showMessageDialog(null, "Member ID Should Be A Number...", "Invalid Input Of Member ID", JOptionPane.INFORMATION_MESSAGE);
-            } catch (SQLException ex) {
-                ex.printStackTrace();
             }
-
+        } catch (NumberFormatException el) {
+            JOptionPane.showMessageDialog(null, "Member ID Should Be A Number...", "Invalid Input Of Member ID", JOptionPane.INFORMATION_MESSAGE);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         }
     }//GEN-LAST:event_editMemberActionPerformed
 
     private void confirmUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmUpdateActionPerformed
-
+        Connection con = ConnectDatabase.setConnect();
+        Statement stmt = null;
+        ResultSet rs = null;
+        boolean chk = false;
+        if (memberID.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Member ID Is Empty...", "Invalid Input Of Member ID", JOptionPane.INFORMATION_MESSAGE);
+        }
     }//GEN-LAST:event_confirmUpdateActionPerformed
 
     private void exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitActionPerformed
@@ -292,6 +297,7 @@ public class EditMember extends javax.swing.JFrame {
     private javax.swing.JTextField phone;
     // End of variables declaration//GEN-END:variables
 void clearData() {
+        memberID.setText("");
         fName.setText("");
         mName.setText("");
         lName.setText("");

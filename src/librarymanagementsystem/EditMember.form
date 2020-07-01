@@ -204,7 +204,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="confirmUpdate">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Update Information Of Book"/>
+        <Property name="text" type="java.lang.String" value="Update Information Of Member"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="confirmUpdateActionPerformed"/>
