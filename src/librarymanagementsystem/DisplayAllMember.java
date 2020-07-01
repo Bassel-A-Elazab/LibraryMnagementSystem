@@ -5,19 +5,52 @@
  */
 package librarymanagementsystem;
 
-/**
- *
- * @author Basola
- */
+import infoClasses.Members;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import javax.swing.table.DefaultTableModel;
+
+
+
 public class DisplayAllMember extends javax.swing.JFrame {
 
     /**
      * Creates new form DisplayAllMember
      */
+    Members memb = new Members();
     public DisplayAllMember() {
         initComponents();
+        ShowMembers();
     }
-
+    public void ShowMembers(){
+        Connection con = ConnectDatabase.setConnect();
+        Statement stmt = null;
+        ResultSet rs = null;
+        Object[] row  = new Object[7];
+        DefaultTableModel model = (DefaultTableModel) tableMembers.getModel();
+        try{
+            String sql = "SELECT * FROM members;";
+            stmt = con.createStatement();
+            rs = stmt.executeQuery(sql);
+            while(rs.next()){
+                System.out.println("Here");
+                memb = new Members(rs.getString("Fname_M"),rs.getString("Mname_M"),rs.getString("Lname_M"),rs.getString("Email_M"),rs.getString("Phone_M"),rs.getString("Address_M"),rs.getInt("NumOfBooksBorrowed"),rs.getInt("NumOfBooksBought"));
+                row[0] = rs.getInt("idMembers");
+                row[1] = memb.getFName()+" "+memb.getMName()+" "+memb.getLName();
+                row[2] = memb.getEmail();
+                row[3] = memb.getPhone();
+                row[4] = memb.getAddress();
+                row[5] = memb.getBookBorrowed();
+                row[6] = memb.getBookBought();
+                model.addRow(row);
+            }
+        }catch(SQLException ex){
+            ex.printStackTrace();
+        }
+        
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -27,17 +60,45 @@ public class DisplayAllMember extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tableMembers = new javax.swing.JTable();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jLabel1.setText("Display All  Members");
+
+        tableMembers.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "MemberID", "Name", "Email", "Phone", "Address", "Number Of Books Borrowed", "CostNumber Of Books Bought"
+            }
+        ));
+        jScrollPane1.setViewportView(tableMembers);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(486, 486, 486)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 392, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(566, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(237, Short.MAX_VALUE))
         );
 
         pack();
@@ -79,5 +140,8 @@ public class DisplayAllMember extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tableMembers;
     // End of variables declaration//GEN-END:variables
 }

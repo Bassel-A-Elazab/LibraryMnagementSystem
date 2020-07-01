@@ -40,7 +40,7 @@ public class DisplayBooks extends javax.swing.JFrame {
     public void showBooks() {
         String sql1, sql2;
         Object[] row = new Object[10];
-        DefaultTableModel model = (DefaultTableModel) tableBooks.getModel();
+        DefaultTableModel model = (DefaultTableModel) tableMembers.getModel();
         try {
             sql1 = "SELECT * FROM books";
             stmt = con.createStatement();
@@ -84,13 +84,13 @@ public class DisplayBooks extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tableBooks = new javax.swing.JTable();
+        tableMembers = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("Display All Books");
 
-        tableBooks.setModel(new javax.swing.table.DefaultTableModel(
+        tableMembers.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -98,7 +98,7 @@ public class DisplayBooks extends javax.swing.JFrame {
                 "ISBN", "Title", "Author Name", "CopyRightYear", "PublishCountry", "TotalCopy", "Cost", "PublishDate", "Category", "BorrowedCopy"
             }
         ));
-        jScrollPane1.setViewportView(tableBooks);
+        jScrollPane1.setViewportView(tableMembers);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -164,6 +164,6 @@ public class DisplayBooks extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tableBooks;
+    private javax.swing.JTable tableMembers;
     // End of variables declaration//GEN-END:variables
 }
