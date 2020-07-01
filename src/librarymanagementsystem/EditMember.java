@@ -198,10 +198,10 @@ public class EditMember extends javax.swing.JFrame {
         Connection con = ConnectDatabase.setConnect();
         Statement stmt = null;
         ResultSet rs = null;
-        try {
-            if (memberID.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Member ID Is Empty...", "Invalid Input Of Member ID", JOptionPane.INFORMATION_MESSAGE);
-            } else {
+        if (memberID.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Member ID Is Empty...", "Invalid Input Of Member ID", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            try {
                 ID = Integer.parseInt(memberID.getText());
                 String sql = "SELECT * FROM members WHERE idMembers = " + ID + ";";
                 stmt = con.createStatement();
@@ -218,22 +218,23 @@ public class EditMember extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "Sorry, This Member Is Not Found", "Members List", JOptionPane.INFORMATION_MESSAGE);
                     clearData();
                 }
+            } catch (NumberFormatException el) {
+                JOptionPane.showMessageDialog(null, "Member ID Should Be A Number...", "Invalid Input Of Member ID", JOptionPane.INFORMATION_MESSAGE);
+            } catch (SQLException ex) {
+                ex.printStackTrace();
             }
-        } catch (NumberFormatException el) {
-            JOptionPane.showMessageDialog(null, "Member ID Should Be A Number...", "Invalid Input Of Member ID", JOptionPane.INFORMATION_MESSAGE);
-        } catch (SQLException ex) {
-            ex.printStackTrace();
+
         }
     }//GEN-LAST:event_editMemberActionPerformed
 
     private void confirmUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmUpdateActionPerformed
-        Connection con = ConnectDatabase.setConnect();
-        Statement stmt = null;
-        ResultSet rs = null;
-        boolean chk = false;
-        if (memberID.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Member ID Is Empty...", "Invalid Input Of Member ID", JOptionPane.INFORMATION_MESSAGE);
-        }
+            Connection con = ConnectDatabase.setConnect();
+            Statement stmt = null;
+            ResultSet rs = null;
+            boolean chk = false;
+            if(memberID.getText().isEmpty()){
+              JOptionPane.showMessageDialog(null, "Member ID Is Empty...", "Invalid Input Of Member ID", JOptionPane.INFORMATION_MESSAGE);        
+            }
     }//GEN-LAST:event_confirmUpdateActionPerformed
 
     private void exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitActionPerformed
