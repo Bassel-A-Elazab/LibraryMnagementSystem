@@ -101,7 +101,6 @@ public class DeleteBook extends javax.swing.JFrame {
                 stmt_book = con_book.createStatement();
                 rs_book = stmt_book.executeQuery(sql);
                 if (rs_book.next()) {
-                    System.out.println("here");
                     stmt_other = con_other.createStatement();
                     sql = "SELECT Name_C FROM category WHERE idCategory = " + rs_book.getInt(9) + ";";
                     rs_other = stmt_other.executeQuery(sql);
