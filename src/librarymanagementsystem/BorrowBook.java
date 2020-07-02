@@ -5,6 +5,14 @@
  */
 package librarymanagementsystem;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Basola
@@ -14,8 +22,14 @@ public class BorrowBook extends javax.swing.JFrame {
     /**
      * Creates new form BorrowBook
      */
+    Date dateToday = new Date();
+    SimpleDateFormat dcn = new SimpleDateFormat("yyyy-MM-dd");
+    String fromDate = dcn.format(dateToday);
+
     public BorrowBook() {
         initComponents();
+        stDate.setText(fromDate);
+        stDate.setEditable(false);
     }
 
     /**
@@ -27,21 +41,169 @@ public class BorrowBook extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        membID = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        stDate = new javax.swing.JTextField();
+        ISBN = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        borrow = new javax.swing.JButton();
+        Exit = new javax.swing.JButton();
+        endDate = new com.toedter.calendar.JDateChooser();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jLabel1.setText("Borrow A Book");
+
+        jLabel2.setText("Member ID : ");
+
+        membID.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                membIDActionPerformed(evt);
+            }
+        });
+
+        jLabel5.setText("Start Date : ");
+
+        jLabel6.setText("Book ID : ");
+
+        jLabel7.setText("End Date : ");
+
+        borrow.setText("Borrow");
+        borrow.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                borrowActionPerformed(evt);
+            }
+        });
+
+        Exit.setText("Exit");
+        Exit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ExitActionPerformed(evt);
+            }
+        });
+
+        endDate.setDateFormatString("dd-MM-yyyy");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(296, 296, 296)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(106, 106, 106)
+                        .addComponent(borrow, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(89, 89, 89)
+                        .addComponent(Exit, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(54, 54, 54)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(membID, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE)
+                            .addComponent(stDate, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE)
+                            .addComponent(ISBN, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE)
+                            .addComponent(endDate, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap(255, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(membID, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(34, 34, 34)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(ISBN, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(45, 45, 45)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(stDate, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(40, 40, 40)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(endDate, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(47, 47, 47)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(borrow, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Exit, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(109, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void membIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_membIDActionPerformed
+
+    }//GEN-LAST:event_membIDActionPerformed
+
+    private void ExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_ExitActionPerformed
+
+    private void borrowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_borrowActionPerformed
+        Connection con = ConnectDatabase.setConnect(), con_book = ConnectDatabase.setConnect(), con_member = ConnectDatabase.setConnect();
+        Statement stmt = null, stmt_book, stmt_member = null;
+        ResultSet rs = null, rs_book, rs_member = null;
+        int IDMemb = 0, IDBook = 0;
+        boolean chk = false;
+        Date date = new Date();
+        String toDate;
+        if (membID.getText().isEmpty() && ISBN.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Sorry , Enter The Requird Inforamtion !!!", "Invalid Input", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            try {
+
+                if (membID.getText().isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Sorry , Member ID Is Empty !!!", "Invalid Input", JOptionPane.INFORMATION_MESSAGE);
+                    chk = true;
+                } else if (Integer.parseInt(membID.getText()) < 0) {
+                    JOptionPane.showMessageDialog(null, "Sorry , Member ID Is Less Than 0 !!!", "Invalid Input", JOptionPane.INFORMATION_MESSAGE);
+                    chk = true;
+                } else {
+                    IDMemb = Integer.parseInt(membID.getText());
+                }
+
+                if (ISBN.getText().isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Sorry , Book ID Is Empty !!!", "Invalid Input", JOptionPane.INFORMATION_MESSAGE);
+                    chk = true;
+                } else if (Integer.parseInt(ISBN.getText()) < 0) {
+                    JOptionPane.showMessageDialog(null, "Sorry , Book ID Is Less Than 0 !!!", "Invalid Input", JOptionPane.INFORMATION_MESSAGE);
+                    chk = true;
+                } else {
+                    IDBook = Integer.parseInt(ISBN.getText());
+                }
+                if (endDate.getDate() == null) {
+                    JOptionPane.showMessageDialog(null, "Please Choose Correct Calender Like 01-06-2020", "Invalid Input Calender", JOptionPane.INFORMATION_MESSAGE);
+                    chk = true;
+                } else if ((dcn.format(endDate.getDate()).compareTo(fromDate) < 0)) {
+                    JOptionPane.showMessageDialog(null, "Please, Choose Date After Today Day", "Invalid Input", JOptionPane.INFORMATION_MESSAGE);
+                    chk = true;
+                    endDate.setDate(null);
+                } else {
+                    date = endDate.getDate();
+                    toDate = dcn.format(date);
+                }
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(null, "Should Be A Number !!!", "Invalid Input", JOptionPane.INFORMATION_MESSAGE);
+            }
+        }
+
+    }//GEN-LAST:event_borrowActionPerformed
 
     /**
      * @param args the command line arguments
@@ -79,5 +241,16 @@ public class BorrowBook extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Exit;
+    private javax.swing.JTextField ISBN;
+    private javax.swing.JButton borrow;
+    private com.toedter.calendar.JDateChooser endDate;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JTextField membID;
+    private javax.swing.JTextField stDate;
     // End of variables declaration//GEN-END:variables
 }
