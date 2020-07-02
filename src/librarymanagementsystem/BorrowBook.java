@@ -5,6 +5,8 @@
  */
 package librarymanagementsystem;
 
+import infoClasses.Books;
+import infoClasses.Members;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -22,6 +24,8 @@ public class BorrowBook extends javax.swing.JFrame {
     /**
      * Creates new form BorrowBook
      */
+    Books bk = new Books();
+    Members memb = new Members();
     Date dateToday = new Date();
     SimpleDateFormat dcn = new SimpleDateFormat("yyyy-MM-dd");
     String fromDate = dcn.format(dateToday);
@@ -158,13 +162,14 @@ public class BorrowBook extends javax.swing.JFrame {
     private void borrowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_borrowActionPerformed
         Connection con = ConnectDatabase.setConnect(), con_book = ConnectDatabase.setConnect(), con_member = ConnectDatabase.setConnect();
         Statement stmt = null, stmt_book, stmt_member = null;
-        ResultSet rs = null, rs_book, rs_member = null;
-        int IDMemb = 0, IDBook = 0;
+        ResultSet rs = null, rs_book = null, rs_member = null;
+        int IDMemb = 0, IDBook = 0, qntyAfter = -1;
         boolean chk = false;
         Date date = new Date();
-        String toDate;
+        String toDate = null;
         if (membID.getText().isEmpty() && ISBN.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Sorry , Enter The Requird Inforamtion !!!", "Invalid Input", JOptionPane.INFORMATION_MESSAGE);
+            chk = true;
         } else {
             try {
 
@@ -202,7 +207,60 @@ public class BorrowBook extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Should Be A Number !!!", "Invalid Input", JOptionPane.INFORMATION_MESSAGE);
             }
         }
+        if (!chk) {
+            try {
+                String sql_book = "SELECT * FROM books WHERE ISBN = " + IDBook + ";";
+                String sql_member = "SELECT * FROM members WHERE idMembers = " + IDMemb + ";";
+                stmt_book = con_book.createStatement();
+                rs_book = stmt_book.executeQuery(sql_book);
+                stmt_member = con_member.createStatement();
+                rs_member = stmt_member.executeQuery(sql_member);
 
+                if (rs_book.next() && rs_member.next()) {
+                    bk = new Books(rs_book.getString("Title"), rs_book.getInt("CopyRightYear"), rs_book.getString("PublishCountry"), rs_book.getInt("TotalCopy"), rs_book.getInt("Cost"), rs_book.getDate("PublishDate"), rs_book.getInt("BorrowedCopy"));
+                    memb = new Members(rs_member.getString("Fname_M"), rs_member.getString("Mname_M"), rs_member.getString("Lname_M"), rs_member.getString("Email_M"), rs_member.getString("Phone_M"), rs_member.getString("Address_M"), rs_member.getInt("NumOfBooksBorrowed"), rs_member.getInt("NumOfBooksBought"));
+
+                    if (bk.getQnty() > 1) {
+                        String paneMessg = "Book Title : " + bk.getTitle() + "\n"
+                                + "Member Name : " + memb.getFName() + " " + memb.getMName() + " " + memb.getLName() + "\n";
+                        int option = JOptionPane.showConfirmDialog(this, "Are You Want To Borrow This Book Your Info?\n" + paneMessg, "Confirmation Borrow Book", JOptionPane.YES_NO_CANCEL_OPTION);
+                        switch (option) {
+                            case JOptionPane.YES_OPTION:
+
+                                qntyAfter = bk.getQnty() - 1;
+                                memb.setBookBorrowed(memb.getBookBorrowed() + 1);
+                                String sql = "INSERT INTO borrowed(ISBN_Books_Borrow,Memb_ID_Borrow,StartDate,EndDate)VALUES(" + IDBook + "," + IDMemb + ",'" + fromDate + "','" + toDate + "');";
+                                stmt = con.createStatement();
+                                stmt.execute(sql);
+
+                                sql_book = "UPDATE books SET TotalCopy = " + qntyAfter + " WHERE ISBN = " + IDBook + ";";
+                                stmt_book.executeUpdate(sql_book);
+
+                                sql_member = "UPDATE members SET NumOfBooksBorrowed = " + memb.getBookBorrowed() + " WHERE idMembers = " + IDMemb + ";";
+                                stmt_member.executeUpdate(sql_member);
+
+                                JOptionPane.showMessageDialog(null, "Book Borrow Successfully...", "Borrow Operation", JOptionPane.INFORMATION_MESSAGE);
+                                clearData();
+                                break;
+                            case JOptionPane.NO_OPTION:
+                                clearData();
+                                break;
+                            case JOptionPane.CANCEL_OPTION:
+                                clearData();
+                                break;
+                            default:
+                                break;
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Sorry , There Isn't Avaliable Number\nWe Have" + bk.getQnty() + "Total Copy of This Book", "Warning Message", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Please, Be Sure From Member ID OR Book ID !!!", "Warning Message", JOptionPane.INFORMATION_MESSAGE);
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
     }//GEN-LAST:event_borrowActionPerformed
 
     /**
@@ -253,4 +311,9 @@ public class BorrowBook extends javax.swing.JFrame {
     private javax.swing.JTextField membID;
     private javax.swing.JTextField stDate;
     // End of variables declaration//GEN-END:variables
+void clearData() {
+        membID.setText("");
+        ISBN.setText("");
+        endDate.setDate(null);
+    }
 }
