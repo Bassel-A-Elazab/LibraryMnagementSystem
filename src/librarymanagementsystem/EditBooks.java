@@ -29,6 +29,7 @@ public class EditBooks extends javax.swing.JFrame {
     Author auth;
     Category categClass;
     int ISBN;
+    boolean chkEdit = false;
 
     /**
      * Creates new form EditBooks
@@ -373,6 +374,7 @@ public class EditBooks extends javax.swing.JFrame {
                     publishDate.setDate(this.bk.getDate());
                     publishCountry.setSelectedItem(this.bk.getPublishCountry());
                     authorName.setSelectedItem(this.auth.getFName() + " " + this.auth.getMName() + " " + this.auth.getLName());
+                    chkEdit = true;
                 } else {
                     JOptionPane.showMessageDialog(null, "Sorry, This book Is Not Found", "Books List", JOptionPane.INFORMATION_MESSAGE);
                     title.setText("");
@@ -408,113 +410,118 @@ public class EditBooks extends javax.swing.JFrame {
         String authName;
         String[] getAuthorName = new String[3];
         //Edit Of Check If There Is No Change In Book Data
-        try {
-            authName = (String) authorName.getSelectedItem();
-            getAuthorName = authName.split(" ");
-            if (bookID.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Book ID Is Empty...", "Invalid Input Of Book ID", JOptionPane.INFORMATION_MESSAGE);
-                chkOther = true;
-            }
-            if (title.getText().equals(this.bk.getTitle()) && Integer.parseInt(cost.getText()) == this.bk.getCost()
-                    && Integer.parseInt(qnty.getText()) == this.bk.getQnty() && Integer.parseInt(copyRightYear.getText()) == this.bk.getCopyRightYear()
-                    && publishCountry.getSelectedItem().toString().equals(this.bk.getPublishCountry())
-                    && category.getSelectedItem().toString().equals(this.categClass.getName())
-                    && ((dcn.format(publishDate.getDate()).compareTo(dcn.format(this.bk.getDate()))) == 0)
-                    && (getAuthorName[0].equals(this.auth.getFName()) && getAuthorName[1].equals(this.auth.getMName()) && getAuthorName[2].equals(this.auth.getLName()))) {
-                JOptionPane.showMessageDialog(null, "There Isn't Change In Book Info...", "Update Information Message", JOptionPane.INFORMATION_MESSAGE);
-                chkOther = true;
-            }
-        } catch (NumberFormatException ex) {
-               chkOther = true;
-        } catch (NullPointerException el) {
-            chkOther = true;
-        }
-
-        if (title.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Title Name Is Empty", "Invalid Input Title", JOptionPane.INFORMATION_MESSAGE);
-            chkOther = true;
-        } else {
-            this.bk.setTitle(title.getText());
-        }
-
-        //Check Cost
-        if (cost.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Cost Field Is Empty", "Invalid Input Cost", JOptionPane.INFORMATION_MESSAGE);
-            chkOther = true;
-        } else {
+        if (chkEdit) {
             try {
-                if (Integer.parseInt(cost.getText()) < 0) {
-                    JOptionPane.showMessageDialog(null, "Cost Field Is Less Than Zero", "Invalid Input Cost", JOptionPane.INFORMATION_MESSAGE);
+                authName = (String) authorName.getSelectedItem();
+                getAuthorName = authName.split(" ");
+                if (bookID.getText().isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Book ID Is Empty...", "Invalid Input Of Book ID", JOptionPane.INFORMATION_MESSAGE);
                     chkOther = true;
-                } else {
-                    this.bk.setCost(Integer.parseInt(cost.getText()));
                 }
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(null, "Not A Number", "Invalid Input Cost", JOptionPane.INFORMATION_MESSAGE);
+                if (title.getText().equals(this.bk.getTitle()) && Integer.parseInt(cost.getText()) == this.bk.getCost()
+                        && Integer.parseInt(qnty.getText()) == this.bk.getQnty() && Integer.parseInt(copyRightYear.getText()) == this.bk.getCopyRightYear()
+                        && publishCountry.getSelectedItem().toString().equals(this.bk.getPublishCountry())
+                        && category.getSelectedItem().toString().equals(this.categClass.getName())
+                        && ((dcn.format(publishDate.getDate()).compareTo(dcn.format(this.bk.getDate()))) == 0)
+                        && (getAuthorName[0].equals(this.auth.getFName()) && getAuthorName[1].equals(this.auth.getMName()) && getAuthorName[2].equals(this.auth.getLName()))) {
+                    JOptionPane.showMessageDialog(null, "There Isn't Change In Book Info...", "Update Information Message", JOptionPane.INFORMATION_MESSAGE);
+                    chkOther = true;
+                }
+            } catch (NumberFormatException ex) {
+                chkOther = true;
+            } catch (NullPointerException el) {
                 chkOther = true;
             }
-        }
 
-        //Check Total Of Copy
-        if (qnty.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Total Copy Field Is Empty", "Invalid Input Total Copy", JOptionPane.INFORMATION_MESSAGE);
-            chkOther = true;
-        } else {
-            try {
-                this.bk.setQnty(Integer.parseInt(qnty.getText()));
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(null, "Not A Number", "Invalid Input Total Copy", JOptionPane.INFORMATION_MESSAGE);
+            if (title.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Title Name Is Empty", "Invalid Input Title", JOptionPane.INFORMATION_MESSAGE);
                 chkOther = true;
+            } else {
+                this.bk.setTitle(title.getText());
             }
-        }
 
-        //Check Total Of Copy
-        if (copyRightYear.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Copy Right Year Field Is Empty", "Invalid Input Copy Right Year", JOptionPane.INFORMATION_MESSAGE);
-            chkOther = true;
-        } else {
-            try {
-                this.bk.setCopyRightYear(Integer.parseInt(copyRightYear.getText()));
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(null, "Not A Number", "Invalid Input Copy Right Year", JOptionPane.INFORMATION_MESSAGE);
+            //Check Cost
+            if (cost.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Cost Field Is Empty", "Invalid Input Cost", JOptionPane.INFORMATION_MESSAGE);
                 chkOther = true;
+            } else {
+                try {
+                    if (Integer.parseInt(cost.getText()) < 0) {
+                        JOptionPane.showMessageDialog(null, "Cost Field Is Less Than Zero", "Invalid Input Cost", JOptionPane.INFORMATION_MESSAGE);
+                        chkOther = true;
+                    } else {
+                        this.bk.setCost(Integer.parseInt(cost.getText()));
+                    }
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(null, "Not A Number", "Invalid Input Cost", JOptionPane.INFORMATION_MESSAGE);
+                    chkOther = true;
+                }
             }
-        }
-        
-        if (publishCountry.getSelectedIndex() == -1){
-            JOptionPane.showMessageDialog(null, "Publish Country Isn't Selected", "Invalid Input Copy Right Year", JOptionPane.INFORMATION_MESSAGE);
-            chkOther = true;
-        } else {
-            this.bk.setPublishCountry(publishCountry.getSelectedItem().toString());
-        }
-        //Check Category
-        if (category.getSelectedIndex() == -1) {
-            JOptionPane.showMessageDialog(null, "Category Isn't Selected", "Invalid Input Category", JOptionPane.INFORMATION_MESSAGE);
-            chkOther = true;
-        } else if ((category.getSelectedItem().toString().equals(this.categClass.getName()))) {
-            chkCategory = true;
-        } else {
-            this.categClass.setName(category.getSelectedItem().toString());
-        }
 
-        //Check Author Name
-        if (authorName.getSelectedIndex() == -1) {
-            JOptionPane.showMessageDialog(null, "Author Isn't Selected", "Invalid Input Author", JOptionPane.INFORMATION_MESSAGE);
-            chkOther = true;
-        } else if ((getAuthorName[0].equals(this.auth.getFName()) && getAuthorName[1].equals(this.auth.getMName()) && getAuthorName[2].equals(this.auth.getLName()))) {
-            chkAuthor = true;
-        } else {
-            authName = (String) authorName.getSelectedItem();
-            getAuthorName = authName.split(" ");
-        }
+            //Check Total Of Copy
+            if (qnty.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Total Copy Field Is Empty", "Invalid Input Total Copy", JOptionPane.INFORMATION_MESSAGE);
+                chkOther = true;
+            } else {
+                try {
+                    this.bk.setQnty(Integer.parseInt(qnty.getText()));
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(null, "Not A Number", "Invalid Input Total Copy", JOptionPane.INFORMATION_MESSAGE);
+                    chkOther = true;
+                }
+            }
 
-        //Check Date
-        if (publishDate.getDate() == null) {
-            JOptionPane.showMessageDialog(null, "Please Choose Correct Calender Like 01-06-2020", "Invalid Input Calender", JOptionPane.INFORMATION_MESSAGE);
-            chkOther = true;
+            //Check Total Of Copy
+            if (copyRightYear.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Copy Right Year Field Is Empty", "Invalid Input Copy Right Year", JOptionPane.INFORMATION_MESSAGE);
+                chkOther = true;
+            } else {
+                try {
+                    this.bk.setCopyRightYear(Integer.parseInt(copyRightYear.getText()));
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(null, "Not A Number", "Invalid Input Copy Right Year", JOptionPane.INFORMATION_MESSAGE);
+                    chkOther = true;
+                }
+            }
+
+            if (publishCountry.getSelectedIndex() == -1) {
+                JOptionPane.showMessageDialog(null, "Publish Country Isn't Selected", "Invalid Input Copy Right Year", JOptionPane.INFORMATION_MESSAGE);
+                chkOther = true;
+            } else {
+                this.bk.setPublishCountry(publishCountry.getSelectedItem().toString());
+            }
+            //Check Category
+            if (category.getSelectedIndex() == -1) {
+                JOptionPane.showMessageDialog(null, "Category Isn't Selected", "Invalid Input Category", JOptionPane.INFORMATION_MESSAGE);
+                chkOther = true;
+            } else if ((category.getSelectedItem().toString().equals(this.categClass.getName()))) {
+                chkCategory = true;
+            } else {
+                this.categClass.setName(category.getSelectedItem().toString());
+            }
+
+            //Check Author Name
+            if (authorName.getSelectedIndex() == -1) {
+                JOptionPane.showMessageDialog(null, "Author Isn't Selected", "Invalid Input Author", JOptionPane.INFORMATION_MESSAGE);
+                chkOther = true;
+            } else if ((getAuthorName[0].equals(this.auth.getFName()) && getAuthorName[1].equals(this.auth.getMName()) && getAuthorName[2].equals(this.auth.getLName()))) {
+                chkAuthor = true;
+            } else {
+                authName = (String) authorName.getSelectedItem();
+                getAuthorName = authName.split(" ");
+            }
+
+            //Check Date
+            if (publishDate.getDate() == null) {
+                JOptionPane.showMessageDialog(null, "Please Choose Correct Calender Like 01-06-2020", "Invalid Input Calender", JOptionPane.INFORMATION_MESSAGE);
+                chkOther = true;
+            } else {
+                d = publishDate.getDate();
+                date_Publish = dcn.format(d);
+            }
         } else {
-            d = publishDate.getDate();
-            date_Publish = dcn.format(d);
+            JOptionPane.showMessageDialog(null, "Please Choose Book Id And Click Edit Button First", "Error Message", JOptionPane.INFORMATION_MESSAGE);
+            chkOther = true;
         }
 
         if (!chkOther) {
@@ -529,8 +536,10 @@ public class EditBooks extends javax.swing.JFrame {
                     stmt.executeUpdate(sql);
                     sql = "UPDATE publisher SET Autor_ID = (SELECT idAuthors FROM authors WHERE Fname_A = '" + this.auth.getFName() + "' and Mname_A = '" + this.auth.getMName() + "' and Lname_A = '" + this.auth.getLName() + "') WHERE ISBN_Books_Publish = " + ISBN + ";";
                     stmt.executeUpdate(sql);
+                    System.out.println("1");
                     JOptionPane.showMessageDialog(null, "Book Edited Success...", "Update Information Message", JOptionPane.INFORMATION_MESSAGE);
                     clearData();
+                    chkEdit = false;
 
                 } else if (!chkAuthor && chkCategory) {
                     sql = "UPDATE books SET Title = '" + this.bk.getTitle() + "',CopyRightYear = " + this.bk.getCopyRightYear()
@@ -540,21 +549,32 @@ public class EditBooks extends javax.swing.JFrame {
                     stmt.executeUpdate(sql);
                     sql = "UPDATE publisher SET Autor_ID = (SELECT idAuthors FROM authors WHERE Fname_A = '" + this.auth.getFName() + "' and Mname_A = '" + this.auth.getMName() + "' and Lname_A = '" + this.auth.getLName() + "') WHERE ISBN_Books_Publish = " + ISBN + ";";
                     stmt.executeUpdate(sql);
+                    System.out.println("2");
                     JOptionPane.showMessageDialog(null, "Book Edited Success...", "Update Information Message", JOptionPane.INFORMATION_MESSAGE);
                     clearData();
+                    chkEdit = false;
+
                 } else if (chkAuthor && !chkCategory) {
                     sql = "UPDATE books SET Title = '" + this.bk.getTitle() + "',CopyRightYear = " + this.bk.getCopyRightYear()
                             + ",PublishCountry = '" + this.bk.getPublishCountry() + "',TotalCopy = " + this.bk.getQnty()
                             + ",Cost = " + this.bk.getCost() + ",PublishDate = '" + this.bk.getDate()
                             + "',Categ_ID = (SELECT idCategory FROM category WHERE Name_C = '" + this.categClass.getName() + "')WHERE ISBN = " + ISBN + ";";
+                    stmt.executeUpdate(sql);
+                    System.out.println("3");
                     JOptionPane.showMessageDialog(null, "Book Edited Success...", "Update Information Message", JOptionPane.INFORMATION_MESSAGE);
                     clearData();
+                    chkEdit = false;
+
                 } else {
                     sql = "UPDATE books SET Title = '" + this.bk.getTitle() + "',CopyRightYear = " + this.bk.getCopyRightYear()
                             + ",PublishCountry = '" + this.bk.getPublishCountry() + "',TotalCopy = " + this.bk.getQnty()
                             + ",Cost = " + this.bk.getCost() + ",PublishDate = '" + this.bk.getDate() + "' WHERE ISBN = " + ISBN + ";";
+                    stmt.executeUpdate(sql);
+                    System.out.println("4");
                     JOptionPane.showMessageDialog(null, "Book Edited Success...", "Update Information Message", JOptionPane.INFORMATION_MESSAGE);
                     clearData();
+                    chkEdit = false;
+
                 }
             } catch (SQLException ex) {
                 ex.printStackTrace();
