@@ -234,7 +234,7 @@ public class EditMember extends javax.swing.JFrame {
         ResultSet rs = null;
         boolean chk = false;
         if (chkEdit) {  
-            if(fName.getText().equals(memb.getFName()) && mName.getText().equals(memb.getMName()) && lName.getText().equals(memb.getMName())
+            if(fName.getText().equals(memb.getFName()) && mName.getText().equals(memb.getMName()) && lName.getText().equals(memb.getLName())
                     && email.getText().equals(memb.getEmail())&& phone.getText().equals(memb.getPhone())&& address.getText().equals(memb.getAddress())){
                 JOptionPane.showMessageDialog(null, "There Isn't Change In Member Info...", "Update Information Message", JOptionPane.INFORMATION_MESSAGE);
                 chk = true;
@@ -272,10 +272,9 @@ public class EditMember extends javax.swing.JFrame {
            JOptionPane.showMessageDialog(null, "Please Choose Member Id And Click Edit Button First", "Error Message", JOptionPane.INFORMATION_MESSAGE);     
            chk = true;
         }
-        System.out.println(chk);
        if(!chk){
            memb = new Members(fName.getText(),mName.getText(),lName.getText(),email.getText(),phone.getText(),address.getText());
-           String sql = "UPDATE members SET Fname_M = '+"+memb.getFName()+"' , Mname_M = '"+memb.getMName()+"' , Lname_M = '"+memb.getLName()+"' , Email_M = '"+memb.getEmail()+"',Phone_M = '"+memb.getPhone()+"',Address_M = '"+memb.getAddress()+"' WHERE idMembers = "+ID+";";
+           String sql = "UPDATE members SET Fname_M = '"+memb.getFName()+"' , Mname_M = '"+memb.getMName()+"' , Lname_M = '"+memb.getLName()+"' , Email_M = '"+memb.getEmail()+"',Phone_M = '"+memb.getPhone()+"',Address_M = '"+memb.getAddress()+"' WHERE idMembers = "+ID+";";
             try {
                 stmt = con.createStatement();
                 stmt.executeUpdate(sql);
