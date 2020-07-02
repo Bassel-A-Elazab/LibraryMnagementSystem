@@ -25,18 +25,29 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="booksManage" min="-2" pref="162" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
-                      <Component id="membersManage" min="-2" pref="177" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="1" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="membersManage" min="-2" pref="177" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" attributes="0">
+                          <EmptySpace min="-2" pref="168" max="-2" attributes="0"/>
+                          <Component id="jLabel1" min="-2" pref="306" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
-                  <Group type="102" attributes="0">
-                      <EmptySpace min="-2" pref="168" max="-2" attributes="0"/>
-                      <Component id="jLabel1" min="-2" pref="306" max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="87" max="-2" attributes="0"/>
+                      <Component id="buyBook" min="-2" pref="162" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace pref="182" max="32767" attributes="0"/>
+          </Group>
+          <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace min="-2" pref="89" max="-2" attributes="0"/>
+                  <Component id="booksManage" min="-2" pref="162" max="-2" attributes="0"/>
+                  <EmptySpace pref="405" max="32767" attributes="0"/>
+              </Group>
           </Group>
       </Group>
     </DimensionLayout>
@@ -45,12 +56,18 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jLabel1" min="-2" pref="31" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="membersManage" alignment="3" min="-2" pref="44" max="-2" attributes="0"/>
-                  <Component id="booksManage" alignment="3" min="-2" pref="44" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+              <Component id="membersManage" min="-2" pref="44" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
+              <Component id="buyBook" min="-2" pref="44" max="-2" attributes="0"/>
+              <EmptySpace pref="172" max="32767" attributes="0"/>
+          </Group>
+          <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace min="-2" pref="72" max="-2" attributes="0"/>
+                  <Component id="booksManage" min="-2" pref="44" max="-2" attributes="0"/>
+                  <EmptySpace pref="268" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace pref="278" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -67,6 +84,14 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="membersManageActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="buyBook">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Buy Book"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buyBookActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="booksManage">
