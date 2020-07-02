@@ -25,7 +25,7 @@ public class EditMember extends javax.swing.JFrame {
      */
     Members memb = new Members();
     int ID;
-
+    boolean chkEdit = false;
     public EditMember() {
         initComponents();
     }
@@ -207,6 +207,7 @@ public class EditMember extends javax.swing.JFrame {
                 stmt = con.createStatement();
                 rs = stmt.executeQuery(sql);
                 if (rs.next()) {
+                    chkEdit = true;
                     memb = new Members(rs.getString("Fname_M"), rs.getString("Mname_M"), rs.getString("Lname_M"), rs.getString("Email_M"), rs.getString("Phone_M"), rs.getString("Address_M"), rs.getInt("NumOfBooksBorrowed"), rs.getInt("NumOfBooksBought"));
                     fName.setText(memb.getFName());
                     mName.setText(memb.getMName());
@@ -228,13 +229,64 @@ public class EditMember extends javax.swing.JFrame {
     }//GEN-LAST:event_editMemberActionPerformed
 
     private void confirmUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmUpdateActionPerformed
-            Connection con = ConnectDatabase.setConnect();
-            Statement stmt = null;
-            ResultSet rs = null;
-            boolean chk = false;
-            if(memberID.getText().isEmpty()){
-              JOptionPane.showMessageDialog(null, "Member ID Is Empty...", "Invalid Input Of Member ID", JOptionPane.INFORMATION_MESSAGE);        
+        Connection con = ConnectDatabase.setConnect();
+        Statement stmt = null;
+        ResultSet rs = null;
+        boolean chk = false;
+        if (chkEdit) {  
+            if(fName.getText().equals(memb.getFName()) && mName.getText().equals(memb.getMName()) && lName.getText().equals(memb.getMName())
+                    && email.getText().equals(memb.getEmail())&& phone.getText().equals(memb.getPhone())&& address.getText().equals(memb.getAddress())){
+                JOptionPane.showMessageDialog(null, "There Isn't Change In Member Info...", "Update Information Message", JOptionPane.INFORMATION_MESSAGE);
+                chk = true;
             }
+            if (fName.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "First Name Is Empty", "Invalid Input", JOptionPane.INFORMATION_MESSAGE);
+                chk = true;
+            }
+
+            if (mName.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Middle Name Is Empty", "Invalid Input", JOptionPane.INFORMATION_MESSAGE);
+                chk = true;
+            }
+
+            if (lName.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Last Name Is Empty", "Invalid Input", JOptionPane.INFORMATION_MESSAGE);
+                chk = true;
+            }
+
+            if (email.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Email Is Empty", "Invalid Input", JOptionPane.INFORMATION_MESSAGE);
+                chk = true;
+            }
+
+            if (phone.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Phone Is Empty", "Invalid Input", JOptionPane.INFORMATION_MESSAGE);
+                chk = true;
+            }
+
+            if (address.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Address Is Empty", "Invalid Input", JOptionPane.INFORMATION_MESSAGE);
+                chk = true;
+            }
+        }else{
+           JOptionPane.showMessageDialog(null, "Please Choose Member Id And Click Edit Button First", "Error Message", JOptionPane.INFORMATION_MESSAGE);     
+           chk = true;
+        }
+        System.out.println(chk);
+       if(!chk){
+           memb = new Members(fName.getText(),mName.getText(),lName.getText(),email.getText(),phone.getText(),address.getText());
+           String sql = "UPDATE members SET Fname_M = '+"+memb.getFName()+"' , Mname_M = '"+memb.getMName()+"' , Lname_M = '"+memb.getLName()+"' , Email_M = '"+memb.getEmail()+"',Phone_M = '"+memb.getPhone()+"',Address_M = '"+memb.getAddress()+"' WHERE idMembers = "+ID+";";
+            try {
+                stmt = con.createStatement();
+                stmt.executeUpdate(sql);
+                JOptionPane.showMessageDialog(null, "Member Edited Success...", "Update Information Message", JOptionPane.INFORMATION_MESSAGE);
+                clearData();  
+                chkEdit = false;
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+       }
+
     }//GEN-LAST:event_confirmUpdateActionPerformed
 
     private void exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitActionPerformed
