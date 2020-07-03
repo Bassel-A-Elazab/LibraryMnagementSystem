@@ -9,5 +9,4 @@ public class LibraryManagementSystem {
         AdminLogin Login = new AdminLogin();
         Login.setVisible(true);
     }
-    
 }
