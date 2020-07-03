@@ -7,6 +7,9 @@ package librarymanagementsystem;
 
 import infoClasses.Books;
 import infoClasses.Members;
+import java.awt.HeadlessException;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,6 +18,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
@@ -32,7 +36,6 @@ public class BuyBook extends javax.swing.JFrame {
     public BuyBook() {
         initComponents();
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -146,7 +149,7 @@ public class BuyBook extends javax.swing.JFrame {
         boolean chk = false;
         if (membID.getText().isEmpty() && ISBN.getText().isEmpty() && qnty.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Sorry , Enter The Requird Inforamtion !!!", "Invalid Input", JOptionPane.INFORMATION_MESSAGE);
-            
+
         } else {
             try {
 
@@ -193,7 +196,7 @@ public class BuyBook extends javax.swing.JFrame {
                 rs_book = stmt_book.executeQuery(sql_book);
                 stmt_member = con_member.createStatement();
                 rs_member = stmt_member.executeQuery(sql_member);
-                
+
                 if (rs_book.next() && rs_member.next()) {
                     bk = new Books(rs_book.getString("Title"), rs_book.getInt("CopyRightYear"), rs_book.getString("PublishCountry"), rs_book.getInt("TotalCopy"), rs_book.getInt("Cost"), rs_book.getDate("PublishDate"), rs_book.getInt("BorrowedCopy"));
                     memb = new Members(rs_member.getString("Fname_M"), rs_member.getString("Mname_M"), rs_member.getString("Lname_M"), rs_member.getString("Email_M"), rs_member.getString("Phone_M"), rs_member.getString("Address_M"), rs_member.getInt("NumOfBooksBorrowed"), rs_member.getInt("NumOfBooksBought"));
