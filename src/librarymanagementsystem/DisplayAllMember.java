@@ -36,7 +36,7 @@ public class DisplayAllMember extends javax.swing.JFrame {
             rs = stmt.executeQuery(sql);
             while(rs.next()){
                 System.out.println("Here");
-                memb = new Members(rs.getString("Fname_M"),rs.getString("Mname_M"),rs.getString("Lname_M"),rs.getString("Email_M"),rs.getString("Phone_M"),rs.getString("Address_M"),rs.getInt("NumOfBooksBorrowed"),rs.getInt("NumOfBooksBought"),rs.getInt("Fine"));
+                memb = new Members(rs.getString("Fname_M"),rs.getString("Mname_M"),rs.getString("Lname_M"),rs.getString("Email_M"),rs.getString("Phone_M"),rs.getString("Address_M"),rs.getInt("NumOfBooksBorrowed"),rs.getInt("NumOfBooksBought"));
                 row[0] = rs.getInt("idMembers");
                 row[1] = memb.getFName()+" "+memb.getMName()+" "+memb.getLName();
                 row[2] = memb.getEmail();
@@ -44,7 +44,6 @@ public class DisplayAllMember extends javax.swing.JFrame {
                 row[4] = memb.getAddress();
                 row[5] = memb.getBookBorrowed();
                 row[6] = memb.getBookBought();
-                row[7] = memb.getFine();
                 model.addRow(row);
             }
         }catch(SQLException ex){

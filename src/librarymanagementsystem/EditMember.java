@@ -208,7 +208,7 @@ public class EditMember extends javax.swing.JFrame {
                 rs = stmt.executeQuery(sql);
                 if (rs.next()) {
                     chkEdit = true;
-                    memb = new Members(rs.getString("Fname_M"), rs.getString("Mname_M"), rs.getString("Lname_M"), rs.getString("Email_M"), rs.getString("Phone_M"), rs.getString("Address_M"), rs.getInt("NumOfBooksBorrowed"), rs.getInt("NumOfBooksBought"),rs.getInt("Fine"));
+                    memb = new Members(rs.getString("Fname_M"), rs.getString("Mname_M"), rs.getString("Lname_M"), rs.getString("Email_M"), rs.getString("Phone_M"), rs.getString("Address_M"), rs.getInt("NumOfBooksBorrowed"), rs.getInt("NumOfBooksBought"));
                     fName.setText(memb.getFName());
                     mName.setText(memb.getMName());
                     lName.setText(memb.getLName());
