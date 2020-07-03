@@ -103,8 +103,9 @@ public class DeleteBook extends javax.swing.JFrame {
     private void deleteBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBookActionPerformed
         Connection con_book = ConnectDatabase.setConnect();
         Connection con_other = ConnectDatabase.setConnect();
-        Statement stmt_book = null, stmt_other = null;
-        ResultSet rs_book = null, rs_other = null;
+        Connection con_borrow = ConnectDatabase.setConnect();
+        Statement stmt_book = null, stmt_other = null, stmt_borrow = null;
+        ResultSet rs_book = null, rs_other = null, rs_borrow = null;
         String categ = null;
         int ISBN;
         if (bookID.getText().isEmpty()) {
@@ -126,32 +127,39 @@ public class DeleteBook extends javax.swing.JFrame {
                     rs_other = stmt_other.executeQuery(sql);
                     rs_other.next();
 
-                    String paneOutput = "Title : " + rs_book.getString(2) + "\n"
-                            + "Copy Right Year : " + rs_book.getInt(3) + "\n"
-                            + "Cost : " + rs_book.getInt(6) + "\n"
-                            + "Category : " + categ + "\n"
-                            + "Total Copy : " + rs_book.getInt(5) + "\n"
-                            + "Publish Date : " + rs_book.getDate(7) + "\n"
-                            + "Publish Country : " + rs_book.getString(4) + "\n"
-                            + "Author Name : " + rs_other.getString(2) + " " + rs_other.getString(3) + " " + rs_other.getString(4);
-                    int result = JOptionPane.showConfirmDialog(this, "Are You Want To Delete This book?\nYour Book Info: \n" + paneOutput, "Delete Message", JOptionPane.YES_NO_CANCEL_OPTION);
-                    switch (result) {
-                        case JOptionPane.YES_OPTION:
-                            sql = "delete from publisher where ISBN_Books_Publish =" + ISBN + ";";
-                            stmt_book.execute(sql);
-                            sql = "delete from books where ISBN =" + ISBN + ";";
-                            stmt_book.execute(sql);
-                            JOptionPane.showMessageDialog(null, "Book Is Deleted...", "Delete Message", JOptionPane.INFORMATION_MESSAGE);
-                            bookID.setText("");
-                            break;
-                        case JOptionPane.NO_OPTION:
-                            bookID.setText("");
-                            break;
-                        case JOptionPane.CANCEL_OPTION:
-                            bookID.setText("");
-                            break;
-                        default:
-                            break;
+                    String sql_borrow = "SELECT * FROM borrowed WHERE ISBN_Books_Borrow = " + ISBN + ";";
+                    stmt_borrow = con_borrow.createStatement();
+                    rs_borrow = stmt_borrow.executeQuery(sql_borrow);
+                    if (rs_borrow.next()) {
+                        JOptionPane.showMessageDialog(null, "Can't Delete This Book,Please Go To Return Borrowed Book First!!!", "Advice Message", JOptionPane.INFORMATION_MESSAGE);
+                    } else {
+                        String paneOutput = "Title : " + rs_book.getString(2) + "\n"
+                                + "Copy Right Year : " + rs_book.getInt(3) + "\n"
+                                + "Cost : " + rs_book.getInt(6) + "\n"
+                                + "Category : " + categ + "\n"
+                                + "Total Copy : " + rs_book.getInt(5) + "\n"
+                                + "Publish Date : " + rs_book.getDate(7) + "\n"
+                                + "Publish Country : " + rs_book.getString(4) + "\n"
+                                + "Author Name : " + rs_other.getString(2) + " " + rs_other.getString(3) + " " + rs_other.getString(4);
+                        int result = JOptionPane.showConfirmDialog(this, "Are You Want To Delete This book?\nYour Book Info: \n" + paneOutput, "Delete Message", JOptionPane.YES_NO_CANCEL_OPTION);
+                        switch (result) {
+                            case JOptionPane.YES_OPTION:
+                                sql = "delete from publisher where ISBN_Books_Publish =" + ISBN + ";";
+                                stmt_book.execute(sql);
+                                sql = "delete from books where ISBN =" + ISBN + ";";
+                                stmt_book.execute(sql);
+                                JOptionPane.showMessageDialog(null, "Book Is Deleted...", "Delete Message", JOptionPane.INFORMATION_MESSAGE);
+                                bookID.setText("");
+                                break;
+                            case JOptionPane.NO_OPTION:
+                                bookID.setText("");
+                                break;
+                            case JOptionPane.CANCEL_OPTION:
+                                bookID.setText("");
+                                break;
+                            default:
+                                break;
+                        }
                     }
                 } else {
                     JOptionPane.showMessageDialog(null, "Sorry, This book Is Not Found", "Books List", JOptionPane.INFORMATION_MESSAGE);
