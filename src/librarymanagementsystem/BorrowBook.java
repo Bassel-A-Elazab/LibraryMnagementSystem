@@ -241,7 +241,7 @@ public class BorrowBook extends javax.swing.JFrame {
                                 stmt = con.createStatement();
                                 stmt.execute(sql);
 
-                                sql_book = "UPDATE books SET TotalCopy = " + qntyAfter + " WHERE ISBN = " + IDBook + ";";
+                                sql_book = "UPDATE books SET TotalCopy = " + qntyAfter + " ,BorrowedCopy = BorrowedCopy+1 WHERE ISBN = " + IDBook + ";";
                                 stmt_book.executeUpdate(sql_book);
 
                                 sql_member = "UPDATE members SET NumOfBooksBorrowed = " + memb.getBookBorrowed() + " WHERE idMembers = " + IDMemb + ";";
