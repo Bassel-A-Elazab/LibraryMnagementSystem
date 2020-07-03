@@ -108,8 +108,9 @@ public class DeleteMember extends javax.swing.JFrame {
 
     private void deletememberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deletememberActionPerformed
         Connection con = ConnectDatabase.setConnect();
-        Statement stmt = null;
-        ResultSet rs = null;
+        Connection con_borrow = ConnectDatabase.setConnect();
+        Statement stmt = null, stmt_borrow = null;
+        ResultSet rs = null, rs_borrow = null;
         int ID;
         if (memberID.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Member ID Is Empty...", "Invalid Input Of Member ID", JOptionPane.INFORMATION_MESSAGE);
@@ -121,26 +122,33 @@ public class DeleteMember extends javax.swing.JFrame {
                 stmt = con.createStatement();
                 rs = stmt.executeQuery(sql);
                 if (rs.next()) {
-                    String paneOutput = "Name : " + rs.getString(2) + " " + rs.getString(3) + " " + rs.getString(4) + "\n"
-                            + "Email : " + rs.getString(5) + "\n"
-                            + "Phone : " + rs.getString(6) + "\n"
-                            + "Address : " + rs.getString(7) + "\n";
-                    int result = JOptionPane.showConfirmDialog(this, "Are You Want To Delete This Member?\nYour Member Info: \n" + paneOutput, "Delete Message", JOptionPane.YES_NO_CANCEL_OPTION);
-                    switch (result) {
-                        case JOptionPane.YES_OPTION:
-                            sql = "delete from members where idMembers =" + ID + ";";
-                            stmt.execute(sql);
-                            JOptionPane.showMessageDialog(null, "Member Is Deleted...", "Delete Message", JOptionPane.INFORMATION_MESSAGE);
-                            memberID.setText("");
-                            break;
-                        case JOptionPane.NO_OPTION:
-                            memberID.setText("");
-                            break;
-                        case JOptionPane.CANCEL_OPTION:
-                            memberID.setText("");
-                            break;
-                        default:
-                            break;
+                    String sql_borrow = "SELECT * FROM borrowed WHERE Memb_ID_Borrow = " + ID + ";";
+                    stmt_borrow = con_borrow.createStatement();
+                    rs_borrow = stmt_borrow.executeQuery(sql_borrow);
+                    if (rs_borrow.next()) {
+                        JOptionPane.showMessageDialog(null, "Can't Delete This Member,Please Go To Return Borrowed Book First!!!", "Advice Message", JOptionPane.INFORMATION_MESSAGE);
+                    } else {
+                        String paneOutput = "Name : " + rs.getString(2) + " " + rs.getString(3) + " " + rs.getString(4) + "\n"
+                                + "Email : " + rs.getString(5) + "\n"
+                                + "Phone : " + rs.getString(6) + "\n"
+                                + "Address : " + rs.getString(7) + "\n";
+                        int result = JOptionPane.showConfirmDialog(this, "Are You Want To Delete This Member?\nYour Member Info: \n" + paneOutput, "Delete Message", JOptionPane.YES_NO_CANCEL_OPTION);
+                        switch (result) {
+                            case JOptionPane.YES_OPTION:
+                                sql = "DELETE FROM members WHERE idMembers =" + ID + ";";
+                                stmt.execute(sql);
+                                JOptionPane.showMessageDialog(null, "Member Is Deleted...", "Delete Message", JOptionPane.INFORMATION_MESSAGE);
+                                memberID.setText("");
+                                break;
+                            case JOptionPane.NO_OPTION:
+                                memberID.setText("");
+                                break;
+                            case JOptionPane.CANCEL_OPTION:
+                                memberID.setText("");
+                                break;
+                            default:
+                                break;
+                        }
                     }
                 } else {
                     JOptionPane.showMessageDialog(null, "Sorry, This Member Is Not Found", "Member List", JOptionPane.INFORMATION_MESSAGE);
