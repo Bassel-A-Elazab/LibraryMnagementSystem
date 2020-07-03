@@ -4,7 +4,6 @@ public class Members extends MainPersonInfo {
 
     private int numBookBorrowed;
     private int numBookBought;
-    private int fine;
     public Members(){
         super();
     }
@@ -15,11 +14,10 @@ public class Members extends MainPersonInfo {
 
     public Members(String newFName, String newMName, String newLName,
             String newEmail, String newPhone, String newAddress,
-            int newNumBookBorrowed, int newNumBookBought,int newFine) {
+            int newNumBookBorrowed, int newNumBookBought) {
         super(newFName, newMName, newLName, newEmail, newPhone, newAddress);
         this.numBookBorrowed = newNumBookBorrowed;
         this.numBookBought = newNumBookBought;
-        this.fine = newFine;
     }
 
     public void setBookBorrowed(int newNumBookBorrowed) {
@@ -36,13 +34,5 @@ public class Members extends MainPersonInfo {
 
     public int getBookBought() {
         return numBookBought;
-    }
-    
-     public void setFine(int newFine) {
-        this.fine = newFine;
-    }
-
-    public int getFine() {
-        return fine;
     }
 }

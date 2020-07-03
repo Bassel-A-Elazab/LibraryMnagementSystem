@@ -28,7 +28,7 @@ public class DisplayAllMember extends javax.swing.JFrame {
         Connection con = ConnectDatabase.setConnect();
         Statement stmt = null;
         ResultSet rs = null;
-        Object[] row  = new Object[7];
+        Object[] row  = new Object[8];
         DefaultTableModel model = (DefaultTableModel) tableMembers.getModel();
         try{
             String sql = "SELECT * FROM members;";
@@ -36,7 +36,7 @@ public class DisplayAllMember extends javax.swing.JFrame {
             rs = stmt.executeQuery(sql);
             while(rs.next()){
                 System.out.println("Here");
-                memb = new Members(rs.getString("Fname_M"),rs.getString("Mname_M"),rs.getString("Lname_M"),rs.getString("Email_M"),rs.getString("Phone_M"),rs.getString("Address_M"),rs.getInt("NumOfBooksBorrowed"),rs.getInt("NumOfBooksBought"));
+                memb = new Members(rs.getString("Fname_M"),rs.getString("Mname_M"),rs.getString("Lname_M"),rs.getString("Email_M"),rs.getString("Phone_M"),rs.getString("Address_M"),rs.getInt("NumOfBooksBorrowed"),rs.getInt("NumOfBooksBought"),rs.getInt("Fine"));
                 row[0] = rs.getInt("idMembers");
                 row[1] = memb.getFName()+" "+memb.getMName()+" "+memb.getLName();
                 row[2] = memb.getEmail();
@@ -44,6 +44,7 @@ public class DisplayAllMember extends javax.swing.JFrame {
                 row[4] = memb.getAddress();
                 row[5] = memb.getBookBorrowed();
                 row[6] = memb.getBookBought();
+                row[7] = memb.getFine();
                 model.addRow(row);
             }
         }catch(SQLException ex){
@@ -73,7 +74,7 @@ public class DisplayAllMember extends javax.swing.JFrame {
 
             },
             new String [] {
-                "MemberID", "Name", "Email", "Phone", "Address", "Number Of Books Borrowed", "CostNumber Of Books Bought"
+                "MemberID", "Name", "Email", "Phone", "Address", "Number Of Books Borrowed", "CostNumber Of Books Bought", "Fine"
             }
         ));
         jScrollPane1.setViewportView(tableMembers);
