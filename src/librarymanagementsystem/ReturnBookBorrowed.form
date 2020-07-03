@@ -34,12 +34,10 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jLabel2" alignment="0" min="-2" pref="131" max="-2" attributes="0"/>
                           <Component id="jLabel6" alignment="0" min="-2" pref="131" max="-2" attributes="0"/>
-                          <Component id="jLabel7" min="-2" pref="131" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="64" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="ISBN" min="-2" pref="177" max="-2" attributes="0"/>
-                          <Component id="fineAmount" min="-2" pref="177" max="-2" attributes="0"/>
                           <Component id="membID" min="-2" pref="177" max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -72,12 +70,7 @@
                           <Component id="jLabel6" min="-2" pref="36" max="-2" attributes="0"/>
                           <Component id="ISBN" min="-2" pref="43" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="47" max="32767" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="fineAmount" alignment="3" min="-2" pref="43" max="-2" attributes="0"/>
-                          <Component id="jLabel7" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" pref="176" max="-2" attributes="0"/>
+                      <EmptySpace min="180" pref="266" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="32767" attributes="0"/>
@@ -113,8 +106,6 @@
         <Property name="text" type="java.lang.String" value="Book ID : "/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="fineAmount">
-    </Component>
     <Component class="javax.swing.JButton" name="returnBook">
       <Properties>
         <Property name="text" type="java.lang.String" value="Return"/>
@@ -132,11 +123,6 @@
       </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="ISBN">
-    </Component>
-    <Component class="javax.swing.JLabel" name="jLabel7">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Fine Amount : "/>
-      </Properties>
     </Component>
   </SubComponents>
 </Form>

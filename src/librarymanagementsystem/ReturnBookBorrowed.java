@@ -31,9 +31,6 @@ public class ReturnBookBorrowed extends javax.swing.JFrame {
      */
     public ReturnBookBorrowed() {
         initComponents();
-        fineAmount.setText("");
-        fineAmount.setEditable(false);
-        fineAmount.setBackground(Color.gray);
     }
 
     /**
@@ -49,11 +46,9 @@ public class ReturnBookBorrowed extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         membID = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        fineAmount = new javax.swing.JTextField();
         returnBook = new javax.swing.JButton();
         Exit = new javax.swing.JButton();
         ISBN = new javax.swing.JTextField();
-        jLabel7 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -83,8 +78,6 @@ public class ReturnBookBorrowed extends javax.swing.JFrame {
             }
         });
 
-        jLabel7.setText("Fine Amount : ");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -98,12 +91,10 @@ public class ReturnBookBorrowed extends javax.swing.JFrame {
                         .addGap(39, 39, 39)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(64, 64, 64)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(ISBN, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(fineAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(membID, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
@@ -128,11 +119,7 @@ public class ReturnBookBorrowed extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(ISBN, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(fineAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(176, 176, 176))
+                        .addGap(180, 266, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -158,7 +145,7 @@ public class ReturnBookBorrowed extends javax.swing.JFrame {
         String currentDate = dcn.format(date);
         String endDate = "";
         boolean chk = false;
-        if (membID.getText().isEmpty() && fineAmount.getText().isEmpty()) {
+        if (membID.getText().isEmpty() && ISBN.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Sorry , Enter The Requird Inforamtion !!!", "Invalid Input", JOptionPane.INFORMATION_MESSAGE);
             chk = true;
         } else {
@@ -198,17 +185,28 @@ public class ReturnBookBorrowed extends javax.swing.JFrame {
                     firstDate = dcn.parse(currentDate);
                     secondDate = dcn.parse(endDate);
                     long diffInMillies = Math.abs(secondDate.getTime() - firstDate.getTime());
-                    long diff = TimeUnit.DAYS.convert(diffInMillies,TimeUnit.MILLISECONDS);
-                    if(diff > 1){
-                        fine = (int) (diff*150);
+                    long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+                    if (diff > 1) {
+                        fine = (int) (diff * 150);
                     }
-                    sql = "UPDATE books SET TotalCopy = TotalCopy+1 where ISBn = "+IDBook+";";
-                    stmt.executeUpdate(sql);
-                    sql = "DELETE FROM borrowed WHERE Memb_ID_Borrow = "+IDMemb+" and ISBN_Books_Borrow = "+IDBook+";";
-                    stmt.execute(sql);
-                    JOptionPane.showMessageDialog(null,"Book Returned Successfully...","Confiramtion Message",JOptionPane.INFORMATION_MESSAGE);
-                }else{
-                    JOptionPane.showMessageDialog(null,"There Isn't Book Borrowed For This Member...","Warning Message",JOptionPane.INFORMATION_MESSAGE);
+
+                    int result = JOptionPane.showConfirmDialog(null, "Aru You Want To Return This Book?\nYour Fine Amount Is : " + fine, "Return Book Confirmation", JOptionPane.YES_NO_OPTION);
+                    switch (result) {
+                        case JOptionPane.YES_OPTION:
+                            sql = "UPDATE books SET TotalCopy = TotalCopy+1 where ISBn = " + IDBook + ";";
+                            stmt.executeUpdate(sql);
+                            sql = "DELETE FROM borrowed WHERE Memb_ID_Borrow = " + IDMemb + " and ISBN_Books_Borrow = " + IDBook + ";";
+                            stmt.execute(sql);
+                            JOptionPane.showMessageDialog(null, "Book Returned Successfully...", "Confiramtion Message", JOptionPane.INFORMATION_MESSAGE);
+                            break;
+                        case JOptionPane.NO_OPTION:
+                            clearData();
+                            break;
+                        default:
+                            break;
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "There Isn't Book Borrowed For This Member...", "Warning Message", JOptionPane.INFORMATION_MESSAGE);
                 }
             } catch (SQLException ex) {
                 ex.printStackTrace();
@@ -260,12 +258,14 @@ public class ReturnBookBorrowed extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Exit;
     private javax.swing.JTextField ISBN;
-    private javax.swing.JTextField fineAmount;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JTextField membID;
     private javax.swing.JButton returnBook;
     // End of variables declaration//GEN-END:variables
+void clearData() {
+        membID.setText("");
+        ISBN.setText("");
+    }
 }
