@@ -22,47 +22,79 @@ public class AddBooks extends javax.swing.JFrame {
     Category cat;
     Books bk;
     Author authName = new Author();
-    Connection conAuthor = ConnectDatabase.setConnect() , conCategory = ConnectDatabase.setConnect();
-    Statement stmtAuthor = null , stmtCategory = null;
-    ResultSet rsAuthor = null , rsCategory = null;
+    Connection conAuthor = ConnectDatabase.setConnect(), conCategory = ConnectDatabase.setConnect();
+    Statement stmtAuthor = null, stmtCategory = null;
+    ResultSet rsAuthor = null, rsCategory = null;
+
     /**
      * Creates new form AddBooks
      */
     public AddBooks() {
-        initComponents(); 
+        initComponents();
         getAuthorName();
         getCategoryname();
+        authorName.setSelectedIndex(-1);
+        category.setSelectedIndex(-1);
     }
 
     public AddBooks(Author auth) {
         initComponents();
     }
-    private void getAuthorName(){
+
+    private void getAuthorName() {
         String sql = "SELECT * FROM authors;";
         try {
             stmtAuthor = conAuthor.createStatement();
             rsAuthor = stmtAuthor.executeQuery(sql);
-            while(rsAuthor.next()){
+            while (rsAuthor.next()) {
                 authorName.addItem(rsAuthor.getString("Fname_A") + " " + rsAuthor.getString("Mname_A") + " " + rsAuthor.getString("Lname_A"));
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
+        }finally {
+            try {
+                rsAuthor.close();
+            } catch (Exception e) {
+                /* ignored */ }
+            try {
+                stmtAuthor.close();
+            } catch (Exception e) {
+                /* ignored */ }
+            try {
+                conAuthor.close();
+            } catch (Exception e) {
+                /* ignored */ }
         }
-        
+
     }
-        private void getCategoryname(){
+
+    private void getCategoryname() {
         String sql = "SELECT * FROM category;";
         try {
             stmtCategory = conCategory.createStatement();
             rsCategory = stmtCategory.executeQuery(sql);
-            while(rsCategory.next()){
+            while (rsCategory.next()) {
                 category.addItem(rsCategory.getString("Name_C"));
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
+        } finally {
+            try {
+                rsCategory.close();
+            } catch (Exception e) {
+                /* ignored */ }
+            try {
+                stmtCategory.close();
+            } catch (Exception e) {
+                /* ignored */ }
+            try {
+                conCategory.close();
+            } catch (Exception e) {
+                /* ignored */ }
         }
-        
+
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
