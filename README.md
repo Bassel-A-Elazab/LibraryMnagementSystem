@@ -31,46 +31,46 @@ The project has two interaces in general :
   ![alt text](Screenshot/2.png)
   
   # Admin Interface
-   * # Welcome System
-    ![alt text](Screenshot/3.png)
+   * # Welcome System<br/>
+    ![alt text](Screenshot/3.png)<br/>
     
-   * Add Book
-     ![alt text](Screenshot/5.png)
-     ![alt text](Screenshot/11.png)
+   * # Add Book<br/>
+     ![alt text](Screenshot/5.png)<br/>
+     ![alt text](Screenshot/11.png)<br/>
     
-   * Delete Book
-   ![alt text](Screenshot/19.png)
+   * # Delete Book<br/>
+   ![alt text](Screenshot/19.png)<br/>
    
-   * Edit Book
-   ![alt text](Screenshot/12.png)
-   ![alt text](Screenshot/17.png)
+   * # Edit Book<br/>
+   ![alt text](Screenshot/12.png)<br/>
+   ![alt text](Screenshot/17.png)<br/>
    
-   * Display All Books
-   ![alt text](Screenshot/21.png)
+   * # Display All Books<br/>
+   ![alt text](Screenshot/21.png)<br/>
    
-   * Add Member
-   ![alt text](Screenshot/25.png)
-   ![alt text](Screenshot/26.png)
+   * # Add Member<br/>
+   ![alt text](Screenshot/25.png)<br/>
+   ![alt text](Screenshot/26.png)<br/>
    
-   * Delete Member
-   ![alt text](Screenshot/33.png)
-   ![alt text](Screenshot/36.png)
+   * # Delete Member<br/>
+   ![alt text](Screenshot/33.png)<br/>
+   ![alt text](Screenshot/36.png)<br/>
    
-   * Edit Member
-   ![alt text](Screenshot/31.png)
-   ![alt text](Screenshot/27.png)
+   * # Edit Member<br/>
+   ![alt text](Screenshot/31.png)<br/>
+   ![alt text](Screenshot/27.png)<br/>
    
-   * Display All Members
-   ![alt text](Screenshot/37.png)
+   * # Display All Members<br/>
+   ![alt text](Screenshot/37.png)<br/>
    
-   * Buy Books
-   ![alt text](Screenshot/39.png)
-   ![alt text](Screenshot/40.png)
+   * # Buy Books<br/>
+   ![alt text](Screenshot/39.png)<br/>
+   ![alt text](Screenshot/40.png)<br/>
    
-   * Borrow Books
-   ![alt text](Screenshot/43.png)
-   ![alt text](Screenshot/45.png)
+   * # Borrow Books<br/>
+   ![alt text](Screenshot/43.png)<br/>
+   ![alt text](Screenshot/45.png)<br/>
    
-   * Return Books
-   ![alt text](Screenshot/47.png)
+   * # Return Books<br/>
+   ![alt text](Screenshot/47.png)<br/>
 
