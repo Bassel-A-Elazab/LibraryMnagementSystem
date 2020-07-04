@@ -31,46 +31,46 @@ The project has two interaces in general :
   ![alt text](Screenshot/2.png)
   
   # Admin Interface
-   * # Welcome System<br/>
+   * # Welcome System<br/><br/>
      ![alt text](Screenshot/3.png)<br/>
-    
-   * # Add Book<br/>
-     ![alt text](Screenshot/5.png =100x20)<br/>
+    <br/>
+   * # Add Book<br/><br/>
+     ![alt text](Screenshot/5.png)<br/>
      ![alt text](Screenshot/11.png)<br/>
-    
-   * # Delete Book<br/>
+    <br/>
+   * # Delete Book<br/><br/>
    ![alt text](Screenshot/19.png)<br/>
-   
-   * # Edit Book<br/>
+   <br/>
+   * # Edit Book<br/><br/>
    ![alt text](Screenshot/12.png)<br/>
    ![alt text](Screenshot/17.png)<br/>
-   
-   * # Display All Books<br/>
+   <br/>
+   * # Display All Books<br/><br/>
    ![alt text](Screenshot/21.png)<br/>
-   
-   * # Add Member<br/>
+   <br/>
+   * # Add Member<br/><br/>
    ![alt text](Screenshot/25.png)<br/>
    ![alt text](Screenshot/26.png)<br/>
-   
-   * # Delete Member<br/>
+   <br/>
+   * # Delete Member<br/><br/>
    ![alt text](Screenshot/33.png)<br/>
    ![alt text](Screenshot/36.png)<br/>
-   
-   * # Edit Member<br/>
+   <br/>
+   * # Edit Member<br/><br/>
    ![alt text](Screenshot/31.png)<br/>
    ![alt text](Screenshot/27.png)<br/>
-   
-   * # Display All Members<br/>
+   <br/>
+   * # Display All Members<br/><br/>
    ![alt text](Screenshot/37.png)<br/>
-   
-   * # Buy Books<br/>
+   <br/>
+   * # Buy Books<br/><br/>
    ![alt text](Screenshot/39.png)<br/>
    ![alt text](Screenshot/40.png)<br/>
-   
-   * # Borrow Books<br/>
+   <br/>
+   * # Borrow Books<br/><br/>
    ![alt text](Screenshot/43.png)<br/>
    ![alt text](Screenshot/45.png)<br/>
-   
-   * # Return Books<br/>
+   <br/>
+   * # Return Books<br/><br/>
    ![alt text](Screenshot/47.png)<br/>
 
