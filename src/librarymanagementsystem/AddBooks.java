@@ -33,14 +33,7 @@ public class AddBooks extends javax.swing.JFrame {
         initComponents();
         getAuthorName();
         getCategoryname();
-        authorName.setSelectedIndex(-1);
-        category.setSelectedIndex(-1);
     }
-
-    public AddBooks(Author auth) {
-        initComponents();
-    }
-
     private void getAuthorName() {
         String sql = "SELECT * FROM authors;";
         try {
@@ -49,6 +42,7 @@ public class AddBooks extends javax.swing.JFrame {
             while (rsAuthor.next()) {
                 authorName.addItem(rsAuthor.getString("Fname_A") + " " + rsAuthor.getString("Mname_A") + " " + rsAuthor.getString("Lname_A"));
             }
+            authorName.setSelectedIndex(-1);
         } catch (SQLException ex) {
             ex.printStackTrace();
         }finally {
@@ -76,6 +70,7 @@ public class AddBooks extends javax.swing.JFrame {
             while (rsCategory.next()) {
                 category.addItem(rsCategory.getString("Name_C"));
             }
+            category.setSelectedIndex(-1);
         } catch (SQLException ex) {
             ex.printStackTrace();
         } finally {
@@ -529,6 +524,7 @@ public class AddBooks extends javax.swing.JFrame {
     private void addAuthorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addAuthorActionPerformed
         AddAuthor addName = new AddAuthor();
         addName.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_addAuthorActionPerformed
 
     /**
