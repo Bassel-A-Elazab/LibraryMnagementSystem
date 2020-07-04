@@ -34,6 +34,7 @@ public class AddBooks extends javax.swing.JFrame {
         getAuthorName();
         getCategoryname();
     }
+
     private void getAuthorName() {
         String sql = "SELECT * FROM authors;";
         try {
@@ -45,7 +46,7 @@ public class AddBooks extends javax.swing.JFrame {
             authorName.setSelectedIndex(-1);
         } catch (SQLException ex) {
             ex.printStackTrace();
-        }finally {
+        } finally {
             try {
                 rsAuthor.close();
             } catch (Exception e) {
@@ -403,11 +404,13 @@ public class AddBooks extends javax.swing.JFrame {
             try {
                 if (Integer.parseInt(cost.getText()) < 0) {
                     JOptionPane.showMessageDialog(null, "Cost Field Is Less Than Zero", "Invalid Input Cost", JOptionPane.INFORMATION_MESSAGE);
+                    chk = true;
                 } else {
                     bk.setCost(Integer.parseInt(cost.getText()));
                 }
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(null, "Not A Number", "Invalid Input Cost", JOptionPane.INFORMATION_MESSAGE);
+                chk = true;
             }
         }
 
@@ -417,9 +420,15 @@ public class AddBooks extends javax.swing.JFrame {
             chk = true;
         } else {
             try {
-                bk.setQnty(Integer.parseInt(qnty.getText()));
+                if (Integer.parseInt(qnty.getText()) < 0) {
+                    JOptionPane.showMessageDialog(null, "Total Copy Field Is Less Than Zero", "Invalid Input Total Copy", JOptionPane.INFORMATION_MESSAGE);
+                    chk = true;
+                } else {
+                    bk.setQnty(Integer.parseInt(qnty.getText()));
+                }
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(null, "Not A Number", "Invalid Input Total Copy", JOptionPane.INFORMATION_MESSAGE);
+                chk = true;
             }
         }
 
@@ -429,9 +438,15 @@ public class AddBooks extends javax.swing.JFrame {
             chk = true;
         } else {
             try {
-                bk.setCopyRightYear(Integer.parseInt(copyRightYear.getText()));
+                if (Integer.parseInt(copyRightYear.getText()) < 1700) {
+                    JOptionPane.showMessageDialog(null, "Please Choose Correct Year For Publish", "Invalid Input Copy Right Year", JOptionPane.INFORMATION_MESSAGE);
+                    chk = true;
+                } else {
+                    bk.setCopyRightYear(Integer.parseInt(copyRightYear.getText()));
+                }
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(null, "Not A Number", "Invalid Input Copy Right Year", JOptionPane.INFORMATION_MESSAGE);
+                chk = true;
             }
         }
 
