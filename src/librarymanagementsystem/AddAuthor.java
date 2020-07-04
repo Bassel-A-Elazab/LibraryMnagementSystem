@@ -207,7 +207,7 @@ public class AddAuthor extends javax.swing.JFrame {
     }//GEN-LAST:event_addActionPerformed
 
     private void exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitActionPerformed
-        this.setVisible(false);
+        new AddBooks().setVisible(true);
     }//GEN-LAST:event_exitActionPerformed
 
     private void resetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetActionPerformed
