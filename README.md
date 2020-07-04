@@ -13,7 +13,7 @@ The project has two interaces in general :
    - Admin login to manage books and members.
 2. Admin Interface : 
    * For manage all function in library. <br/>
-         2.1. Add Book.<br/>
+         2.1 Add Book.<br/>
          2.2 Delete Book.<br/>
          2.3 Edit Book.<br/>
          2.4 Display All Books.<br/>
@@ -30,4 +30,47 @@ The project has two interaces in general :
   # Login Interfce
   ![alt text](Screenshot/2.png)
   
+  # Admin Interface
+   * Welcome System
+    ![alt text](Screenshot/3.png)
+    
+   * Add Book
+     ![alt text](Screenshot/5.png)
+     ![alt text](Screenshot/11.png)
+    
+   * Delete Book
+   ![alt text](Screenshot/19.png)
+   
+   * Edit Book
+   ![alt text](Screenshot/12.png)
+   ![alt text](Screenshot/17.png)
+   
+   * Display All Books
+   ![alt text](Screenshot/21.png)
+   
+   * Add Member
+   ![alt text](Screenshot/25.png)
+   ![alt text](Screenshot/26.png)
+   
+   * Delete Member
+   ![alt text](Screenshot/33.png)
+   ![alt text](Screenshot/36.png)
+   
+   * Edit Member
+   ![alt text](Screenshot/31.png)
+   ![alt text](Screenshot/27.png)
+   
+   * Display All Members
+   ![alt text](Screenshot/37.png)
+   
+   * Buy Books
+   ![alt text](Screenshot/39.png)
+   ![alt text](Screenshot/40.png)
+   
+   * Borrow Books
+   ![alt text](Screenshot/43.png)
+   ![alt text](Screenshot/45.png)
+   
+   * Return Books
+   ![alt text](Screenshot/47.png)
 
