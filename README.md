@@ -35,7 +35,7 @@ The project has two interaces in general :
      ![alt text](Screenshot/3.png)<br/>
     
    * # Add Book<br/>
-     ![alt text](Screenshot/5.png){ width=10% }<br/>
+     ![alt text](Screenshot/5.png =100x20)<br/>
      ![alt text](Screenshot/11.png)<br/>
     
    * # Delete Book<br/>
