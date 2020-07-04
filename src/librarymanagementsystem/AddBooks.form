@@ -58,11 +58,11 @@
                                   <Component id="qntError" min="-2" pref="178" max="-2" attributes="0"/>
                                   <Group type="102" alignment="1" attributes="0">
                                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="authorName" max="32767" attributes="0"/>
                                           <Component id="copyRightYear" alignment="1" max="32767" attributes="0"/>
                                           <Component id="copyYearError" alignment="1" max="32767" attributes="0"/>
                                           <Component id="publishCountry" alignment="1" min="-2" pref="178" max="-2" attributes="0"/>
                                           <Component id="publishDate" alignment="1" max="32767" attributes="0"/>
+                                          <Component id="authorName" max="32767" attributes="0"/>
                                       </Group>
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Group type="102" attributes="0">
@@ -148,7 +148,11 @@
               <Component id="qntError" min="-2" pref="32" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="publishDate" min="-2" pref="41" max="-2" attributes="0"/>
+                  <Group type="102" alignment="1" attributes="0">
+                      <Component id="publishDate" min="-2" pref="41" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="63" max="-2" attributes="0"/>
+                      <Component id="authorName" min="-2" pref="44" max="-2" attributes="0"/>
+                  </Group>
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jLabel9" min="-2" pref="31" max="-2" attributes="0"/>
@@ -160,12 +164,11 @@
                       <EmptySpace min="-2" pref="72" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel3" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
-                          <Component id="authorName" alignment="3" min="-2" pref="41" max="-2" attributes="0"/>
                           <Component id="addAuthor" alignment="3" min="-2" pref="41" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
-              <EmptySpace type="separate" pref="63" max="32767" attributes="0"/>
+              <EmptySpace pref="63" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="add" alignment="3" min="-2" pref="41" max="-2" attributes="0"/>
                   <Component id="reset" alignment="3" min="-2" pref="41" max="-2" attributes="0"/>
@@ -335,27 +338,6 @@
         <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="costKeyPressed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JComboBox" name="authorName">
-      <Properties>
-        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="6">
-            <StringItem index="0" value="Liam Noah William"/>
-            <StringItem index="1" value="Jacob Michael Daniel"/>
-            <StringItem index="2" value="James Oliver Benjamin"/>
-            <StringItem index="3" value="Elijah Lucas Mason"/>
-            <StringItem index="4" value="Logan Alexander Ethan"/>
-            <StringItem index="5" value="Bassel Ahmed El-azab"/>
-          </StringArray>
-        </Property>
-        <Property name="selectedIndex" type="int" value="-1"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="authorNameActionPerformed"/>
-      </Events>
-      <AuxValues>
-        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
-      </AuxValues>
-    </Component>
     <Component class="javax.swing.JButton" name="exit">
       <Properties>
         <Property name="text" type="java.lang.String" value="Exit"/>
@@ -403,6 +385,21 @@
     <Component class="javax.swing.JLabel" name="qntError">
     </Component>
     <Component class="javax.swing.JLabel" name="costError">
+    </Component>
+    <Component class="javax.swing.JComboBox" name="authorName">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="4">
+            <StringItem index="0" value="Item 1"/>
+            <StringItem index="1" value="Item 2"/>
+            <StringItem index="2" value="Item 3"/>
+            <StringItem index="3" value="Item 4"/>
+          </StringArray>
+        </Property>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+      </AuxValues>
     </Component>
   </SubComponents>
 </Form>

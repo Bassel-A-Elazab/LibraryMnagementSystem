@@ -10,16 +10,13 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class AddAuthor extends javax.swing.JFrame {
-
-    Author auth;
-
     /**
      * Creates new form AddAuthor
      */
     public AddAuthor() {
         initComponents();
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -194,14 +191,13 @@ public class AddAuthor extends javax.swing.JFrame {
             chk = true;
         }
         if (!chk) {
-            this.auth = new Author(fName.getText(), mName.getText(), lName.getText(), email.getText(), phone.getText(), address.getText());
+            Author auth = new Author(fName.getText(), mName.getText(), lName.getText(), email.getText(), phone.getText(), address.getText());
             try {
                 Statement stmt = con.createStatement();
                 String sql = "INSERT INTO authors(fName_A,Mname_A,Lname_A,Email_A,Phone_A,Address_A)" + "VALUES('" + auth.getFName() + "','" + auth.getMName() + "','" + auth.getLName() + "','" + auth.getEmail() + "','" + auth.getPhone() + "','" + auth.getAddress() + "')";
                 stmt.executeUpdate(sql);
                 JOptionPane.showMessageDialog(null, "New Author Added Success...", "Success", JOptionPane.INFORMATION_MESSAGE);
-                new AddBooks(this.auth);
-                this.setVisible(false);
+                new AddBooks(auth).setVisible(true);
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }

@@ -13,28 +13,41 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
 public class AddBooks extends javax.swing.JFrame {
 
     Category cat;
     Books bk;
-
+    Author authName = new Author();
+    Connection conAuthor = ConnectDatabase.setConnect() , conCategory = ConnectDatabase.setConnect();
+    Statement stmtAuthor = null , stmtCategory = null;
+    ResultSet rsAuthor = null , rsCategory = null;
     /**
      * Creates new form AddBooks
      */
     public AddBooks() {
-        initComponents();
-        System.out.println("One");
-        
-         authorName.addItem("Usama Serag");
+        initComponents(); 
+        getAuthorName();
     }
 
     public AddBooks(Author auth) {
         initComponents();
-        System.out.println("Two");
-        authorName.addItem(auth.getFName() + " " + auth.getMName() + " " + auth.getLName()); 
-        authorName.addItem("Bassel");
+    }
+    private void getAuthorName(){
+        String sql = "SELECT * FROM authors;";
+        try {
+            stmtAuthor = conAuthor.createStatement();
+            rsAuthor = stmtAuthor.executeQuery(sql);
+            while(rsAuthor.next()){
+                authorName.addItem(rsAuthor.getString("Fname_A") + " " + rsAuthor.getString("Mname_A") + " " + rsAuthor.getString("Lname_A"));
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        
     }
 
     /**
@@ -62,7 +75,6 @@ public class AddBooks extends javax.swing.JFrame {
         publishCountry = new javax.swing.JComboBox<>();
         qnty = new javax.swing.JTextField();
         cost = new javax.swing.JTextField();
-        authorName = new javax.swing.JComboBox<>();
         exit = new javax.swing.JButton();
         addAuthor = new javax.swing.JButton();
         add = new javax.swing.JButton();
@@ -72,6 +84,7 @@ public class AddBooks extends javax.swing.JFrame {
         copyYearError = new javax.swing.JLabel();
         qntError = new javax.swing.JLabel();
         costError = new javax.swing.JLabel();
+        authorName = new javax.swing.JComboBox<>();
 
         jCheckBoxMenuItem1.setSelected(true);
         jCheckBoxMenuItem1.setText("jCheckBoxMenuItem1");
@@ -144,14 +157,6 @@ public class AddBooks extends javax.swing.JFrame {
             }
         });
 
-        authorName.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Liam Noah William", "Jacob Michael Daniel", "James Oliver Benjamin", "Elijah Lucas Mason", "Logan Alexander Ethan", "Bassel Ahmed El-azab" }));
-        authorName.setSelectedIndex(-1);
-        authorName.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                authorNameActionPerformed(evt);
-            }
-        });
-
         exit.setText("Exit");
         exit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -184,6 +189,8 @@ public class AddBooks extends javax.swing.JFrame {
 
         publishDate.setDateFormatString("dd-MM-yyyy");
 
+        authorName.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -207,11 +214,11 @@ public class AddBooks extends javax.swing.JFrame {
                                     .addComponent(qntError, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(authorName, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                             .addComponent(copyRightYear, javax.swing.GroupLayout.Alignment.TRAILING)
                                             .addComponent(copyYearError, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                             .addComponent(publishCountry, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(publishDate, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                            .addComponent(publishDate, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(authorName, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addGroup(layout.createSequentialGroup()
                                                 .addGap(111, 111, 111)
@@ -275,7 +282,10 @@ public class AddBooks extends javax.swing.JFrame {
                 .addComponent(qntError, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(publishDate, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(publishDate, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(63, 63, 63)
+                        .addComponent(authorName, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -285,9 +295,8 @@ public class AddBooks extends javax.swing.JFrame {
                         .addGap(72, 72, 72)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(authorName, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(addAuthor, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(18, 63, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(add, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(reset, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -340,7 +349,7 @@ public class AddBooks extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Title Name Is Empty", "Invalid Input Title", JOptionPane.INFORMATION_MESSAGE);
             chk = true;
         } else {
-            this.bk.setTitle(title.getText());
+            bk.setTitle(title.getText());
         }
 
         //Check Cost
@@ -352,7 +361,7 @@ public class AddBooks extends javax.swing.JFrame {
                 if (Integer.parseInt(cost.getText()) < 0) {
                     JOptionPane.showMessageDialog(null, "Cost Field Is Less Than Zero", "Invalid Input Cost", JOptionPane.INFORMATION_MESSAGE);
                 } else {
-                    this.bk.setCost(Integer.parseInt(cost.getText()));
+                    bk.setCost(Integer.parseInt(cost.getText()));
                 }
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(null, "Not A Number", "Invalid Input Cost", JOptionPane.INFORMATION_MESSAGE);
@@ -365,7 +374,7 @@ public class AddBooks extends javax.swing.JFrame {
             chk = true;
         } else {
             try {
-                this.bk.setQnty(Integer.parseInt(qnty.getText()));
+                bk.setQnty(Integer.parseInt(qnty.getText()));
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(null, "Not A Number", "Invalid Input Total Copy", JOptionPane.INFORMATION_MESSAGE);
             }
@@ -377,7 +386,7 @@ public class AddBooks extends javax.swing.JFrame {
             chk = true;
         } else {
             try {
-                this.bk.setCopyRightYear(Integer.parseInt(copyRightYear.getText()));
+                bk.setCopyRightYear(Integer.parseInt(copyRightYear.getText()));
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(null, "Not A Number", "Invalid Input Copy Right Year", JOptionPane.INFORMATION_MESSAGE);
             }
@@ -387,7 +396,7 @@ public class AddBooks extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Publish Country Isn't Selected", "Invalid Input Copy Right Year", JOptionPane.INFORMATION_MESSAGE);
             chk = true;
         } else {
-            this.bk.setPublishCountry(publishCountry.getSelectedItem().toString());
+            bk.setPublishCountry(publishCountry.getSelectedItem().toString());
         }
 
         //Check Category
@@ -446,10 +455,6 @@ public class AddBooks extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_addActionPerformed
-
-    private void authorNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_authorNameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_authorNameActionPerformed
 
     private void costKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_costKeyPressed
 
