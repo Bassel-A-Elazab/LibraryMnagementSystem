@@ -32,7 +32,7 @@ The project has two interaces in general :
   
   # Admin Interface
    * # Welcome System<br/>
-     ![alt text](Screenshot/3.png)<br/>
+     ![alt text](Screenshot/3.png = 300*300)<br/>
     
    * # Add Book<br/>
      ![alt text](Screenshot/5.png)<br/>
