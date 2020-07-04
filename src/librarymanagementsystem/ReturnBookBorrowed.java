@@ -182,10 +182,9 @@ public class ReturnBookBorrowed extends javax.swing.JFrame {
                     secondDate = dcn.parse(endDate);
                     long diffInMillies = Math.abs(secondDate.getTime() - firstDate.getTime());
                     long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
-                    if (diff > 1) {
+                    if (currentDate.compareTo(endDate) > 0) {
                         fine = (int) (diff * 150);
                     }
-
                     int result = JOptionPane.showConfirmDialog(null, "Aru You Want To Return This Book?\nYour Fine Amount Is : " + fine, "Return Book Confirmation", JOptionPane.YES_NO_OPTION);
                     switch (result) {
                         case JOptionPane.YES_OPTION:
