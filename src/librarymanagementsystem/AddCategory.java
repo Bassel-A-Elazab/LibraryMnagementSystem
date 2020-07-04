@@ -132,6 +132,7 @@ public class AddCategory extends javax.swing.JFrame {
                 String sql = "INSERT INTO category(Name_C)" + "VALUES('" + categ.getName() + "');";
                         stmt.executeUpdate(sql);
                 JOptionPane.showMessageDialog(null, "New Category Added Success...", "Success", JOptionPane.INFORMATION_MESSAGE);
+                new AddBooks().setVisible(true);
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
