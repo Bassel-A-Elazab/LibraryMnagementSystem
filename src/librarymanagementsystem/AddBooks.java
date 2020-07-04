@@ -367,7 +367,7 @@ public class AddBooks extends javax.swing.JFrame {
     }//GEN-LAST:event_costActionPerformed
 
     private void exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitActionPerformed
-        new AddBooks().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_exitActionPerformed
 
     private void resetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetActionPerformed
