@@ -167,6 +167,7 @@ public class AddMember extends javax.swing.JFrame {
 
     private void addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addActionPerformed
         Connection con = ConnectDatabase.setConnect();
+        Statement stmt = null;
         boolean chk = false;
         if (fName.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "First Name Is Empty", "Invalid Input", JOptionPane.INFORMATION_MESSAGE);
@@ -200,14 +201,23 @@ public class AddMember extends javax.swing.JFrame {
         if (!chk) {
             mem = new Members(fName.getText(), mName.getText(), lName.getText(), email.getText(), phone.getText(), address.getText());
             try {
-                Statement stmt = con.createStatement();
+                stmt = con.createStatement();
                 String sql = "INSERT INTO members(fName_M,Mname_M,Lname_M,Email_M,Phone_M,Address_M)" + "VALUES('" + mem.getFName() + "','" + mem.getMName() + "','" + mem.getLName() + "','" + mem.getEmail() + "','" + mem.getPhone() + "','" + mem.getAddress() +"')";
                 stmt.executeUpdate(sql);
                 JOptionPane.showMessageDialog(null, "New Member Added Success...", "Success", JOptionPane.INFORMATION_MESSAGE);
                 this.setVisible(false);
             } catch (SQLException ex) {
                 ex.printStackTrace();
-            }
+            }finally {
+            try {
+                stmt.close();
+            } catch (Exception e) {
+                /* ignored */ }
+            try {
+                con.close();
+            } catch (Exception e) {
+                /* ignored */ }
+        }
         }
     }//GEN-LAST:event_addActionPerformed
 

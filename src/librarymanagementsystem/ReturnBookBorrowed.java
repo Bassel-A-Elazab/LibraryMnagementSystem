@@ -207,7 +207,20 @@ public class ReturnBookBorrowed extends javax.swing.JFrame {
                 ex.printStackTrace();
             } catch (ParseException ex) {
                 ex.printStackTrace();
-            }
+            }finally {
+            try {
+                rs.close();
+            } catch (Exception e) {
+                /* ignored */ }
+            try {
+                stmt.close();
+            } catch (Exception e) {
+                /* ignored */ }
+            try {
+                con.close();
+            } catch (Exception e) {
+                /* ignored */ }
+        }
         }
     }//GEN-LAST:event_returnBookActionPerformed
 

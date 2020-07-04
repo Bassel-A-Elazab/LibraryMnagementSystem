@@ -157,7 +157,23 @@ public class DeleteMember extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Member ID Should Be A Number...", "Invalid Input Of Member ID", JOptionPane.INFORMATION_MESSAGE);
             } catch (SQLException e) {
                 e.printStackTrace();
-            }
+            }finally {
+            try {
+                rs.close();
+                rs_borrow.close();
+            } catch (Exception e) {
+                /* ignored */ }
+            try {
+                stmt.close();
+                stmt_borrow.close();
+            } catch (Exception e) {
+                /* ignored */ }
+            try {
+                con.close();
+                con_borrow.close();
+            } catch (Exception e) {
+                /* ignored */ }
+        }
         }
     }//GEN-LAST:event_deletememberActionPerformed
 

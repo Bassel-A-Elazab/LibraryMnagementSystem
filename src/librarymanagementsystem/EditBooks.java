@@ -25,9 +25,10 @@ import javax.swing.plaf.basic.BasicToolBarUI;
  */
 public class EditBooks extends javax.swing.JFrame {
 
-    Books bk;
-    Author auth;
-    Category categClass;
+    Books bk = new Books();
+    Author auth = new Author();
+    Category categClass = new Category();
+    
     int ISBN;
     boolean chkEdit = false;
     Connection conAuthor = ConnectDatabase.setConnect(), conCategory = ConnectDatabase.setConnect();
@@ -393,10 +394,7 @@ public class EditBooks extends javax.swing.JFrame {
         Statement stmt_book = null, stmt_other = null;
         ResultSet rs_book = null, rs_other = null;
         String categ = null;
-        this.bk = new Books();
-        this.auth = new Author();
-        this.categClass = new Category();
-
+        
         if (bookID.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Book ID Is Empty...", "Invalid Input Of Book ID", JOptionPane.INFORMATION_MESSAGE);
         } else {
@@ -449,7 +447,23 @@ public class EditBooks extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Book ID Should Be A Number...", "Invalid Input Of Book ID", JOptionPane.INFORMATION_MESSAGE);
             } catch (SQLException e) {
                 e.printStackTrace();
-            }
+            }finally {
+            try {
+                rs_book.close();
+                rs_other.close();
+            } catch (Exception e) {
+                /* ignored */ }
+            try {
+                stmt_book.close();
+                stmt_other.close();
+            } catch (Exception e) {
+                /* ignored */ }
+            try {
+                con_book.close();
+                con_other.close();
+            } catch (Exception e) {
+                /* ignored */ }
+        }
         }
     }//GEN-LAST:event_editBookActionPerformed
 

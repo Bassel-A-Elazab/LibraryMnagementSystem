@@ -161,6 +161,7 @@ public class AddAuthor extends javax.swing.JFrame {
 
     private void addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addActionPerformed
         Connection con = ConnectDatabase.setConnect();
+        Statement stmt = null;
         boolean chk = false;
         if (fName.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "First Name Is Empty", "Invalid Input", JOptionPane.INFORMATION_MESSAGE);
@@ -194,14 +195,23 @@ public class AddAuthor extends javax.swing.JFrame {
         if (!chk) {
              auth = new Author(fName.getText(), mName.getText(), lName.getText(), email.getText(), phone.getText(), address.getText());
             try {
-                Statement stmt = con.createStatement();
+                stmt = con.createStatement();
                 String sql = "INSERT INTO authors(fName_A,Mname_A,Lname_A,Email_A,Phone_A,Address_A)" + "VALUES('" + auth.getFName() + "','" + auth.getMName() + "','" + auth.getLName() + "','" + auth.getEmail() + "','" + auth.getPhone() + "','" + auth.getAddress() + "')";
                 stmt.executeUpdate(sql);
                 JOptionPane.showMessageDialog(null, "New Author Added Success...", "Success", JOptionPane.INFORMATION_MESSAGE);
                 new AddBooks().setVisible(true);
             } catch (SQLException ex) {
                 ex.printStackTrace();
-            }
+            }finally {
+            try {
+                stmt.close();
+            } catch (Exception e) {
+                /* ignored */ }
+            try {
+                con.close();
+            } catch (Exception e) {
+                /* ignored */ }
+        }
         }
 
     }//GEN-LAST:event_addActionPerformed

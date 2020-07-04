@@ -19,8 +19,8 @@ import javax.swing.JOptionPane;
 
 public class AddBooks extends javax.swing.JFrame {
 
-    Category cat;
-    Books bk;
+    Category cat = new Category();;
+    Books bk = new Books();
     Author authName = new Author();
     Connection conAuthor = ConnectDatabase.setConnect(), conCategory = ConnectDatabase.setConnect();
     Statement stmtAuthor = null, stmtCategory = null;
@@ -60,7 +60,6 @@ public class AddBooks extends javax.swing.JFrame {
             } catch (Exception e) {
                 /* ignored */ }
         }
-
     }
 
     private void getCategoryname() {
@@ -377,8 +376,6 @@ public class AddBooks extends javax.swing.JFrame {
 
     private void addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addActionPerformed
         Connection con = ConnectDatabase.setConnect();
-        this.cat = new Category();
-        this.bk = new Books();
         Statement stmt = null;
         ResultSet rs = null;
         Integer idCateg = 0, idAuthor = 0, ISBN = 0, price, cpyRight, numberBk;
@@ -508,7 +505,20 @@ public class AddBooks extends javax.swing.JFrame {
                 clearInfo();
             } catch (SQLException ex) {
                 ex.printStackTrace();
-            }
+            }finally {
+            try {
+                rs.close();
+            } catch (Exception e) {
+                /* ignored */ }
+            try {
+                stmt.close();
+            } catch (Exception e) {
+                /* ignored */ }
+            try {
+                con.close();
+            } catch (Exception e) {
+                /* ignored */ }
+        }
         }
 
     }//GEN-LAST:event_addActionPerformed

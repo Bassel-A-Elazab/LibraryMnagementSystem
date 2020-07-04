@@ -169,7 +169,7 @@ public class BorrowBook extends javax.swing.JFrame {
 
     private void borrowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_borrowActionPerformed
         Connection con = ConnectDatabase.setConnect(), con_book = ConnectDatabase.setConnect(), con_member = ConnectDatabase.setConnect();
-        Statement stmt = null, stmt_book, stmt_member = null;
+        Statement stmt = null, stmt_book = null, stmt_member = null;
         ResultSet rs = null, rs_book = null, rs_member = null;
         int IDMemb = 0, IDBook = 0, qntyAfter = -1;
         boolean chk = false;
@@ -267,6 +267,25 @@ public class BorrowBook extends javax.swing.JFrame {
                 }
             } catch (SQLException ex) {
                 ex.printStackTrace();
+            } finally {
+                try {
+                    rs.close();
+                    rs_book.close();
+                    rs_member.close();
+                } catch (Exception e) {
+                    /* ignored */ }
+                try {
+                    stmt.close();
+                    stmt_book.close();
+                    stmt_member.close();
+                } catch (Exception e) {
+                    /* ignored */ }
+                try {
+                    con.close();
+                    con_book.close();
+                    con_member.close();
+                } catch (Exception e) {
+                    /* ignored */ }
             }
         }
     }//GEN-LAST:event_borrowActionPerformed

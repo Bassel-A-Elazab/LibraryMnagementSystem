@@ -48,6 +48,19 @@ public class DisplayAllMember extends javax.swing.JFrame {
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
+        }finally {
+            try {
+                rs.close();
+            } catch (Exception e) {
+                /* ignored */ }
+            try {
+                stmt.close();
+            } catch (Exception e) {
+                /* ignored */ }
+            try {
+                con.close();
+            } catch (Exception e) {
+                /* ignored */ }
         }
 
     }
@@ -75,7 +88,7 @@ public class DisplayAllMember extends javax.swing.JFrame {
 
             },
             new String [] {
-                "MemberID", "Name", "Email", "Phone", "Address", "Number Of Books Borrowed", "CostNumber Of Books Bought", "Fine"
+                "MemberID", "Name", "Email", "Phone", "Address", "Number Of Books Borrowed", "CostNumber Of Books Bought"
             }
         ));
         jScrollPane1.setViewportView(tableMembers);

@@ -135,7 +135,16 @@ public class AddCategory extends javax.swing.JFrame {
                 new AddBooks().setVisible(true);
             } catch (SQLException ex) {
                 ex.printStackTrace();
-            }
+            }finally {
+            try {
+                stmt.close();
+            } catch (Exception e) {
+                /* ignored */ }
+            try {
+                con.close();
+            } catch (Exception e) {
+                /* ignored */ }
+        }
         }
     }//GEN-LAST:event_addActionPerformed
 

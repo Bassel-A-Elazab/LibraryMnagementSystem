@@ -168,6 +168,25 @@ public class DeleteBook extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Book ID Should Be A Number...", "Invalid Input Of Book ID", JOptionPane.INFORMATION_MESSAGE);
             } catch (SQLException e) {
                 e.printStackTrace();
+            } finally {
+                try {
+                    rs_book.close();
+                    rs_borrow.close();
+                    rs_other.close();
+                } catch (Exception e) {
+                    /* ignored */ }
+                try {
+                    stmt_book.close();
+                    stmt_borrow.close();
+                    stmt_other.close();
+                } catch (Exception e) {
+                    /* ignored */ }
+                try {
+                    con_book.close();
+                    con_borrow.close();
+                    con_other.close();
+                } catch (Exception e) {
+                    /* ignored */ }
             }
         }
     }//GEN-LAST:event_deleteBookActionPerformed

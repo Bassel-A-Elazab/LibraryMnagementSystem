@@ -70,6 +70,22 @@ public class DisplayBooks extends javax.swing.JFrame {
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
+        }finally {
+            try {
+                rs.close();
+                rs_other.close();
+            } catch (Exception e) {
+                /* ignored */ }
+            try {
+                stmt.close();
+                stmt_other.close();
+            } catch (Exception e) {
+                /* ignored */ }
+            try {
+                con.close();
+                con_other.close();
+            } catch (Exception e) {
+                /* ignored */ }
         }
     }
 

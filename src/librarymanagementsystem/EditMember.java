@@ -223,7 +223,20 @@ public class EditMember extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Member ID Should Be A Number...", "Invalid Input Of Member ID", JOptionPane.INFORMATION_MESSAGE);
             } catch (SQLException ex) {
                 ex.printStackTrace();
-            }
+            }finally {
+            try {
+                rs.close();
+            } catch (Exception e) {
+                /* ignored */ }
+            try {
+                stmt.close();
+            } catch (Exception e) {
+                /* ignored */ }
+            try {
+                con.close();
+            } catch (Exception e) {
+                /* ignored */ }
+        }
 
         }
     }//GEN-LAST:event_editMemberActionPerformed
