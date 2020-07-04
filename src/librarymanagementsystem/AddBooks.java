@@ -485,7 +485,6 @@ public class AddBooks extends javax.swing.JFrame {
         if (!chk) {
             try {
                 String getCategId = "SELECT idCategory FROM category where Name_C =" + "'" + this.cat.getName() + "';";
-                System.out.println(getCategId);
                 stmt = con.createStatement();
                 rs = stmt.executeQuery(getCategId);
                 if (rs.next()) {

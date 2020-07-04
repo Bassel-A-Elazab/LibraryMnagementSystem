@@ -585,7 +585,6 @@ public class EditBooks extends javax.swing.JFrame {
 
         if (!chkOther) {
             try {
-                System.out.println(this.bk.getDate());
                 stmt = con.createStatement();
                 if (!chkAuthor && !chkCategory) {
                     sql = "UPDATE books SET Title = '" + this.bk.getTitle() + "',CopyRightYear = " + this.bk.getCopyRightYear()

@@ -79,12 +79,12 @@
   <SubComponents>
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Books Management"/>
+        <Property name="text" type="java.lang.String" value="Member Management"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="addMember">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Add New Book"/>
+        <Property name="text" type="java.lang.String" value="Add New Member"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addMemberActionPerformed"/>
@@ -92,7 +92,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="editMember">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Edit Book"/>
+        <Property name="text" type="java.lang.String" value="Edit Member"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="editMemberActionPerformed"/>
@@ -100,7 +100,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="deleteMember">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Delete Book"/>
+        <Property name="text" type="java.lang.String" value="Delete Member"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="deleteMemberActionPerformed"/>
@@ -108,7 +108,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="displayMembers">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Display All Books"/>
+        <Property name="text" type="java.lang.String" value="Display All member"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="displayMembersActionPerformed"/>

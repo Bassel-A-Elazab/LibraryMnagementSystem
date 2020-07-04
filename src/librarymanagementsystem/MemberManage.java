@@ -37,30 +37,30 @@ public class MemberManage extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jLabel1.setText("Books Management");
+        jLabel1.setText("Member Management");
 
-        addMember.setText("Add New Book");
+        addMember.setText("Add New Member");
         addMember.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addMemberActionPerformed(evt);
             }
         });
 
-        editMember.setText("Edit Book");
+        editMember.setText("Edit Member");
         editMember.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 editMemberActionPerformed(evt);
             }
         });
 
-        deleteMember.setText("Delete Book");
+        deleteMember.setText("Delete Member");
         deleteMember.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 deleteMemberActionPerformed(evt);
             }
         });
 
-        displayMembers.setText("Display All Books");
+        displayMembers.setText("Display All member");
         displayMembers.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 displayMembersActionPerformed(evt);
